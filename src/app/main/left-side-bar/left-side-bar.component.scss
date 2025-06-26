@@ -1,0 +1,91 @@
+/* custom-sidebar.component.css */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 320px;
+  height: 100%;
+  background: rgb(6 48 72);
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+  z-index: 1000;
+  color: white !important;
+  /* No pointer-events to allow clicks on the rest of the app */
+}
+
+.sidebar-open {
+  transform: translateX(320px);
+}
+
+.sidebar-content {
+  /* border: 1px solid red; */
+  padding: 1rem 2rem;
+}
+
+.sidebar-content header {
+  font-size: 3rem;
+}
+
+:host ::ng-deep .custom-panel-menu {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  .p-panelmenu-panel {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+  }
+
+  .p-panelmenu-header {
+    background: transparent !important;
+    border: none;
+    color: white !important;
+
+  }
+
+  .p-panelmenu-header-content {
+    color: white !important;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 1) !important;
+    }
+  }
+
+  .p-panelmenu-submenu-icon {
+    color: white !important;
+  }
+
+  .p-panelmenu-item-content {
+    color: white !important;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 1) !important;
+    }
+  }
+
+  .p-panelmenu-content {
+    background: transparent !important;
+    border: none;
+    padding: 0;
+
+    .p-menuitem-link {
+      background: transparent !important;
+      color: white !important;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+
+      .pi {
+        margin-right: 0.5rem;
+        color: white !important;
+      }
+    }
+
+    .p-menuitem-active>.p-menuitem-link {
+      background-color: rgba(0, 0, 0, 0.1);
+      color: white !important;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div [class.drawer-open]="isDrawerOpen">
+    <p-toolbar [style]="{'padding': '1.5rem'}">
+        <ng-template #start>
+            <p-button icon="pi pi-bars" class="mr-2" (onClick)="hamburgerBtnClickHandler()" text />
+
+            <p-iconfield styleClass="custom-search-field">
+                <input pInputText [(ngModel)]="search" placeholder="Search" />
+                <p-inputicon class="pi pi-search" />
+            </p-iconfield>
+
+        </ng-template>
+
+        <ng-template #end>
+            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                [style]="{ width: '32px', height: '32px' }" />
+        </ng-template>
+    </p-toolbar>
+</div>

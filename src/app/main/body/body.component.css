@@ -1,0 +1,9 @@
+/* Smooth transition for the push effect */
+div[class^="drawer-open"] {
+    transition: margin-left 0.3s cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  /* Push content by the drawer's width (adjust 300px to match your drawer width) */
+  .drawer-open {
+    margin-left: 320px; 
+  }

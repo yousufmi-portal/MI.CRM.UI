@@ -1,0 +1,11 @@
+<app-top-bar (toggleLeftSideBar)="toggleLeftSideBarVisibility()" [isDrawerOpen]="isDrawerVisible">
+</app-top-bar>
+
+<app-left-side-bar [isOpen]="isDrawerVisible" (closed)="onSidebarClosed()">
+</app-left-side-bar>
+
+<!-- <app-body [isDrawerOpen]="isDrawerVisible"></app-body> -->
+
+<div class="content-wrapper" [ngClass]="{ 'drawer-open': isDrawerVisible }">
+    <router-outlet></router-outlet>
+</div>

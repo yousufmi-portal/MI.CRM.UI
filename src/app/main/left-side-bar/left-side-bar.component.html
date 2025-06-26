@@ -1,0 +1,14 @@
+<div class="sidebar" [class.sidebar-open]="isOpen">
+  <div class="sidebar-content">
+    <ng-content>
+      <header>
+        <img src="/mi_logo_white.png" alt="" width="50" height="50">
+      </header>
+
+      <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2.5rem;">
+        <p-panelMenu [model]="menuItems" [style]="{ width: '100%' }" styleClass="custom-panel-menu">
+        </p-panelMenu>
+      </section>
+    </ng-content>
+  </div>
+</div>

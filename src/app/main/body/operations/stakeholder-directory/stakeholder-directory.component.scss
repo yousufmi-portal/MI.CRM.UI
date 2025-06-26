@@ -1,0 +1,48 @@
+/* Smooth transition for the push effect */
+/* Ensure smooth sidebar push effect */
+// .drawer-open {
+//     margin-left: 320px;
+//     transition: margin-left 0.3s ease-in-out;
+// }
+
+/* Adjust for full width when sidebar closed */
+// :host {
+//     display: block;
+//     padding: 1rem;
+// }
+
+// .drawer-open {
+//     margin-left: 320px;
+//     transition: margin-left 0.3s ease-in-out;
+// }
+
+// :host {
+//     display: block;
+//     padding: 1rem;
+// }
+
+.stackholder-container {
+    padding: 1rem;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+.title-header {
+    margin-bottom: 1rem;
+}
+
+.truncate-email {
+    white-space: normal;
+    word-break: break-word;
+}
+
+.menu-wrapper button {
+    color: black;
+    font-size: 1.2rem;
+}
+
+.p-button-text {
+    padding: 0.25rem;
+    height: 2rem;
+    width: 2rem;
+}

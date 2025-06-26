@@ -1,0 +1,75 @@
+<main>
+    <header class="main-header">
+        <section class="header-section-left">
+            <div>Project ID: NCSRD15577227412552</div>
+            <div>Deliverable Types: Onsite + Training</div>
+            <div>Tasks Completed: 80%</div>
+            <div>In Progress</div>
+        </section>
+
+        <section class="header-section-right">
+            <div>TASK SUMMARY</div>
+            <div>Total No. of Events: <b>100</b></div>
+            <div>Budgeted No. of Events: <b>80</b></div>
+            <div>Remaining No. of Events: <b>20</b></div>
+        </section>
+    </header>
+
+    <div class="main-body">
+        <section class="body-section-left">
+            <header class="body-section-left-header">
+                <div>
+                    <i class="pi pi-check-circle"></i> My To Do Items
+                </div>
+
+                <div class="body-section-left-header-btns">
+                    <button class="body-section-left-header-btn">View All</button>
+                    <div class="btn-separator"></div>
+                    <button class="body-section-left-header-btn">New To Do</button>
+                </div>
+            </header>
+
+            <div class="main-body-to-do-body">
+                <section class="latest-to-do-section">
+                    <div class="latest-to-do-section-heading"><i class="pi pi-exclamation-triangle"></i> Latest to do's
+                    </div>
+                    <div class="latest-to-do-continer">
+                        No to do's available
+                    </div>
+                </section>
+
+                <section class="latest-finished-to-do-section">
+                    <div class="latest-finished-to-do-section-heading"><i class="pi pi-check"></i> Latest finished to
+                        do's
+                    </div>
+                    <div class="latest-finished-to-do-continer">
+                        <ul>
+                            @for (item of finishedTodos; track $index) {
+                            <li class="latest-finished-to-do-item">
+                                <div>⋮⋮</div>
+                                <p-checkbox [binary]="true" />
+                                <div class="latest-finished-to-do-item-content">
+                                    <div class="latest-finished-to-do-item-title">{{ item.text }}</div>
+                                    <div class="latest-finished-to-do-item-details">
+                                        <small class="latest-finished-to-do-item-date">{{ item.timestamp }}</small>
+                                        <div>
+                                            <i class="pi pi-pencil"></i>
+                                            <i class="pi pi-times"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>}
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </section>
+        <section class="body-section-right">
+            <header class="body-section-right-header">
+                <div>Activities Due Today</div>
+                <div>Activities Due This Week</div>
+                <div>Over Due Activities</div>
+            </header>
+        </section>
+    </div>
+</main>

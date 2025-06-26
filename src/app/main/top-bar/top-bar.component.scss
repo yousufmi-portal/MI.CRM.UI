@@ -1,0 +1,55 @@
+/* Smooth transition for the push effect */
+div[class^="drawer-open"] {
+  transition: margin-left 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Push content by the drawer's width (adjust 300px to match your drawer width) */
+.drawer-open {
+  margin-left: 320px;
+}
+
+.pi-bars {
+  color: rgb(41 153 180) !important;
+}
+
+.hamburger-btn {
+  font-size: 2rem;
+  /* color: ; */
+}
+
+:host ::ng-deep .pi-bars {
+  font-size: 2rem !important;
+  color: rgb(41 153 180) !important;
+}
+
+:host ::ng-deep .custom-search-field {
+  display: flex;
+  align-items: center;
+
+  input.p-inputtext {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 20px !important;
+    color: white;
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    outline: none !important;
+
+    &::placeholder {
+      color: rgba(255, 0, 0, 0.6); // whiteish placeholder
+    }
+
+    &:hover,
+    &:focus {
+      background-color: rgba(255, 0, 0, 0.1);
+    }
+  }
+
+  .p-inputicon {
+    // position: absolute;
+    // right: 1rem;
+    color: black;
+    pointer-events: none;
+  }
+}
