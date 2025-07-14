@@ -8,11 +8,13 @@ import { TimelineComponent } from './main/body/operations/timeline/timeline.comp
 import { TaskmanagerComponent } from './main/body/operations/taskmanager/taskmanager.component';
 import { DashboardComponent } from './main/body/dashboard/dashboard.component';
 import { CompletedCashflowByAwardComponent } from './main/charts/completed-cashflow-by-award/completed-cashflow-by-award.component';
+import { Page1Component } from './main/body/financials/page1/page1.component';
+import { Page2Component } from './main/body/financials/page2/page2.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: CompletedCashflowByAwardComponent
+        component: MainComponent
     },
     {
         path: 'main',
@@ -35,8 +37,12 @@ export const routes: Routes = [
                 component: TaskmanagerComponent
             },
             {
-                path: 'dashboard',
-                component: DashboardComponent
+                path: 'financials/page1',
+                component: Page1Component
+            },
+            {
+                path: 'financials/page2',
+                component: Page2Component
             }
         ]
     }

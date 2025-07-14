@@ -1,0 +1,86 @@
+<main>
+    <header class="project-title-header">
+        {{ project()?.title }}
+    </header>
+
+    <section class="budget-types-data-section">
+        <div class="budget-type-item">
+            <div class="budget-type-item-content">
+                <span class="icon-wrapper">
+                    <i class="pi pi-database"></i>
+                </span>
+                <span>
+                    Approved Budget
+                </span>
+                <span>
+                    {{ project()?.totalApprovedBudget | currency:'USD' }}
+                </span>
+            </div>
+            <div class="budget-type-item-footer">
+                <!-- footer content -->
+            </div>
+        </div>
+
+        <div class="budget-type-item">
+            <div class="budget-type-item-content">
+                <span class="icon-wrapper">
+                    <i class="pi pi-chart-bar"></i>
+                </span>
+                <span>
+                    Disbursed Budget
+                </span>
+                <span>
+                    {{ project()?.totalDisbursedBudget | currency:'USD' }}
+                </span>
+            </div>
+            <div class="budget-type-item-footer">
+                <!-- footer content -->
+            </div>
+        </div>
+
+        <div class="budget-type-item">
+            <div class="budget-type-item-content">
+                <span class="icon-wrapper">
+                    <i class="pi pi-user"></i>
+                </span>
+                <span>
+                    Remaining Budget
+                </span>
+                <span>
+                    {{ project()?.totalRemainingBudget | currency:'USD' }}
+                </span>
+            </div>
+            <div class="budget-type-item-footer">
+                <!-- footer content -->
+            </div>
+        </div>
+    </section>
+
+    <section class="budget-category-section">
+        <header>
+            <div class="budget-category-header-title">Budget Category</div>
+        </header>
+
+        <p-table [value]="budgetCategoryList()" *ngIf="budgetCategoryList()?.length; else noData"
+            class="p-datatable-sm">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Category Name</th>
+                    <th>Approved Amount</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-entry>
+                <tr>
+                    <td style="width: 75%;">{{ entry.name }}</td>
+                    <td>{{ getApprovedAmount(entry.name) | currency:'USD' }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <ng-template #noData>
+            <div>No data available for this project.</div>
+        </ng-template>
+    </section>
+
+</main>
