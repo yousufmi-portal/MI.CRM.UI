@@ -10,6 +10,7 @@ import { DashboardComponent } from './main/body/dashboard/dashboard.component';
 import { CompletedCashflowByAwardComponent } from './main/charts/completed-cashflow-by-award/completed-cashflow-by-award.component';
 import { Page1Component } from './main/body/financials/page1/page1.component';
 import { Page2Component } from './main/body/financials/page2/page2.component';
+import { TimelineCalendarComponent } from './main/body/operations/timeline-calendar/timeline-calendar.component';
 
 export const routes: Routes = [
     {
@@ -30,7 +31,7 @@ export const routes: Routes = [
             },
             {
                 path: 'operations/timeline',
-                component: TimelineComponent,
+                component: TimelineCalendarComponent,
             },
             {
                 path: 'operations/taskmanager',
