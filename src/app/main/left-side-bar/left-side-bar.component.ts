@@ -116,12 +116,12 @@ export class LeftSideBarComponent implements OnInit {
         command: () => this.router.navigate(['main/financials']),
         items: [
           {
-            label: 'Page1',
+            label: 'Budget Category',
             icon: 'pi pi-file',
             command: () => this.router.navigate(['main/financials/page1'])
           },
           {
-            label: 'Page2',
+            label: 'Claims',
             icon: 'pi pi-file-edit',
             command: () => this.router.navigate(['main/financials/page2'])
           }

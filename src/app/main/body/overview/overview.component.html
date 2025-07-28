@@ -1,4 +1,13 @@
 <main>
+    <section>
+        <h1>
+            Weekly Overview
+            <span class="overview-date">
+                ({{ weekStartDate | date: 'MMM d, y' }} - {{ weekEndDate | date: 'MMM d, y' }})
+            </span>
+        </h1>
+    </section>
+
     <section class="top-cards-section">
         <div class="top-card">
             <div class="top-card-header">
@@ -62,6 +71,7 @@
             <section class="tasks-report-section">
                 <header>
                     Tasks Report
+                    <small>(Overall project)</small>
                 </header>
                 <div class="tasks-report-section-content-container">
                     <div class="tasks-count-container">

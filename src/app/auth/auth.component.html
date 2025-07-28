@@ -1,4 +1,5 @@
 <main>
+    <p-toast></p-toast>
     <div id="login-container" [ngStyle]="isLogin ? { 'height': '55vh' } : { 'height': '70vh' }">
         <img src="/mi_logo.png" alt="logo" width="50" height="50" id="logo-img" />
         <form *ngIf="isLogin" [formGroup]="authForm" class="auth-form">
@@ -30,7 +31,8 @@
 
             <div class="form-field-container">
                 <label for="role" class="form-field-label">Role</label>
-                <input id="role" type="text" formControlName="role" />
+                <p-select formControlName="roleId" [options]="Roles" optionLabel="name" optionValue="roleId"
+                    placeholder="Select a Role" />
             </div>
 
             <div class="form-field-container">
@@ -57,7 +59,7 @@
             </div>
 
             <div class="form-field-container">
-                <button class="submit-btn" id="register-btn">Register Now</button>
+                <button class="submit-btn" id="register-btn" (click)="onSubmit()">Register Now</button>
             </div>
             <div class="form-field-container">
                 <p><small>Already have an account? <b (click)="toggleAuthMode()"

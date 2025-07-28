@@ -15,7 +15,7 @@ import { TimelineCalendarComponent } from './main/body/operations/timeline-calen
 export const routes: Routes = [
     {
         path: '',
-        component: MainComponent
+        component: AuthComponent
     },
     {
         path: 'main',
