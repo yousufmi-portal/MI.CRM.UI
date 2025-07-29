@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
+import { AddDisbursedDialogComponent } from "../../../shared/add-disbursed-dialog/add-disbursed-dialog.component";
 
 @Component({
   selector: 'app-page2',
-  imports: [CommonModule, TableModule, FormsModule, SelectModule],
+  imports: [CommonModule, TableModule, FormsModule, SelectModule, AddDisbursedDialogComponent],
   templateUrl: './page2.component.html',
   styleUrl: './page2.component.scss'
 })
@@ -26,7 +27,7 @@ export class Page2Component {
   constructor(private projectsService: ProjectsService) { }
 
   ngOnInit(): void {
-    const projectId = 2; // Replace with route param if needed
+    const projectId = 19; // Replace with route param if needed
     forkJoin({
       project: this.projectsService.getProjectById(projectId),
       budgetEntries: this.projectsService.getBudgetEntriesByProjectId(projectId)
@@ -60,6 +61,11 @@ export class Page2Component {
         entry.categoryName?.trim().toLowerCase() === selected.name.trim().toLowerCase() &&
         entry.typeId === 2
     );
+  }
+
+  visibleAddDisbursedDialog = false;
+  showAddDisbursedDialog() {
+    this.visibleAddDisbursedDialog = true;
   }
 
 }

@@ -14,7 +14,7 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './left-side-bar.component.scss'
 })
 export class LeftSideBarComponent implements OnInit {
-  @Input() isOpen: boolean = false;
+  @Input() isOpen: boolean = true;
   @Output() closed = new EventEmitter<void>();
 
   constructor(private router: Router) { }

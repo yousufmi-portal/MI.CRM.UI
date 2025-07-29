@@ -1,8 +1,10 @@
 <main>
     <p-toast></p-toast>
     <div id="login-container" [ngStyle]="isLogin ? { 'height': '55vh' } : { 'height': '70vh' }">
-        <img src="/mi_logo.png" alt="logo" width="50" height="50" id="logo-img" />
-        <form *ngIf="isLogin" [formGroup]="authForm" class="auth-form">
+        <img src="/mi_logo.png" alt="logo" width="50" height="50" id="logo-img"
+            class="animate__animated animate__fadeIn animate__slower" />
+        <form *ngIf="isLogin" [formGroup]="authForm"
+            class="auth-form animate__animated animate__fadeInRight animate__slow">
             <div class="form-field-container">
                 <label for="email" class="form-field-label">Email</label>
                 <input id="email" type="text" formControlName="email" />

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, signal, ViewChild } from '@angular/core';
 
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventInput } from '@fullcalendar/core/index.js';
@@ -7,6 +7,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
+import { TaskDto } from '../../../../../api-dtos/task.dto';
+import { TasksService } from '../../../../service/tasks-service/tasks.service';
 
 
 @Component({
@@ -15,7 +17,7 @@ import listPlugin from '@fullcalendar/list';
   templateUrl: './timeline-calendar.component.html',
   styleUrls: ['./timeline-calendar.component.scss']
 })
-export class TimelineCalendarComponent implements AfterViewInit {
+export class TimelineCalendarComponent implements AfterViewInit, OnInit {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
   TODAY_STR = new Date().toISOString().replace(/T.*$/, '');
   INITIAL_EVENTS: EventInput[] = [
@@ -88,6 +90,32 @@ export class TimelineCalendarComponent implements AfterViewInit {
     }
   ];
 
+  tasks: TaskDto[] = [];
+
+  projectId = 19; // Use actual projectId or inject via route
+
+  constructor(private taskService: TasksService) {
+
+  }
+
+  ngOnInit(): void {
+    this.loadTasks();
+  }
+  loadTasks() {
+    this.taskService.getTasksByProject(this.projectId).subscribe({
+      next: (data) => {
+        this.tasks = data;
+        this.calendarOptions.initialEvents = this.mapTasksToCalendarEvents(this.tasks);
+
+        const calendarApi = this.calendarComponent.getApi();
+        calendarApi.removeAllEvents();
+        calendarApi.addEventSource(this.calendarOptions.initialEvents);
+      },
+      error: (err) => {
+        console.error('Error fetching tasks:', err);
+      }
+    });
+  }
 
   addDays(dateStr: string, days: number): string {
     const date = new Date(dateStr);
@@ -117,7 +145,7 @@ export class TimelineCalendarComponent implements AfterViewInit {
     },
     firstDay: 1, // Monday as the first day of the week
     initialView: 'dayGridMonth',
-    initialEvents: this.INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed (data mangwana hai from db)
+    initialEvents: [],
     weekends: true,
     editable: true,
     selectable: true,
@@ -146,4 +174,42 @@ export class TimelineCalendarComponent implements AfterViewInit {
       resizeObserver.observe(calendarEl.parentElement as Element);
     }
   }
+
+  mapTasksToCalendarEvents(tasks: TaskDto[]): EventInput[] {
+
+    return tasks.map(task => {
+      const start = task.startDate ? new Date(task.startDate) : null;
+      const end = task.endDate ? new Date(task.endDate) : null;
+
+      const isAllDay =
+        start &&
+        end &&
+        start.getHours() === 0 &&
+        start.getMinutes() === 0 &&
+        start.getSeconds() === 0 &&
+        end.getHours() === 23 &&
+        end.getMinutes() === 59 &&
+        end.getSeconds() === 59;
+
+      return {
+        id: task.id.toString(),
+        title: task.title,
+        start: task.startDate ?? '',
+        end: task.endDate ?? undefined,
+        color: task.statusColor,
+        allDay: isAllDay || undefined,
+        extendedProps: {
+          description: task.description,
+          assignedTo: task.assignedTo,
+          statusId: task.statusId,
+          statusName: task.statusName,
+          activityTypeId: task.activityTypeId,
+          activityTypeName: task.activityTypeName
+        }
+      };
+    });
+
+  }
+
 }
+

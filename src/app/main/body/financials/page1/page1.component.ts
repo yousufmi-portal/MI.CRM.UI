@@ -26,7 +26,7 @@ export class Page1Component {
   constructor(private projectsService: ProjectsService) { }
 
   ngOnInit(): void {
-    const projectId = 2; // Replace with route param if needed
+    const projectId = 19; // Replace with route param if needed
     forkJoin({
       project: this.projectsService.getProjectById(projectId),
       budgetEntries: this.projectsService.getBudgetEntriesByProjectId(projectId)

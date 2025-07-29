@@ -1,5 +1,5 @@
 <main>
-    <section>
+    <section class="animate__animated animate__fadeIn animate__slower">
         <h1>
             Weekly Overview
             <span class="overview-date">
@@ -8,28 +8,28 @@
         </h1>
     </section>
 
-    <section class="top-cards-section">
+    <section class="top-cards-section animate__animated animate__fadeInDown">
         <div class="top-card">
             <div class="top-card-header">
                 <div>Active Tasks</div>
             </div>
             <div class="top-card-body">
                 <div class="top-card-content">
-                    <div>10</div>
+                    <div>{{ ProjectOverview?.activeTasks }}</div>
                     <a href="">See more</a>
                 </div>
                 <div class="top-card-footer">
-                    <span><i class="pi pi-wave-pulse"></i>15</span> vs <span>last 7 days</span>
+                    <!-- <span><i class="pi pi-wave-pulse"></i>15</span> vs <span>last 7 days</span> -->
                 </div>
             </div>
         </div>
         <div class="top-card">
             <div class="top-card-header">
-                <div>Upcoming Event</div>
+                <div>Upcoming Tasks</div>
             </div>
             <div class="top-card-body">
                 <div class="top-card-content">
-                    <div>05</div>
+                    <div>{{ ProjectOverview?.upcomingTasks }}</div>
                     <a href="">See more</a>
                 </div>
                 <div class="top-card-footer">
@@ -39,15 +39,15 @@
         </div>
         <div class="top-card">
             <div class="top-card-header">
-                <div>Pending Claims</div>
+                <div>Pending Tasks</div>
             </div>
             <div class="top-card-body">
                 <div class="top-card-content">
-                    <div>01</div>
+                    <div>{{ ProjectOverview?.pendingTasks }}</div>
                     <a href="">See more</a>
                 </div>
                 <div class="top-card-footer">
-                    <span>Last Claim Approved 60 Days ago</span>
+                    <!-- <span>Last Claim Approved 60 Days ago</span> -->
                 </div>
             </div>
         </div>
@@ -57,73 +57,69 @@
             </div>
             <div class="top-card-body">
                 <div class="top-card-content">
-                    <div>75%</div>
+                    <div>{{ ProjectOverview?.budgetPercentageUsed }}%</div>
                     <a href="">See more</a>
                 </div>
                 <div class="top-card-footer">
-                    <span>Last Budget Approved 2 Days ago</span>
+                    <!-- <span>Last Budget Approved 2 Days ago</span> -->
                 </div>
             </div>
         </div>
     </section>
     <section class="bottom-cards-section">
         <section class="bottom-cards-section-left">
-            <section class="tasks-report-section">
+            <section class="tasks-report-section animate__animated animate__fadeInLeft">
                 <header>
                     Tasks Report
                     <small>(Overall project)</small>
                 </header>
                 <div class="tasks-report-section-content-container">
                     <div class="tasks-count-container">
-                        <div class="task-count">23</div>
+                        <div class="task-count">{{ ProjectOverview?.toDoTasks }}</div>
                         <div class="task-label">To-do Tasks</div>
                     </div>
                     <div class="tasks-count-container">
-                        <div class="task-count">07</div>
+                        <div class="task-count">{{ ProjectOverview?.completedTasks }}</div>
                         <div class="task-label">Completed Tasks</div>
                     </div>
                     <div class="tasks-count-container">
-                        <div class="task-count">16</div>
+                        <div class="task-count">{{ ProjectOverview?.remainingTasks }}</div>
                         <div class="task-label">Remaining</div>
                     </div>
                 </div>
                 <footer>
-                    <p-progressbar [value]="43" styleClass="custom-progress" />
+                    <p-progressbar [value]="ProjectOverview?.progressPercentage" styleClass="custom-progress" />
                 </footer>
             </section>
 
-            <section class="project-notifications-section">
+            <section class="project-notifications-section animate__animated animate__fadeInUp">
                 <header>
                     <i class="pi pi-bell"></i>Project Notification
                 </header>
 
                 <div class="notifications-container">
-                    <div class="notification-container">
+                    <div class="notification-container" *ngFor="let notification of ProjectOverview?.notifications">
                         <i class="pi pi-caret-right"></i>
-                        <p>Task 02 is scheduled in 02 days</p>
-                    </div>
-                    <div class="notification-container">
-                        <i class="pi pi-caret-right"></i>
-                        <p>Personal Cost Claim is being declined</p>
+                        <p>{{ notification.title}} in {{notification.timeRemaining}}</p>
                     </div>
                 </div>
 
-                <footer>
+                <!-- <footer>
                     <small>See more</small>
-                </footer>
+                </footer> -->
             </section>
         </section>
-        <section class="bottom-cards-section-right">
+        <section class="bottom-cards-section-right animate__animated animate__fadeInRight">
             <header>
                 Recent Updates
             </header>
 
             <div class="recent-updates-container">
                 <ul class="custom-list">
+                    <!-- <li>Task 02 is scheduled in 02 days</li>
                     <li>Task 02 is scheduled in 02 days</li>
                     <li>Task 02 is scheduled in 02 days</li>
-                    <li>Task 02 is scheduled in 02 days</li>
-                    <li>Task 02 is scheduled in 02 days</li>
+                    <li>Task 02 is scheduled in 02 days</li> -->
                 </ul>
             </div>
 

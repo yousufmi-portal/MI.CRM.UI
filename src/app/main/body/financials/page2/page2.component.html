@@ -1,3 +1,4 @@
+<app-add-disbursed-dialog [(display)]="visibleAddDisbursedDialog"></app-add-disbursed-dialog>
 <main>
     <section class="budget-types-data-section">
         <div class="budget-type-item">
@@ -59,7 +60,7 @@
         </section>
         <section class="budget-category-table-section">
             <div class="budget-category-table-options" *ngIf="getDisbursedEntriesForSelectedCategory()?.length">
-                <button class="add-new-btn">Add New</button>
+                <button class="add-new-btn" (click)="showAddDisbursedDialog()">Add New</button>
             </div>
             <p-table [value]="getDisbursedEntriesForSelectedCategory()"
                 *ngIf="getDisbursedEntriesForSelectedCategory()?.length; else noData" class="p-datatable-sm">

@@ -1,0 +1,54 @@
+<p-dialog header="New Task" [(visible)]="visible" [modal]="true" [style]="{ width: '40vw', height: '80vh' }"
+    [closable]="true" [draggable]="false" [contentStyle]="{ padding: '0' }">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="new-task-form">
+        <div class="form-content">
+            <div class="p-field">
+                <label for="title">Title</label>
+                <input id="title" pInputText formControlName="title" />
+            </div>
+
+            <div class="p-field">
+                <label for="description">Description</label>
+                <textarea id="description" pInputTextarea formControlName="description" rows="4"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="p-field">
+                    <label for="startDate">Start Date</label>
+                    <p-datepicker formControlName="startDate" inputId="startDate" dateFormat="yy-mm-dd"
+                        [showTime]="true" />
+                </div>
+                <div class="p-field">
+                    <label for="endDate">End Date</label>
+                    <p-datepicker formControlName="endDate" inputId="endDate" dateFormat="yy-mm-dd" [showTime]="true" />
+                </div>
+            </div>
+
+            <div class="p-field">
+                <label for="assignedTo">Assigned To</label>
+                <p-select [options]="users" formControlName="assignedTo" optionLabel="name" optionValue="id"
+                    placeholder="Select User" appendTo="body"></p-select>
+            </div>
+
+            <div class="p-field">
+                <label for="statusId">Status</label>
+                <p-select [options]="statuses" formControlName="statusId" optionLabel="name" optionValue="id"
+                    placeholder="Select Status" appendTo="body"></p-select>
+            </div>
+
+            <div class="p-field">
+                <label for="activityTypeId">Activity Type</label>
+                <p-select [options]="activityTypes" formControlName="activityTypeId" optionLabel="name" optionValue="id"
+                    placeholder="Select Activity Type" appendTo="body"></p-select>
+            </div>
+        </div>
+
+        <p-footer>
+            <div class="form-actions">
+                <button pButton type="button" label="Cancel" class="p-button-outlined" (click)="close()"></button>
+                <button pButton type="submit" label="Save" [disabled]="taskForm.invalid"
+                    class="p-button-primary"></button>
+            </div>
+        </p-footer>
+    </form>
+</p-dialog>

@@ -21,7 +21,7 @@ import { AvatarModule } from 'primeng/avatar';
   styleUrl: './top-bar.component.scss'
 })
 export class TopBarComponent {
-  @Input() isDrawerOpen: boolean = false
+  @Input() isDrawerOpen: boolean = true;
   @Output() toggleLeftSideBar = new EventEmitter<void>();
   search: string = '';
 

@@ -1,0 +1,32 @@
+<p-dialog [(visible)]="display" [modal]="true" [closeOnEscape]="true" [dismissableMask]="true" (onHide)="close()"
+    [style]="{width: '350px', borderRadius: '20px'}" [header]="''">
+    <div class="dialog-container">
+        <div class="logo-container">
+            <img src="mi_logo.png" alt="Logo" class="dialog-logo" />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input id="description" type="text" pInputText [(ngModel)]="form.description" />
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input id="amount" type="number" pInputText [(ngModel)]="form.amount" />
+        </div>
+
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input id="date" type="date" pInputText [(ngModel)]="form.date" />
+        </div>
+
+        <div class="form-group">
+            <label for="document">Link a document</label>
+            <p-select id="document" type="file" pInputText [(ngModel)]="form.document" />
+        </div>
+
+        <div class="submit-btn-container">
+            <button pButton type="button" label="Submit Now" class="submit-btn" (click)="submit()"></button>
+        </div>
+    </div>
+</p-dialog>
