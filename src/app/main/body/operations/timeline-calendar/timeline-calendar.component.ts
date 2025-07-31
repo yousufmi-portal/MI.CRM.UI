@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit, signal, ViewChild } from '@angular/core';
 
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, EventInput } from '@fullcalendar/core/index.js';
+import { CalendarOptions, EventDropArg, EventInput } from '@fullcalendar/core/index.js';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin, { EventResizeDoneArg } from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import { TaskDto } from '../../../../../api-dtos/task.dto';
 import { TasksService } from '../../../../service/tasks-service/tasks.service';
+import { UpdateTaskDateTimeDto } from '../../../../../api-dtos/update-tast-datetime.dto';
 
 
 @Component({
@@ -151,6 +152,8 @@ export class TimelineCalendarComponent implements AfterViewInit, OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
+    eventDrop: this.onEventDropOrResize.bind(this),
+    eventResize: this.onEventDropOrResize.bind(this),
     // select: this.handleDateSelect.bind(this),
     // eventClick: this.handleEventClick.bind(this),
     // eventsSet: this.handleEvents.bind(this)
@@ -199,17 +202,53 @@ export class TimelineCalendarComponent implements AfterViewInit, OnInit {
         color: task.statusColor,
         allDay: isAllDay || undefined,
         extendedProps: {
+          id: task.id,
+          title: task.title,
           description: task.description,
           assignedTo: task.assignedTo,
           statusId: task.statusId,
           statusName: task.statusName,
           activityTypeId: task.activityTypeId,
-          activityTypeName: task.activityTypeName
+          activityTypeName: task.activityTypeName,
+          startDate: task.startDate,
+          endDate: task.endDate,
         }
       };
     });
 
   }
 
+  onEventDropOrResize(arg: EventDropArg | EventResizeDoneArg): void {
+    const task = arg.event.extendedProps as TaskDto;
+
+    const newStart = arg.event.start?.toISOString();
+    const newEnd = arg.event.end?.toISOString() || newStart;
+
+    if (task.startDate === newStart && task.endDate === newEnd) {
+      return;
+    }
+
+    if (!newStart || !newEnd) {
+      console.error('Invalid start or end date for task:', task);
+      return;
+    }
+
+    const dto: UpdateTaskDateTimeDto = {
+      taskId: task.id,
+      startDateTime: newStart,
+      endDateTime: newEnd
+    };
+
+    this.taskService.updateTaskDateTime(dto).subscribe({
+      next: () => {
+        task.startDate = newStart;
+        task.endDate = newEnd;
+        console.log('Updated task date/time');
+      },
+      error: err => {
+        console.error('Failed to update task', err);
+      }
+    });
+  }
 }
 

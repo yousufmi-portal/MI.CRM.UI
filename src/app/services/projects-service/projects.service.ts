@@ -22,6 +22,10 @@ export class ProjectsService {
     return this.http.get<ProjectBudgetEntryDto[]>(`${this.baseUrl}/GetBudgetEntriesByProjectId/${projectId}`);
   }
 
+  getProjectBudgetEntriesByCategory(projectId: number, categoryId: number): Observable<ProjectBudgetEntryDto[]> {
+    return this.http.get<ProjectBudgetEntryDto[]>(`${this.baseUrl}/ProjectBudgetEntriesByCategory/${projectId}/${categoryId}`);
+  }
+
   getProjectOverview(request: OverviewRequestDto): Observable<OverviewResponseDto> {
     return this.http.post<OverviewResponseDto>(`${this.baseUrl}/Overview`, request);
   }

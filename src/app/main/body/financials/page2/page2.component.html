@@ -1,4 +1,4 @@
-<app-add-disbursed-dialog [(display)]="visibleAddDisbursedDialog"></app-add-disbursed-dialog>
+<app-add-disbursed-dialog [(display)]="visibleAddDisbursedDialog" [projectId]="projectId" [categoryId]="selectedBudgetCategory()?.id ?? 0"></app-add-disbursed-dialog>
 <main>
     <section class="budget-types-data-section">
         <div class="budget-type-item">
@@ -10,7 +10,7 @@
                     Approved Budget
                 </span>
                 <span>
-                    {{ project()?.totalApprovedBudget | currency:'USD' }}
+                    {{ getBudgetAmount(0) | currency:'USD' }}
                 </span>
             </div>
             <div class="budget-type-item-footer">
@@ -27,7 +27,7 @@
                     Disbursed Budget
                 </span>
                 <span>
-                    {{ project()?.totalDisbursedBudget | currency:'USD' }}
+                    {{ getBudgetAmount(1) | currency:'USD' }}
                 </span>
             </div>
             <div class="budget-type-item-footer">
@@ -44,7 +44,7 @@
                     Remaining Budget
                 </span>
                 <span>
-                    {{ project()?.totalRemainingBudget | currency:'USD' }}
+                    {{ getBudgetAmount(2) | currency:'USD' }}
                 </span>
             </div>
             <div class="budget-type-item-footer">
@@ -55,15 +55,15 @@
 
     <section class="budget-category-section">
         <section>
-            <p-select [options]="budgetCategoryList()" [(ngModel)]="selectedBudgetCategory" optionLabel="name"
-                placeholder="Budget Category" />
+            <p-select [options]="budgetCategoryList" [(ngModel)]="selectedBudgetCategory" optionLabel="name"
+                placeholder="Budget Category" (onChange)="onBudgetCategoryChange($event)" />
         </section>
         <section class="budget-category-table-section">
-            <div class="budget-category-table-options" *ngIf="getDisbursedEntriesForSelectedCategory()?.length">
+            <div class="budget-category-table-options">
                 <button class="add-new-btn" (click)="showAddDisbursedDialog()">Add New</button>
             </div>
-            <p-table [value]="getDisbursedEntriesForSelectedCategory()"
-                *ngIf="getDisbursedEntriesForSelectedCategory()?.length; else noData" class="p-datatable-sm">
+            <p-table [value]="disbursementEntries()" *ngIf="disbursementEntries()?.length; else noData"
+                class="p-datatable-sm">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Date</th>
@@ -74,10 +74,9 @@
 
                 <ng-template pTemplate="body" let-entry>
                     <tr>
-                        <!-- <td>{{ entry.date | date: 'shortDate' }}</td> -->
-                        <td>-</td>
-                        <td>{{ entry.notes || '—' }}</td>
-                        <td>{{ entry.amount | currency: 'USD' }}</td>
+                        <td>{{ entry.disbursementDate | date: 'shortDate' }}</td>
+                        <td>{{ entry.description || '—' }}</td>
+                        <td>{{ entry.disbursedAmount | currency: 'USD' }}</td>
                     </tr>
                 </ng-template>
             </p-table>

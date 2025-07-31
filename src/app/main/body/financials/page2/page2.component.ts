@@ -1,14 +1,16 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { ProjectBudgetEntryDto } from '../../../../../api-dtos/project-budget-entry.dto';
 import { ProjectDto } from '../../../../../api-dtos/project.dto';
-import { getBudgetCategoryList } from '../../../../constants/budget-category.map';
+import { BudgetCategoryList, BudgetCategoryMap, getBudgetCategoryList } from '../../../../constants/budget-category.map';
 import { ProjectsService } from '../../../../services/projects-service/projects.service';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { AddDisbursedDialogComponent } from "../../../shared/add-disbursed-dialog/add-disbursed-dialog.component";
+import { DisbursementsService } from '../../../../services/disbursements/disbursements.service';
+import { DisbursementDto } from '../../../../../api-dtos/disbursement.dto';
 
 @Component({
   selector: 'app-page2',
@@ -16,56 +18,61 @@ import { AddDisbursedDialogComponent } from "../../../shared/add-disbursed-dialo
   templateUrl: './page2.component.html',
   styleUrl: './page2.component.scss'
 })
-export class Page2Component {
-  project = signal<ProjectDto | null>(null);
+export class Page2Component implements OnInit {
+
   projectBudgetEntries = signal<ProjectBudgetEntryDto[]>([]);
   loading = signal<boolean>(true);
 
-  budgetCategoryList = signal<{ name: string; description: string | null }[]>(getBudgetCategoryList());
-  selectedBudgetCategory = signal<{ name: string; description: string | null } | null>(null);
+  budgetCategoryList = BudgetCategoryList;
+  selectedBudgetCategory = signal<{ id: number; name: string; description: string | null } | null>(this.budgetCategoryList[0]);
 
-  constructor(private projectsService: ProjectsService) { }
+  constructor(private projectsService: ProjectsService, private disbursementsService: DisbursementsService) { }
 
   ngOnInit(): void {
-    const projectId = 19; // Replace with route param if needed
+    this.loadProjectBudgetEntries();
+  }
+
+  disbursementEntries = signal<DisbursementDto[]>([]);
+  projectId = 19; // Replace with route param if needed
+  loadProjectBudgetEntries() {
+
     forkJoin({
-      project: this.projectsService.getProjectById(projectId),
-      budgetEntries: this.projectsService.getBudgetEntriesByProjectId(projectId)
+      projectBudgetEntries: this.projectsService.getProjectBudgetEntriesByCategory(this.projectId, this.selectedBudgetCategory()?.id ?? 0),
+      disbursements: this.disbursementsService.getDisbursementsByProjectId(this.projectId, this.selectedBudgetCategory()?.id ?? 0)
     }).subscribe({
-      next: ({ project, budgetEntries }) => {
-        this.project.set(project);
-        this.projectBudgetEntries.set(budgetEntries);
+      next: ({ projectBudgetEntries, disbursements }) => {
+        this.projectBudgetEntries.set(projectBudgetEntries);
+        this.disbursementEntries.set(disbursements);
         this.loading.set(false);
       },
       error: () => {
-        // Handle error for either request
+        // Handle error
         this.loading.set(false);
       }
     });
-
-  }
-
-  getApprovedAmount(categoryName: string): number {
-    const match = this.projectBudgetEntries().find(
-      entry => entry.categoryName === categoryName && entry.typeId === 1
-    );
-    return match?.amount ?? 0;
-  }
-
-  getDisbursedEntriesForSelectedCategory(): ProjectBudgetEntryDto[] {
-    const selected = this.selectedBudgetCategory();
-    if (!selected) return [];
-
-    return this.projectBudgetEntries().filter(
-      entry =>
-        entry.categoryName?.trim().toLowerCase() === selected.name.trim().toLowerCase() &&
-        entry.typeId === 2
-    );
   }
 
   visibleAddDisbursedDialog = false;
   showAddDisbursedDialog() {
     this.visibleAddDisbursedDialog = true;
+  }
+
+  previousBudgetCategory: any = null;
+  onBudgetCategoryChange(event: any): void {
+    const newValue = event.value;
+    if (this.previousBudgetCategory?.id !== newValue?.id) {
+      this.previousBudgetCategory = newValue;
+      this.loadProjectBudgetEntries();
+      console.log('Budget category actually changed:', newValue);
+    } else {
+      // Value didn't actually change
+      console.log('Same category selected again, ignoring.');
+    }
+  }
+
+  getBudgetAmount(index: number): number {
+    const entries = this.projectBudgetEntries();
+    return entries.length > index ? entries[index].amount : 0;
   }
 
 }

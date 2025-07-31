@@ -9,22 +9,26 @@ import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { TaskDto } from '../../../../api-dtos/task.dto';
 import { NewTaskDto } from '../../../../api-dtos/new-task.dto';
+import { TasksService } from '../../../service/tasks-service/tasks.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-task-dialog',
   imports: [DialogModule, ButtonModule, InputTextModule, DropdownModule, ReactiveFormsModule, CommonModule, SelectModule, DatePickerModule],
+  providers: [MessageService],
   templateUrl: './new-task-dialog.component.html',
   styleUrl: './new-task-dialog.component.scss'
 })
 export class NewTaskDialogComponent {
   @Input() visible: boolean = false;
-  @Input() projectId!: number;
   @Output() visibleChange = new EventEmitter<boolean>();
+  @Input() projectId!: number;
+  // @Output() projectIdChange = new EventEmitter<number>();
 
   taskForm: FormGroup;
 
   // Dummy options for now
-  users = [{ id: 1, name: 'John Doe' }];
+  users = [{ id: 3, name: 'Umer' }];
   statuses = [
     { id: 1, name: 'To Do' },
     { id: 2, name: 'In Progress' },
@@ -35,7 +39,7 @@ export class NewTaskDialogComponent {
     { id: 1, name: 'Session' },
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private tasksService: TasksService, private messageService: MessageService) {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
       description: [''],
@@ -53,16 +57,24 @@ export class NewTaskDialogComponent {
     this.taskForm.reset();
   }
 
-  
+
 
   onSubmit() {
     if (this.taskForm.valid) {
-      let newTaskDto : NewTaskDto = {
+      let newTaskDto: NewTaskDto = {
         projectId: this.projectId,
         ...this.taskForm.value
       }
-      console.log('Task data:', newTaskDto);
-      this.close();
+      this.tasksService.createTask(newTaskDto).subscribe({
+        next: (response) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'New task created successfully' });
+          this.close();
+        },
+        error: (error) => {
+          console.error('Error creating task:', error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to create task' });
+        }
+      });
     }
   }
 }
