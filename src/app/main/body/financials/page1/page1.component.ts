@@ -6,6 +6,7 @@ import { ProjectBudgetEntryDto } from '../../../../../api-dtos/project-budget-en
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { TableModule } from 'primeng/table';
 import { getBudgetCategoryList } from '../../../../constants/budget-category.map';
+import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
 
 @Component({
   selector: 'app-page1',
@@ -23,13 +24,13 @@ export class Page1Component {
 
   budgetCategoryList = signal<{ name: string; description: string | null }[]>(getBudgetCategoryList());
 
-  constructor(private projectsService: ProjectsService) { }
+  constructor(private projectsService: ProjectsService, private selectedProjectService: SelectedProjectService) { }
 
   ngOnInit(): void {
-    const projectId = 19; // Replace with route param if needed
+    const projectId = localStorage.getItem('selectedProjectId') ? Number(localStorage.getItem('selectedProjectId')) : null;
     forkJoin({
-      project: this.projectsService.getProjectById(projectId),
-      budgetEntries: this.projectsService.getBudgetEntriesByProjectId(projectId)
+      project: this.projectsService.getProjectById(projectId || 0),
+      budgetEntries: this.projectsService.getBudgetEntriesByProjectId(projectId || 0)
     }).subscribe({
       next: ({ project, budgetEntries }) => {
         this.project.set(project);

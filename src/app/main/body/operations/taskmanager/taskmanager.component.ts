@@ -7,6 +7,7 @@ import { TaskDto } from '../../../../../api-dtos/task.dto';
 import { TasksService } from '../../../../service/tasks-service/tasks.service';
 import { NewTaskDialogComponent } from '../../../shared/new-task-dialog/new-task-dialog.component';
 import { UpdateTaskStatusDto } from '../../../../../api-dtos/update-task-status.dto';
+import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
 
 @Component({
   selector: 'app-taskmanager',
@@ -23,17 +24,19 @@ export class TaskmanagerComponent {
     { id: 4, name: 'In Review', color: '#A7D3F2' }
   ];
 
-  projectId = 19; // Use actual projectId or inject via route
+  projectId: number | null = null;
   showTaskDialog: boolean = false;
 
-  constructor(private tasksService: TasksService) { }
+  constructor(private tasksService: TasksService, private selectedProjectService: SelectedProjectService) {
+    this.projectId = localStorage.getItem('selectedProjectId') ? Number(localStorage.getItem('selectedProjectId')) : null;
+  }
 
   ngOnInit(): void {
     this.loadTasks();
   }
 
   loadTasks(statusId?: number): void {
-    this.tasksService.getTasksByProject(this.projectId, statusId).subscribe({
+    this.tasksService.getTasksByProject(this.projectId || 0, statusId).subscribe({
       next: (data) => {
         this.tasks = data;
       },
@@ -60,7 +63,7 @@ export class TaskmanagerComponent {
 
     task.statusId = newStatusId;
     task.statusColor = selectedStatus.color;
-    
+
     this.tasksService.updateTaskStatus(dto).subscribe({
       next: () => {
         console.log('Status updated');

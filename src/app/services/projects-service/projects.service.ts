@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment.development';
 import { ProjectBudgetEntryDto } from '../../../api-dtos/project-budget-entry.dto';
 import { OverviewRequestDto } from '../../../api-dtos/overview-request.dto';
 import { OverviewResponseDto } from '../../../api-dtos/overview-response.dto';
+import { CreateProjectDto } from '../../../api-dtos/create-project.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,10 @@ import { OverviewResponseDto } from '../../../api-dtos/overview-response.dto';
 export class ProjectsService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiUrl}/projects`;
+
+  getAllProjects(): Observable<ProjectDto[]> {
+    return this.http.get<ProjectDto[]>(`${this.baseUrl}/GetAll`);
+  }
 
   getProjectById(id: number): Observable<ProjectDto> {
     return this.http.get<ProjectDto>(`${this.baseUrl}/GetById/${id}`);
@@ -28,5 +33,9 @@ export class ProjectsService {
 
   getProjectOverview(request: OverviewRequestDto): Observable<OverviewResponseDto> {
     return this.http.post<OverviewResponseDto>(`${this.baseUrl}/Overview`, request);
+  }
+
+  createProject(project: CreateProjectDto): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/Create`, project);
   }
 }

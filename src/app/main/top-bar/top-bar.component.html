@@ -11,8 +11,9 @@
         </ng-template>
 
         <ng-template #end>
+            <p-menu #menu [model]="topMenuItems" [popup]="true" />
             <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-                [style]="{ width: '32px', height: '32px' }" />
+                [style]="{ width: '32px', height: '32px', cursor: 'pointer' }" (click)="menu.toggle($event)" />
         </ng-template>
     </p-toolbar>
 </div>

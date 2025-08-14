@@ -8,5 +8,6 @@ export interface DisbursementDto {
 
 
 export interface NewDisbursementDto extends DisbursementDto {
+    budgetEntryId: number;
     documentId?: number; // Optional file for document upload
 }

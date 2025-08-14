@@ -11,6 +11,7 @@ import { SelectModule } from 'primeng/select';
 import { AddDisbursedDialogComponent } from "../../../shared/add-disbursed-dialog/add-disbursed-dialog.component";
 import { DisbursementsService } from '../../../../services/disbursements/disbursements.service';
 import { DisbursementDto } from '../../../../../api-dtos/disbursement.dto';
+import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
 
 @Component({
   selector: 'app-page2',
@@ -26,19 +27,22 @@ export class Page2Component implements OnInit {
   budgetCategoryList = BudgetCategoryList;
   selectedBudgetCategory = signal<{ id: number; name: string; description: string | null } | null>(this.budgetCategoryList[0]);
 
-  constructor(private projectsService: ProjectsService, private disbursementsService: DisbursementsService) { }
+  projectId: number | null = null;
+  constructor(private projectsService: ProjectsService, private disbursementsService: DisbursementsService, private selectedProjectService: SelectedProjectService) {
+    this.projectId = localStorage.getItem('selectedProjectId') ? Number(localStorage.getItem('selectedProjectId')) : null;
+  }
 
   ngOnInit(): void {
+
     this.loadProjectBudgetEntries();
   }
 
   disbursementEntries = signal<DisbursementDto[]>([]);
-  projectId = 19; // Replace with route param if needed
   loadProjectBudgetEntries() {
 
     forkJoin({
-      projectBudgetEntries: this.projectsService.getProjectBudgetEntriesByCategory(this.projectId, this.selectedBudgetCategory()?.id ?? 0),
-      disbursements: this.disbursementsService.getDisbursementsByProjectId(this.projectId, this.selectedBudgetCategory()?.id ?? 0)
+      projectBudgetEntries: this.projectsService.getProjectBudgetEntriesByCategory(this.projectId || 0, this.selectedBudgetCategory()?.id ?? 0),
+      disbursements: this.disbursementsService.getDisbursementsByProjectId(this.projectId || 0, this.selectedBudgetCategory()?.id ?? 0)
     }).subscribe({
       next: ({ projectBudgetEntries, disbursements }) => {
         this.projectBudgetEntries.set(projectBudgetEntries);
@@ -53,7 +57,10 @@ export class Page2Component implements OnInit {
   }
 
   visibleAddDisbursedDialog = false;
+
+  selectedDisbursedBudgetEntry: ProjectBudgetEntryDto | null = null;
   showAddDisbursedDialog() {
+    this.selectedDisbursedBudgetEntry = this.projectBudgetEntries()?.length > 0 ? this.projectBudgetEntries()[1] : null;
     this.visibleAddDisbursedDialog = true;
   }
 

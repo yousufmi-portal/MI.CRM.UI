@@ -1,32 +1,44 @@
-<p-dialog [(visible)]="display" [modal]="true" [closeOnEscape]="true" [dismissableMask]="true" (onHide)="close()"
-    [style]="{width: '350px', borderRadius: '20px'}" [header]="''">
+<p-dialog
+    [(visible)]="display"
+    [modal]="true"
+    [closeOnEscape]="true"
+    [dismissableMask]="true"
+    (onHide)="close()"
+    [style]="{width: '350px', borderRadius: '20px'}"
+    [header]="''"
+    contentStyleClass="animate__animated animate__zoomIn animate__faster">
 
-    <form [formGroup]="form" class="dialog-container">
-        <div class="logo-container">
+    <form [formGroup]="form" class="dialog-container" style="overflow: hidden;">
+
+        <!-- Logo -->
+        <div class="logo-container animate__animated animate__bounceIn animate__faster" style="animation-delay: 0.05s;">
             <img src="mi_logo.png" alt="Logo" class="dialog-logo" />
         </div>
 
-        <div class="form-group">
+        <!-- Fields -->
+        <div class="form-group animate__animated animate__fadeInUp animate__faster" style="animation-delay: 0.1s;">
             <label for="description">Description</label>
             <input id="description" type="text" pInputText formControlName="description" />
         </div>
 
-        <div class="form-group">
+        <div class="form-group animate__animated animate__fadeInUp animate__faster" style="animation-delay: 0.15s;">
             <label for="amount">Amount</label>
             <input id="amount" type="number" pInputText formControlName="amount" />
         </div>
 
-        <div class="form-group">
+        <div class="form-group animate__animated animate__fadeInUp animate__faster" style="animation-delay: 0.2s;">
             <label for="date">Date</label>
-            <input id="date" type="date" pInputText formControlName="date" />
+            <p-datepicker formControlName="date" inputId="date" dateFormat="yy-mm-dd" [showTime]="true"
+                appendTo="body" />
         </div>
 
-        <div class="form-group">
+        <div class="form-group animate__animated animate__fadeInUp animate__faster" style="animation-delay: 0.25s;">
             <label for="document">Link a document</label>
             <p-select id="document" type="file" pInputText formControlName="documentId" />
         </div>
 
-        <div class="submit-btn-container">
+        <!-- Button -->
+        <div class="submit-btn-container animate__animated animate__fadeInUp animate__faster" style="animation-delay: 0.3s;">
             <button pButton type="button" label="Submit Now" class="submit-btn" (click)="submit()"></button>
         </div>
     </form>

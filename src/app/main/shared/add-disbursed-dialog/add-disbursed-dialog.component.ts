@@ -6,10 +6,12 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from "primeng/select";
 import { DisbursementsService } from '../../../services/disbursements/disbursements.service';
+import { DisbursementDto, NewDisbursementDto } from '../../../../api-dtos/disbursement.dto';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-add-disbursed-dialog',
-  imports: [FormsModule, CommonModule, DialogModule, ButtonModule, InputTextModule, Select, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, DialogModule, ButtonModule, InputTextModule, Select, ReactiveFormsModule, DatePickerModule],
   templateUrl: './add-disbursed-dialog.component.html',
   styleUrl: './add-disbursed-dialog.component.scss'
 })
@@ -19,6 +21,8 @@ export class AddDisbursedDialogComponent {
 
   @Input() projectId!: number;
   @Input() categoryId!: number;
+
+  @Input() budgetEntryId!: number;
   form: FormGroup;
 
   constructor(private fb: FormBuilder, private disbursementsService: DisbursementsService) {
@@ -42,10 +46,15 @@ export class AddDisbursedDialogComponent {
 
   submit() {
     console.log('Form Data:', this.form.value);
-    const disbursementData = {
-      ...this.form.value,
+    const disbursementData: NewDisbursementDto = {
+      
       projectId: this.projectId,
-      categoryId: this.categoryId
+      categoryId: this.categoryId,
+      budgetEntryId: this.budgetEntryId,
+      description: this.form.value.description,
+      disbursementDate: this.form.value.date.toISOString(), // Convert to ISO string
+      disbursedAmount: this.form.value.amount,
+      documentId: this.form.value.documentId // Optional, handle file upload separately if needed
     };
     this.disbursementsService.createDisbursement(disbursementData).subscribe({
       next: () => {

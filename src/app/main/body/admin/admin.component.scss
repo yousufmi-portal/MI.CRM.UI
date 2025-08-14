@@ -1,0 +1,111 @@
+main {
+    display: flex;
+    // border: 1px solid red;
+    gap: 1.25rem;
+    height: 80vh;
+}
+
+
+
+section {
+    // background-color: white;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+}
+
+.left-section {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    // border: 1px solid green;
+
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    background-color: white;
+    // border: 1px solid red;
+    padding: 1rem;
+    border-radius: 14px;
+    height: 100%;
+}
+
+.profile-image {
+    border: 5px solid hsl(193.18deg 75% 34.51%);
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // border: 1px solid red;
+    // margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.update-button {
+    border: none;
+    outline: none;
+    background-color: hsl(193.18deg 75% 34.51%);
+    color: white;
+    font-size: 1rem;
+    border-radius: 14px;
+    padding: 0.5rem 2rem;
+}
+
+.user-info-container {
+    // margin-top: 1.25rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 14px;
+    height: 100%;
+    // border: 1px solid gold;
+}
+
+.right-section {
+    background-color: white;
+    padding: 1rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.add-project-button {
+    background: none;
+    outline: none;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 14px;
+    border: 2px dashed #ccc;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.projects-table-container {
+    margin-top: 1rem;
+    flex-grow: 1;
+    overflow: auto;
+}
+
+:host ::ng-deep .projects-table .p-datatable-tbody>tr>td,
+:host ::ng-deep .projects-table .p-datatable-thead>tr>th {
+    border: none;
+    background-color: rgb(237, 237, 237);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+:host ::ng-deep .projects-table .p-datatable-tbody>tr:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #f5f5f5;
+    cursor: pointer;
+}

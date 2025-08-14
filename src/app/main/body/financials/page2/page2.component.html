@@ -1,67 +1,58 @@
-<app-add-disbursed-dialog [(display)]="visibleAddDisbursedDialog" [projectId]="projectId" [categoryId]="selectedBudgetCategory()?.id ?? 0"></app-add-disbursed-dialog>
-<main>
+<app-add-disbursed-dialog [(display)]="visibleAddDisbursedDialog" [projectId]="projectId || 0"
+    [categoryId]="selectedBudgetCategory()?.id ?? 0" [budgetEntryId]="selectedDisbursedBudgetEntry?.id ?? 0"
+    (displayChange)="loadProjectBudgetEntries()">
+</app-add-disbursed-dialog>
+
+<main class="animate__animated animate__fadeIn animate__faster">
+    <!-- Budget Types -->
     <section class="budget-types-data-section">
-        <div class="budget-type-item">
+        <div class="budget-type-item animate__animated animate__zoomIn animate__faster" style="animation-delay: 0.1s;">
             <div class="budget-type-item-content">
-                <span class="icon-wrapper">
+                <span class="icon-wrapper animate__animated animate__bounceIn animate__faster">
                     <i class="pi pi-database"></i>
                 </span>
-                <span>
-                    Approved Budget
-                </span>
-                <span>
-                    {{ getBudgetAmount(0) | currency:'USD' }}
-                </span>
+                <span>Approved Budget</span>
+                <span>{{ getBudgetAmount(0) | currency:'USD' }}</span>
             </div>
-            <div class="budget-type-item-footer">
-                <!-- footer content -->
-            </div>
+            <div class="budget-type-item-footer"></div>
         </div>
 
-        <div class="budget-type-item">
+        <div class="budget-type-item animate__animated animate__zoomIn animate__faster" style="animation-delay: 0.2s;">
             <div class="budget-type-item-content">
-                <span class="icon-wrapper">
+                <span class="icon-wrapper animate__animated animate__bounceIn animate__faster">
                     <i class="pi pi-chart-bar"></i>
                 </span>
-                <span>
-                    Disbursed Budget
-                </span>
-                <span>
-                    {{ getBudgetAmount(1) | currency:'USD' }}
-                </span>
+                <span>Disbursed Budget</span>
+                <span>{{ getBudgetAmount(1) | currency:'USD' }}</span>
             </div>
-            <div class="budget-type-item-footer">
-                <!-- footer content -->
-            </div>
+            <div class="budget-type-item-footer"></div>
         </div>
 
-        <div class="budget-type-item">
+        <div class="budget-type-item animate__animated animate__zoomIn animate__faster" style="animation-delay: 0.3s;">
             <div class="budget-type-item-content">
-                <span class="icon-wrapper">
+                <span class="icon-wrapper animate__animated animate__bounceIn animate__faster">
                     <i class="pi pi-user"></i>
                 </span>
-                <span>
-                    Remaining Budget
-                </span>
-                <span>
-                    {{ getBudgetAmount(2) | currency:'USD' }}
-                </span>
+                <span>Remaining Budget</span>
+                <span>{{ getBudgetAmount(2) | currency:'USD' }}</span>
             </div>
-            <div class="budget-type-item-footer">
-                <!-- footer content -->
-            </div>
+            <div class="budget-type-item-footer"></div>
         </div>
     </section>
 
-    <section class="budget-category-section">
-        <section>
+    <!-- Budget Category -->
+    <section class="budget-category-section animate__animated animate__fadeInUp animate__faster">
+        <section class="animate__animated animate__fadeInDown animate__faster">
             <p-select [options]="budgetCategoryList" [(ngModel)]="selectedBudgetCategory" optionLabel="name"
                 placeholder="Budget Category" (onChange)="onBudgetCategoryChange($event)" />
         </section>
-        <section class="budget-category-table-section">
-            <div class="budget-category-table-options">
+
+        <section class="budget-category-table-section animate__animated animate__fadeInUp animate__faster">
+            <div class="budget-category-table-options animate__animated animate__fadeInUp animate__faster"
+                style="animation-delay: 0.15s;">
                 <button class="add-new-btn" (click)="showAddDisbursedDialog()">Add New</button>
             </div>
+
             <p-table [value]="disbursementEntries()" *ngIf="disbursementEntries()?.length; else noData"
                 class="p-datatable-sm">
                 <ng-template pTemplate="header">
@@ -82,10 +73,10 @@
             </p-table>
 
             <ng-template #noData>
-                <div>No data available for this category.</div>
+                <div class="animate__animated animate__fadeIn animate__faster">
+                    No data available for this category.
+                </div>
             </ng-template>
         </section>
-
     </section>
-
 </main>

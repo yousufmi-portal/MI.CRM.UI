@@ -1,0 +1,19 @@
+<main class="error-page-container animate__animated animate__fadeIn">
+    <div class="error-logo animate__animated animate__zoomIn">
+        <img src="mi_logo.png" alt="Logo" />
+    </div>
+
+    <h1 class="animate__animated animate__fadeInDown">{{ errorCode }}</h1>
+    <p class="error-message animate__animated animate__fadeInUp">{{ errorMessage }}</p>
+
+    <div class="error-actions animate__animated animate__fadeInUp">
+        <a routerLink="/" class="home-btn">Go Back Home</a>
+        <a href="" class="contact-btn">Email Support</a>
+    </div>
+
+    <footer class="error-footer animate__animated animate__fadeInUp animate__delay-1s">
+        <p>Need help? Contact us:</p>
+        <p>Email: <a href="">support</a></p>
+        <p>Phone: <a href="">+1 234 567 89</a></p>
+    </footer>
+</main>

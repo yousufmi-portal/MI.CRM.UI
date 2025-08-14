@@ -1,0 +1,55 @@
+<app-add-project-form [(visible)]="isAddProjectFormVisible" (projectCreated)="loadProjectsData($event)">
+</app-add-project-form>
+
+<main class="animate__animated animate__fadeIn">
+    <!-- Left Section -->
+    <section class="left-section animate__animated animate__slideInLeft">
+        <div class="profile-container animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="profile-image">
+                <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="">
+            </div>
+            <div>{{user()?.name}}</div>
+            <div>{{getRoleName(user()?.roleId ?? 0)}}</div>
+
+            <button class="update-button">
+                Update
+            </button>
+        </div>
+
+        <div class="user-info-container animate__animated animate__fadeIn animate__delay-1s">
+            <h4>Information</h4>
+            <div>Name: {{user()?.name}}</div>
+            <div>Email: {{user()?.email}}</div>
+        </div>
+    </section>
+
+    <!-- Right Section -->
+    <section class="right-section animate__animated animate__slideInRight">
+        <h3 class="animate__animated animate__fadeInDown">Projects</h3>
+
+        <button class="add-project-button" (click)="isAddProjectFormVisible = true">
+            + Add a project
+        </button>
+
+        <div class="projects-table-container animate__animated animate__fadeInUp animate__delay-1s">
+            <p-table [columns]="cols" [value]="projects()" scrollable="true" class="projects-table">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" style="width: 50%;" [ngStyle]="{ 'text-align': col.align }">
+                            {{ col.header }}
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr class="animate__animated animate__fadeIn" (click)="onProjectSelected(rowData.projectId)"
+                        [ngClass]="{ 'selected-row': selectedProjectId() === rowData.projectId }">
+                        <td *ngFor="let col of columns" [ngStyle]="{ 'text-align': col.align }">
+                            {{ rowData[col.field] }}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </section>
+</main>

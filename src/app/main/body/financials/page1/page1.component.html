@@ -1,62 +1,47 @@
-<main>
-    <header class="project-title-header">
+<main class="animate__animated animate__fadeIn animate__faster">
+    <!-- Project Title -->
+    <header class="project-title-header animate__animated animate__fadeInDown animate__faster">
         {{ project()?.title }}
     </header>
 
+    <!-- Budget Types -->
     <section class="budget-types-data-section">
-        <div class="budget-type-item">
+        <div class="budget-type-item animate__animated animate__zoomIn animate__faster" style="animation-delay: 0.1s;">
             <div class="budget-type-item-content">
-                <span class="icon-wrapper">
+                <span class="icon-wrapper animate__animated animate__bounceIn animate__faster">
                     <i class="pi pi-database"></i>
                 </span>
-                <span>
-                    Approved Budget
-                </span>
-                <span>
-                    {{ project()?.totalApprovedBudget | currency:'USD' }}
-                </span>
+                <span>Approved Budget</span>
+                <span>{{ project()?.totalApprovedBudget | currency:'USD' }}</span>
             </div>
-            <div class="budget-type-item-footer">
-                <!-- footer content -->
-            </div>
+            <div class="budget-type-item-footer"></div>
         </div>
 
-        <div class="budget-type-item">
+        <div class="budget-type-item animate__animated animate__zoomIn animate__faster" style="animation-delay: 0.2s;">
             <div class="budget-type-item-content">
-                <span class="icon-wrapper">
+                <span class="icon-wrapper animate__animated animate__bounceIn animate__faster">
                     <i class="pi pi-chart-bar"></i>
                 </span>
-                <span>
-                    Disbursed Budget
-                </span>
-                <span>
-                    {{ project()?.totalDisbursedBudget | currency:'USD' }}
-                </span>
+                <span>Disbursed Budget</span>
+                <span>{{ project()?.totalDisbursedBudget | currency:'USD' }}</span>
             </div>
-            <div class="budget-type-item-footer">
-                <!-- footer content -->
-            </div>
+            <div class="budget-type-item-footer"></div>
         </div>
 
-        <div class="budget-type-item">
+        <div class="budget-type-item animate__animated animate__zoomIn animate__faster" style="animation-delay: 0.3s;">
             <div class="budget-type-item-content">
-                <span class="icon-wrapper">
+                <span class="icon-wrapper animate__animated animate__bounceIn animate__faster">
                     <i class="pi pi-user"></i>
                 </span>
-                <span>
-                    Remaining Budget
-                </span>
-                <span>
-                    {{ project()?.totalRemainingBudget | currency:'USD' }}
-                </span>
+                <span>Remaining Budget</span>
+                <span>{{ project()?.totalRemainingBudget | currency:'USD' }}</span>
             </div>
-            <div class="budget-type-item-footer">
-                <!-- footer content -->
-            </div>
+            <div class="budget-type-item-footer"></div>
         </div>
     </section>
 
-    <section class="budget-category-section">
+    <!-- Budget Category Table -->
+    <section class="budget-category-section animate__animated animate__fadeInUp animate__faster">
         <header>
             <div class="budget-category-header-title">Budget Category</div>
         </header>
@@ -79,8 +64,9 @@
         </p-table>
 
         <ng-template #noData>
-            <div>No data available for this project.</div>
+            <div class="animate__animated animate__fadeIn animate__faster">
+                No data available for this project.
+            </div>
         </ng-template>
     </section>
-
 </main>

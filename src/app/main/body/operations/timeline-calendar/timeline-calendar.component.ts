@@ -10,6 +10,7 @@ import listPlugin from '@fullcalendar/list';
 import { TaskDto } from '../../../../../api-dtos/task.dto';
 import { TasksService } from '../../../../service/tasks-service/tasks.service';
 import { UpdateTaskDateTimeDto } from '../../../../../api-dtos/update-tast-datetime.dto';
+import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
 
 
 @Component({
@@ -93,17 +94,17 @@ export class TimelineCalendarComponent implements AfterViewInit, OnInit {
 
   tasks: TaskDto[] = [];
 
-  projectId = 19; // Use actual projectId or inject via route
+  projectId: number | null = null;
 
-  constructor(private taskService: TasksService) {
-
+  constructor(private taskService: TasksService, private selectedProjectService: SelectedProjectService) {
   }
-
+  
   ngOnInit(): void {
+    this.projectId = localStorage.getItem('selectedProjectId') ? Number(localStorage.getItem('selectedProjectId')) : null;
     this.loadTasks();
   }
   loadTasks() {
-    this.taskService.getTasksByProject(this.projectId).subscribe({
+    this.taskService.getTasksByProject(this.projectId || 0).subscribe({
       next: (data) => {
         this.tasks = data;
         this.calendarOptions.initialEvents = this.mapTasksToCalendarEvents(this.tasks);

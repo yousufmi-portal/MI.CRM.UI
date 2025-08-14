@@ -11,6 +11,9 @@ import { CompletedCashflowByAwardComponent } from './main/charts/completed-cashf
 import { Page1Component } from './main/body/financials/page1/page1.component';
 import { Page2Component } from './main/body/financials/page2/page2.component';
 import { TimelineCalendarComponent } from './main/body/operations/timeline-calendar/timeline-calendar.component';
+import { AdminComponent } from './main/body/admin/admin.component';
+import { ErrorPageComponent } from './main/shared/error-page/error-page.component';
+import { AnalyticsComponent } from './main/body/overview/analytics/analytics.component';
 
 export const routes: Routes = [
     {
@@ -22,8 +25,16 @@ export const routes: Routes = [
         component: MainComponent,
         children: [
             {
+                path: 'admin',
+                component: AdminComponent
+            },
+            {
                 path: 'overview',
                 component: OverviewComponent,
+            },
+            {
+                path: 'overview/analytics',
+                component: AnalyticsComponent
             },
             {
                 path: 'operations/stakeholder-directory',
@@ -46,5 +57,13 @@ export const routes: Routes = [
                 component: Page2Component
             }
         ]
-    }
+    },
+    // ✅ Add 404 page route
+    { path: '404', component: ErrorPageComponent, data: { errorCode: '404', errorMessage: 'Page not found' } },
+
+    // ✅ Optional: Add 500 page route
+    { path: '500', component: ErrorPageComponent, data: { errorCode: '500', errorMessage: 'Internal server error' } },
+
+    // ✅ Wildcard: catch-all unknown routes
+    { path: '**', redirectTo: '404' }
 ];

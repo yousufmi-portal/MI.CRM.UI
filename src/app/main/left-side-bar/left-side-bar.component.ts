@@ -56,12 +56,12 @@ export class LeftSideBarComponent implements OnInit {
       case 'overview':
         this.router.navigate(['/overview']);
         break;
-      case 'operations':
-        this.router.navigate(['/operations']);
-        break;
-      case 'financials':
-        this.router.navigate(['/financials']);
-        break;
+      // case 'operations':
+      //   this.router.navigate(['/operations']);
+      //   break;
+      // case 'financials':
+      //   this.router.navigate(['/financials']);
+      //   break;
       case 'documents':
         this.router.navigate(['/documents']);
         break;
@@ -91,7 +91,7 @@ export class LeftSideBarComponent implements OnInit {
       {
         label: 'Operations',
         icon: 'pi pi-cog',
-        command: () => this.router.navigate(['main/operations']),
+        // command: () => this.router.navigate(['main/operations']),
         items: [
           {
             label: 'Timeline',
@@ -113,7 +113,7 @@ export class LeftSideBarComponent implements OnInit {
       {
         label: 'Financials',
         icon: 'pi pi-wallet',
-        command: () => this.router.navigate(['main/financials']),
+        // command: () => this.router.navigate(['main/financials']),
         items: [
           {
             label: 'Budget Category',

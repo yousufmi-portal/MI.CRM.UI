@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { ProgressBarModule, ProgressBar } from 'primeng/progressbar';
 import { ProjectsService } from '../../../services/projects-service/projects.service';
 import { OverviewRequestDto } from '../../../../api-dtos/overview-request.dto';
 import { OverviewResponseDto } from '../../../../api-dtos/overview-response.dto';
+import { SelectedProjectService } from '../../../services/selected-project-service/selected-project.service';
 
 @Component({
   selector: 'app-overview',
@@ -14,11 +15,11 @@ import { OverviewResponseDto } from '../../../../api-dtos/overview-response.dto'
 export class OverviewComponent implements OnInit {
   weekStartDate: Date;
   weekEndDate: Date;
-  projectId: number = 19;
+  projectId = signal<number | null>(null);
 
-  constructor(private projectService: ProjectsService) {
+  constructor(private projectService: ProjectsService, private selectedProjectService: SelectedProjectService) {
     const today = new Date();
-
+    this.projectId.set(this.selectedProjectService.getProjectId()());
     // Calculate Monday (start of week)
     const day = today.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
     const diffToMonday = (day === 0 ? -6 : 1 - day);
@@ -31,6 +32,7 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.projectId.set(Number(localStorage.getItem('selectedProjectId')));
     this.getProjectOverview();
   }
 
@@ -38,7 +40,7 @@ export class OverviewComponent implements OnInit {
 
   getProjectOverview(): void {
     const request: OverviewRequestDto = {
-      projectId: this.projectId,
+      projectId: this.projectId() || 0, // Fallback to 0 if null
       weekStartDate: this.weekStartDate.toISOString(),
       weekEndDate: this.weekEndDate.toISOString()
     };

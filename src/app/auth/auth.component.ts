@@ -72,8 +72,9 @@ export class AuthComponent {
         next: (response) => {
           this.authForm.reset();
           console.log('Login successful:', response);
+          localStorage.setItem('token', response.token);
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful!' });
-          this.router.navigate(['/main/overview']);
+          this.router.navigate(['/main/admin']);
         },
         error: (error) => {
           console.error('Login failed:', error);

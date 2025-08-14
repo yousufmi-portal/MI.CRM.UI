@@ -1,0 +1,111 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closeOnEscape]="true" [dismissableMask]="true" (onHide)="close()"
+    [draggable]="false" [resizable]="false" [style]="{ width: '50rem' }">
+    <form [formGroup]="projectForm">
+        <p-stepper [value]="1" class="basis-[50rem]">
+            <p-step-list>
+                <p-step [value]="1">Project Details</p-step>
+                <p-step [value]="2">Subcontractor Info</p-step>
+                <p-step [value]="3">Project Budget</p-step>
+            </p-step-list>
+
+            <p-step-panels>
+                <!-- Step 1: Project Details -->
+                <p-step-panel [value]="1">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div formGroupName="projectDetails" style="display: flex; justify-content: center;"
+                            class="animate__animated animate__fadeIn">
+                            <div class="grid grid-cols-2 gap-5">
+                                <p-floatlabel>
+                                    <input type="text" pInputText formControlName="title" />
+                                    <label for="title">Title</label>
+                                </p-floatlabel>
+                                <p-floatlabel>
+                                    <input type="text" pInputText formControlName="awardNumber" />
+                                    <label for="awardNumber">Award Number</label>
+                                </p-floatlabel>
+                                <p-floatlabel>
+                                    <input type="text" pInputText formControlName="category" />
+                                    <label for="category">Category</label>
+                                </p-floatlabel>
+                                <p-floatlabel>
+                                    <input type="text" pInputText formControlName="agency" />
+                                    <label for="agency">Agency</label>
+                                </p-floatlabel>
+                                <p-floatlabel>
+                                    <input type="text" pInputText formControlName="company" />
+                                    <label for="company">Company</label>
+                                </p-floatlabel>
+                                <p-floatlabel>
+                                    <input type="text" pInputText formControlName="state" />
+                                    <label for="state">State</label>
+                                </p-floatlabel>
+                            </div>
+                        </div>
+
+                        <div class="flex pt-6 justify-end">
+                            <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                                (onClick)="activateCallback(2)" />
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+
+                <!-- Step 2: Subcontractor Info -->
+                <p-step-panel [value]="2">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div formGroupName="subcontractorDetails" style="display: flex; justify-content: center;"
+                            class="animate__animated animate__fadeIn">
+                            <div class="grid grid-cols-1 gap-5">
+                                <p-floatlabel>
+                                    <input type="text" pInputText formControlName="subcontractorName" />
+                                    <label for="subcontractorName">Subcontractor Name</label>
+                                </p-floatlabel>
+                                <p-floatlabel>
+                                    <input type="email" pInputText formControlName="email" />
+                                    <label for="email">Email</label>
+                                </p-floatlabel>
+                            </div>
+                        </div>
+
+                        <div class="flex pt-6 justify-between">
+                            <p-button label="Back" icon="pi pi-arrow-left" (onClick)="activateCallback(1)" />
+                            <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                                (onClick)="activateCallback(3)" />
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+
+                <!-- Step 3: Project Budget Info -->
+                <p-step-panel [value]="3">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div formArrayName="projectBudgetInfo" class="animate__animated animate__fadeIn">
+                            <p-table [value]="projectBudgetInfo.controls" class="p-datatable-sm">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="text-left">Category</th>
+                                        <th class="text-right">Approved Amount</th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-row let-i="rowIndex">
+                                    <tr [formGroupName]="i">
+                                        <td class="p-2">{{ getCategoryName(row.value.categoryId) }}</td>
+                                        <td class="p-2 text-right">
+                                            <input type="number" pInputText formControlName="approvedAmount"
+                                                class="w-full text-right" />
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+
+                        </div>
+
+                        <div class="flex pt-6 justify-between">
+                            <p-button label="Back" icon="pi pi-arrow-left" (onClick)="activateCallback(2)" />
+                            <p-button label="Submit" icon="pi pi-check" severity="success" (onClick)="submit()" />
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+            </p-step-panels>
+        </p-stepper>
+    </form>
+</p-dialog>

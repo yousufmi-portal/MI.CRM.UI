@@ -1,4 +1,5 @@
-<app-new-task-dialog [(visible)]="showTaskDialog" [projectId]="projectId"></app-new-task-dialog>
+<app-new-task-dialog [(visible)]="showTaskDialog" [projectId]="projectId || 0"
+    (visibleChange)="loadTasks()"></app-new-task-dialog>
 <main>
     <h2>Task Management</h2>
 
