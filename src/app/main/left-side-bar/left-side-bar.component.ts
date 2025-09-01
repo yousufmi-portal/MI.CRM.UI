@@ -2,10 +2,11 @@ import { Component, EventEmitter, Input, Output, HostListener, OnInit } from '@a
 
 import { DrawerModule } from 'primeng/drawer'
 import { ButtonModule } from 'primeng/button';
-import { SelectModule } from 'primeng/select';
+import { Select, SelectModule } from 'primeng/select';
 import { PanelMenuModule } from 'primeng/panelmenu'
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { SelectedProjectService } from '../../services/selected-project-service/selected-project.service';
 
 @Component({
   selector: 'app-left-side-bar',
@@ -16,12 +17,18 @@ import { MenuItem } from 'primeng/api';
 export class LeftSideBarComponent implements OnInit {
   @Input() isOpen: boolean = true;
   @Output() closed = new EventEmitter<void>();
+  projectId : number | null = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private selectedProjectService: SelectedProjectService) { }
 
   ngOnInit(): void {
     // Initialize menu items
     this.buildMenuItems();
+
+    this.selectedProjectService.projectId$
+      .subscribe(projectId => {
+        this.projectId = projectId!;
+      });
   }
 
   // Close on Escape key press
@@ -79,7 +86,7 @@ export class LeftSideBarComponent implements OnInit {
       {
         label: 'Overview',
         icon: 'pi pi-chart-bar',
-        command: () => this.router.navigate(['main/overview']),
+        command: () => this.router.navigate(['main/overview/' + this.projectId]),
         items: [
           {
             label: 'Analytics',
@@ -96,12 +103,12 @@ export class LeftSideBarComponent implements OnInit {
           {
             label: 'Timeline',
             icon: 'pi pi-calendar',
-            command: () => this.router.navigate(['main/operations/timeline'])
+            command: () => this.router.navigate(['main/operations/timeline/' + this.projectId])
           },
           {
             label: 'TaskManager',
             icon: 'pi pi-address-book',
-            command: () => this.router.navigate(['main/operations/taskmanager'])
+            command: () => this.router.navigate(['main/operations/taskmanager/' + this.projectId])
           },
           {
             label: 'Stakeholder Directory',
@@ -113,17 +120,17 @@ export class LeftSideBarComponent implements OnInit {
       {
         label: 'Financials',
         icon: 'pi pi-wallet',
+        command: () => this.router.navigate(['main/financials/page1/' + this.projectId]),
         // command: () => this.router.navigate(['main/financials']),
         items: [
           {
             label: 'Budget Category',
             icon: 'pi pi-file',
-            command: () => this.router.navigate(['main/financials/page1'])
+            command: () => this.router.navigate(['main/financials/page2/' + this.projectId])
           },
           {
             label: 'Claims',
             icon: 'pi pi-file-edit',
-            command: () => this.router.navigate(['main/financials/page2'])
           }
         ]
       },

@@ -29,7 +29,7 @@ export const routes: Routes = [
                 component: AdminComponent
             },
             {
-                path: 'overview',
+                path: 'overview/:projectId',
                 component: OverviewComponent,
             },
             {
@@ -41,19 +41,19 @@ export const routes: Routes = [
                 component: StakeholderDirectoryComponent,
             },
             {
-                path: 'operations/timeline',
+                path: 'operations/timeline/:projectId',
                 component: TimelineCalendarComponent,
             },
             {
-                path: 'operations/taskmanager',
+                path: 'operations/taskmanager/:projectId',
                 component: TaskmanagerComponent
             },
             {
-                path: 'financials/page1',
+                path: 'financials/page1/:projectId',
                 component: Page1Component
             },
             {
-                path: 'financials/page2',
+                path: 'financials/page2/:projectId',
                 component: Page2Component
             }
         ]

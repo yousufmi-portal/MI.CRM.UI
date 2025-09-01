@@ -5,6 +5,9 @@ import { ProjectsService } from '../../../services/projects-service/projects.ser
 import { OverviewRequestDto } from '../../../../api-dtos/overview-request.dto';
 import { OverviewResponseDto } from '../../../../api-dtos/overview-response.dto';
 import { SelectedProjectService } from '../../../services/selected-project-service/selected-project.service';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-overview',
@@ -17,9 +20,8 @@ export class OverviewComponent implements OnInit {
   weekEndDate: Date;
   projectId = signal<number | null>(null);
 
-  constructor(private projectService: ProjectsService, private selectedProjectService: SelectedProjectService) {
+  constructor(private projectService: ProjectsService, private selectedProjectService: SelectedProjectService, private route: ActivatedRoute) {
     const today = new Date();
-    this.projectId.set(this.selectedProjectService.getProjectId()());
     // Calculate Monday (start of week)
     const day = today.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
     const diffToMonday = (day === 0 ? -6 : 1 - day);
@@ -32,8 +34,11 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.projectId.set(Number(localStorage.getItem('selectedProjectId')));
-    this.getProjectOverview();
+    this.selectedProjectService.projectId$
+      .subscribe(projectId => {
+        this.projectId.set(projectId);
+        this.getProjectOverview();
+      });
   }
 
   ProjectOverview: OverviewResponseDto | null = null;

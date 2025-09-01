@@ -8,6 +8,7 @@ import { TasksService } from '../../../../service/tasks-service/tasks.service';
 import { NewTaskDialogComponent } from '../../../shared/new-task-dialog/new-task-dialog.component';
 import { UpdateTaskStatusDto } from '../../../../../api-dtos/update-task-status.dto';
 import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-taskmanager',
@@ -27,12 +28,16 @@ export class TaskmanagerComponent {
   projectId: number | null = null;
   showTaskDialog: boolean = false;
 
-  constructor(private tasksService: TasksService, private selectedProjectService: SelectedProjectService) {
+  constructor(private tasksService: TasksService, private selectedProjectService: SelectedProjectService, private route: ActivatedRoute) {
     this.projectId = localStorage.getItem('selectedProjectId') ? Number(localStorage.getItem('selectedProjectId')) : null;
   }
 
   ngOnInit(): void {
-    this.loadTasks();
+    this.selectedProjectService.projectId$
+      .subscribe(projectId => {
+        this.projectId = projectId;
+        this.loadTasks();
+      });
   }
 
   loadTasks(statusId?: number): void {

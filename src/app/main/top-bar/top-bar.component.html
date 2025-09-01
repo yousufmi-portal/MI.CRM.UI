@@ -1,14 +1,38 @@
 <div [class.drawer-open]="isDrawerOpen">
-    <p-toolbar [style]="{'padding': '1.5rem'}">
+    <p-toolbar [style]="{'padding': '1rem 1.5rem'}">
         <ng-template #start>
             <p-button icon="pi pi-bars" class="mr-2" (onClick)="hamburgerBtnClickHandler()" text />
-
+            <!-- 
             <p-iconfield styleClass="custom-search-field">
                 <input pInputText [(ngModel)]="search" placeholder="Search" />
                 <p-inputicon class="pi pi-search" />
-            </p-iconfield>
+            </p-iconfield> -->
 
         </ng-template>
+
+
+        <ng-template #center>
+
+            <p-select [options]="projects" [(ngModel)]="selectedProject" optionLabel="title" [filter]="true"
+                filterBy="title,awardNumber" placeholder="Select a Project" class="w-full" [style]="{ width: '100%' }"
+                [panelStyle]="{ width: '100%' }" (onChange)="onProjectSelected()" *ngIf="selectVisible">
+                <ng-template #selectedItem let-selectedOption>
+                    <div class="selected-project">
+                        <div>{{selectedOption.title}}</div>
+                        <div>({{selectedOption.awardNumber}})</div>
+                    </div>
+                </ng-template>
+                <ng-template let-project #item>
+
+                    <div class="projects-list">
+                        <div>{{project.title}}</div>
+                        <div>{{project.awardNumber}}</div>
+                    </div>
+
+                </ng-template>
+            </p-select>
+        </ng-template>
+
 
         <ng-template #end>
             <p-menu #menu [model]="topMenuItems" [popup]="true" />

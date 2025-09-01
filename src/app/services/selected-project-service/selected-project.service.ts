@@ -1,18 +1,35 @@
 import { Injectable, Signal, signal } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectedProjectService {
-  private projectId = signal<number | null>(null);
+  private readonly projectIdSubject = new BehaviorSubject<number | null>(null);
 
-  constructor() { }
+  // Expose as observable (read-only for components)
+  readonly projectId$: Observable<number | null> = this.projectIdSubject.asObservable();
 
-  getProjectId(): Signal<number | null> {
-    return this.projectId;
+  constructor() {
+    // Load from localStorage on service init
+    const saved = localStorage.getItem('selectedProjectId');
+    if (saved) {
+      this.projectIdSubject.next(+saved);
+    }
   }
 
   setProjectId(id: number | null): void {
-    this.projectId.set(id);
+    this.projectIdSubject.next(id);
+
+    if (id !== null) {
+      localStorage.setItem('selectedProjectId', id.toString());
+    } else {
+      localStorage.removeItem('selectedProjectId');
+    }
+  }
+
+  // Optional getter for snapshot value
+  getProjectId(): number | null {
+    return this.projectIdSubject.value;
   }
 }

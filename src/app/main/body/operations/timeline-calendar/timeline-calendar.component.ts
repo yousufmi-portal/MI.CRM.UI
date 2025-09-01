@@ -11,6 +11,7 @@ import { TaskDto } from '../../../../../api-dtos/task.dto';
 import { TasksService } from '../../../../service/tasks-service/tasks.service';
 import { UpdateTaskDateTimeDto } from '../../../../../api-dtos/update-tast-datetime.dto';
 import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -96,12 +97,19 @@ export class TimelineCalendarComponent implements AfterViewInit, OnInit {
 
   projectId: number | null = null;
 
-  constructor(private taskService: TasksService, private selectedProjectService: SelectedProjectService) {
+  constructor(private taskService: TasksService, private selectedProjectService: SelectedProjectService, private route: ActivatedRoute) {
+    this.route.paramMap.subscribe(params => {
+      this.projectId = (Number(params.get('projectId')));
+    });
   }
-  
+
   ngOnInit(): void {
     this.projectId = localStorage.getItem('selectedProjectId') ? Number(localStorage.getItem('selectedProjectId')) : null;
-    this.loadTasks();
+    this.selectedProjectService.projectId$
+      .subscribe(projectId => {
+        this.projectId = projectId;
+        this.loadTasks();
+      });
   }
   loadTasks() {
     this.taskService.getTasksByProject(this.projectId || 0).subscribe({

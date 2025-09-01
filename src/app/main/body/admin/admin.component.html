@@ -1,6 +1,8 @@
 <app-add-project-form [(visible)]="isAddProjectFormVisible" (projectCreated)="loadProjectsData($event)">
 </app-add-project-form>
 
+<app-projects-powerbi-summary-dialog [(visible)]="isProjectsSummaryDialogVisible"></app-projects-powerbi-summary-dialog>
+
 <main class="animate__animated animate__fadeIn">
     <!-- Left Section -->
     <section class="left-section animate__animated animate__slideInLeft">
@@ -27,9 +29,16 @@
     <section class="right-section animate__animated animate__slideInRight">
         <h3 class="animate__animated animate__fadeInDown">Projects</h3>
 
-        <button class="add-project-button" (click)="isAddProjectFormVisible = true">
-            + Add a project
-        </button>
+        <div class="btns-container">
+            <button class="add-project-button" (click)="isAddProjectFormVisible = true">
+                + Add a project
+            </button>
+
+            <button class="add-project-button" (click)="isProjectsSummaryDialogVisible = true">
+                View Summary Report
+            </button>
+        </div>
+
 
         <div class="projects-table-container animate__animated animate__fadeInUp animate__delay-1s">
             <p-table [columns]="cols" [value]="projects()" scrollable="true" class="projects-table">

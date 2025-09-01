@@ -53,3 +53,29 @@ div[class^="drawer-open"] {
     pointer-events: none;
   }
 }
+
+:host ::ng-deep .p-toolbar-center {
+  // border: 1px solid red;
+  // width: auto;
+  flex-grow: 0.9;
+}
+
+.selected-project {
+  // border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.projects-list {
+  // border: 1px solid red;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  // font-size: 1.25rem;
+  // font-weight: bold;
+}

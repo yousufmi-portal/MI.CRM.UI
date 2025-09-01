@@ -52,13 +52,17 @@
                 <tr>
                     <th>Category Name</th>
                     <th>Approved Amount</th>
+                    <th>Disbursed Amount</th>
+                    <th>Remaining Amount</th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-entry>
                 <tr>
-                    <td style="width: 75%;">{{ entry.name }}</td>
+                    <td style="width: 50%;">{{ entry.name }}</td>
                     <td>{{ getApprovedAmount(entry.name) | currency:'USD' }}</td>
+                    <td>{{ getDisbursedAmount(entry.name) | currency:'USD' }}</td>
+                    <td>{{ getRemainingAmount(entry.name) | currency:'USD' }}</td>
                 </tr>
             </ng-template>
         </p-table>

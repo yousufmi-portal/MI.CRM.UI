@@ -11,6 +11,7 @@ import { UserDto } from '../../../../api-dtos/user.dto';
 import { UsersService } from '../../../services/users-service/users.service';
 import { forkJoin } from 'rxjs';
 import { ROLES } from '../../../constants/roles.list';
+import { ProjectsPowerbiSummaryDialogComponent } from "../../shared/projects-powerbi-summary-dialog/projects-powerbi-summary-dialog.component";
 
 interface Column {
   field: string;
@@ -19,7 +20,7 @@ interface Column {
 }
 @Component({
   selector: 'app-admin',
-  imports: [ButtonModule, TableModule, CommonModule, AddProjectFormComponent],
+  imports: [ButtonModule, TableModule, CommonModule, AddProjectFormComponent, ProjectsPowerbiSummaryDialogComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -34,6 +35,7 @@ export class AdminComponent implements OnInit {
   roles = ROLES;
   selectedProjectId = signal<number | null>(null);
   isAddProjectFormVisible = false;
+  isProjectsSummaryDialogVisible = false;
   cols: Column[] = [
     {
       field: 'title',
@@ -64,7 +66,7 @@ export class AdminComponent implements OnInit {
     this.selectedProjectId.set(projectId);
     localStorage.setItem('selectedProjectId', projectId.toString());
     this.selectedProjectService.setProjectId(projectId);
-    this.router.navigate(['/main/overview']);
+    this.router.navigate([`/main/overview/${projectId}`]);
   }
 
   loadProjectsAndUser() {

@@ -60,3 +60,9 @@ h2 {
     background-color: rgb(240 244 247);
     color: rgb(123 135 149);
 }
+
+.stakeholder-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

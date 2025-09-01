@@ -12,6 +12,7 @@ import { AddDisbursedDialogComponent } from "../../../shared/add-disbursed-dialo
 import { DisbursementsService } from '../../../../services/disbursements/disbursements.service';
 import { DisbursementDto } from '../../../../../api-dtos/disbursement.dto';
 import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-page2',
@@ -28,13 +29,18 @@ export class Page2Component implements OnInit {
   selectedBudgetCategory = signal<{ id: number; name: string; description: string | null } | null>(this.budgetCategoryList[0]);
 
   projectId: number | null = null;
-  constructor(private projectsService: ProjectsService, private disbursementsService: DisbursementsService, private selectedProjectService: SelectedProjectService) {
-    this.projectId = localStorage.getItem('selectedProjectId') ? Number(localStorage.getItem('selectedProjectId')) : null;
+  constructor(private projectsService: ProjectsService, private disbursementsService: DisbursementsService, private selectedProjectService: SelectedProjectService, private route: ActivatedRoute) {
+    this.route.paramMap.subscribe(params => {
+      this.projectId = (Number(params.get('projectId')));
+    });
   }
 
   ngOnInit(): void {
-
-    this.loadProjectBudgetEntries();
+    this.selectedProjectService.projectId$
+      .subscribe(projectId => {
+        this.projectId = projectId;
+        this.loadProjectBudgetEntries();
+      });
   }
 
   disbursementEntries = signal<DisbursementDto[]>([]);
