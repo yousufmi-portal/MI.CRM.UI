@@ -17,6 +17,7 @@ import { RegisterDto } from '../../api-dtos/register.dto';
 import { LoginDto } from '../../api-dtos/login.dto';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { ProgressSpinnerModule } from 'primeng/progressspinner'
 
 @Component({
   selector: 'app-auth',
@@ -30,7 +31,8 @@ import { ToastModule } from 'primeng/toast';
     DividerModule,
     RouterModule,
     SelectModule,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ],
   providers: [MessageService],
   templateUrl: './auth.component.html',
@@ -41,6 +43,7 @@ export class AuthComponent {
   authForm!: FormGroup;
 
   Roles = ROLES;
+  loading = false;
 
   mockUsers: LoginModel[] = [
     { email: 'umerdev@noemail.com', password: '12345678' },
@@ -60,6 +63,7 @@ export class AuthComponent {
   }
 
   onSubmit() {
+    this.loading = true;
     console.log(this.authForm.value);
 
     if (this.isLogin) {
@@ -75,6 +79,7 @@ export class AuthComponent {
           localStorage.setItem('token', response.token);
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful!' });
           this.router.navigate(['/main/admin']);
+          this.loading = false;
         },
         error: (error) => {
           console.error('Login failed:', error);
@@ -84,6 +89,7 @@ export class AuthComponent {
           } else {
             this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password' });
           }
+          this.loading = false;
         }
       });
     }
@@ -103,10 +109,12 @@ export class AuthComponent {
           this.isLogin = true;
           this.authForm.reset();
           this.buildLoginForm(); // Reset to login form after successful registration
+          this.loading = false;
         },
         error: (error) => {
           console.error('Registration failed:', error);
           this.messageService.add({ severity: 'error', summary: 'Registration Failed', detail: 'Something went wrong!' });
+          this.loading = false;
         }
       });
     }
