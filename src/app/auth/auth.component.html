@@ -17,7 +17,13 @@
             </div>
 
             <div class="form-field-container">
-                <button class="submit-btn" (click)="onSubmit()">Login</button>
+                <button class="submit-btn" (click)="onSubmit()" [disabled]="loading">
+                    <ng-container *ngIf="!loading">
+                        Login
+                    </ng-container>
+                    <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+                        [style]="{ width: '24px', height: '24px' }" *ngIf="loading" />
+                </button>
             </div>
             <div class="form-field-container">
                 <p><small>Don't have an account. <b style="cursor: pointer;" (click)="toggleAuthMode()">Sign Up
@@ -61,7 +67,13 @@
             </div>
 
             <div class="form-field-container">
-                <button class="submit-btn" id="register-btn" (click)="onSubmit()">Register Now</button>
+                <button class="submit-btn" id="register-btn" (click)="onSubmit()" [disabled]="loading">
+                    <ng-container *ngIf="!loading">
+                        Register Now
+                    </ng-container>
+                    <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+                        [style]="{ width: '24px', height: '24px' }" *ngIf="loading" />
+                </button>
             </div>
             <div class="form-field-container">
                 <p><small>Already have an account? <b (click)="toggleAuthMode()"
