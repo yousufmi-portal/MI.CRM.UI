@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { StakeHolderDto } from '../../../../../api-dtos/stakeholder.dto';
 import { StakeholdersService } from '../../../../services/stakeholders-service/stakeholders.service';
+import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
 
 @Component({
   selector: 'app-stakeholder-directory',
@@ -28,16 +29,21 @@ export class StakeholderDirectoryComponent implements OnInit {
   stakeholders = signal<StakeHolderDto[]>([]);
   selectedStakeholder = signal<StakeHolderDto | null>(null);
 
-  constructor(private stakeholdersService: StakeholdersService) {
+  projectId: number = 0;
+
+  constructor(private stakeholdersService: StakeholdersService, private selectedProjectService: SelectedProjectService) {
 
   }
 
   ngOnInit(): void {
-    this.loadStakeholders();
+    this.selectedProjectService.projectId$.subscribe(projectId => {
+      this.projectId = projectId ?? 0;
+      this.loadStakeholders();
+    });
   }
 
   loadStakeholders(): void {
-    this.stakeholdersService.getAllStakeholders().subscribe({
+    this.stakeholdersService.getStakeholdersByProject(this.projectId).subscribe({
       next: (stakeholders) => {
         this.stakeholders.set(stakeholders);
       },

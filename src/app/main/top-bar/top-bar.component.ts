@@ -34,7 +34,7 @@ import { CommonModule } from '@angular/common';
 })
 export class TopBarComponent implements OnInit {
   currentUrl = '';
-  hiddenRoutes = ['/main/admin', '/main/operations/stakeholder-directory'];
+  hiddenRoutes = ['/main/admin'];
   selectVisible = false;
   constructor(private router: Router, private projectsService: ProjectsService, private route: ActivatedRoute, private selectedProjectService: SelectedProjectService) {
     this.router.events.subscribe(() => {

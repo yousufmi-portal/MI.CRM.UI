@@ -16,4 +16,8 @@ export class StakeholdersService {
   getAllStakeholders(): Observable<StakeHolderDto[]> {
     return this.http.get<StakeHolderDto[]>(this.baseUrl + '/GetAll');
   }
+
+  getStakeholdersByProject(projectId: number): Observable<StakeHolderDto[]> {
+    return this.http.get<StakeHolderDto[]>(`${this.baseUrl}/GetByProject/${projectId}`);
+  }
 }
