@@ -38,4 +38,8 @@ export class ProjectsService {
   createProject(project: CreateProjectDto): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/Create`, project);
   }
+
+  getPowerBiEmbedConfig(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/PowerBI/embed-config`);
+  }
 }
