@@ -88,11 +88,11 @@ export class LeftSideBarComponent implements OnInit {
         icon: 'pi pi-chart-bar',
         command: () => this.router.navigate(['main/overview/' + this.projectId]),
         items: [
-          {
-            label: 'Analytics',
-            icon: 'pi pi-chart-line',
-            command: () => this.router.navigate(['main/overview/analytics'])
-          }
+          // {
+          //   label: 'Analytics',
+          //   icon: 'pi pi-chart-line',
+          //   command: () => this.router.navigate(['main/overview/analytics'])
+          // }
         ]
       },
       {
@@ -100,6 +100,11 @@ export class LeftSideBarComponent implements OnInit {
         icon: 'pi pi-cog',
         // command: () => this.router.navigate(['main/operations']),
         items: [
+          {
+            label: 'Summary',
+            icon: 'pi pi-file',
+            // command: () => this.router.navigate(['main/operations/summary/' + this.projectId])
+          },
           {
             label: 'Timeline',
             icon: 'pi pi-calendar',
@@ -120,9 +125,14 @@ export class LeftSideBarComponent implements OnInit {
       {
         label: 'Financials',
         icon: 'pi pi-wallet',
-        command: () => this.router.navigate(['main/financials/page1/' + this.projectId]),
+        // command: () => this.router.navigate(['main/financials/page1/' + this.projectId]),
         // command: () => this.router.navigate(['main/financials']),
         items: [
+          {
+            label: 'Summary',
+            icon: 'pi pi-file',
+            command: () => this.router.navigate(['main/financials/page1/' + this.projectId])
+          },
           {
             label: 'Budget Category',
             icon: 'pi pi-file',
