@@ -7,6 +7,8 @@ import { ProjectBudgetEntryDto } from '../../../api-dtos/project-budget-entry.dt
 import { OverviewRequestDto } from '../../../api-dtos/overview-request.dto';
 import { OverviewResponseDto } from '../../../api-dtos/overview-response.dto';
 import { CreateProjectDto } from '../../../api-dtos/create-project.dto';
+import { OperationsSummaryDto } from '../../../api-dtos/operations-summary.dto';
+import { MainPageDataDto } from '../../../api-dtos/main-page-data.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +43,13 @@ export class ProjectsService {
 
   getPowerBiEmbedConfig(): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/PowerBI/embed-config`);
+  }
+
+  getOperationsSummary(projectId: number): Observable<OperationsSummaryDto> {
+    return this.http.get<OperationsSummaryDto>(`${this.baseUrl}/OperationsSummary/${projectId}`);
+  }
+
+  getMainPageData(): Observable<MainPageDataDto> {
+    return this.http.get<MainPageDataDto>(`${this.baseUrl}/MainPageData`);
   }
 }

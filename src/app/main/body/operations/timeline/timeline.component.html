@@ -1,17 +1,21 @@
 <main>
     <header class="main-header">
         <section class="header-section-left">
-            <div>Project ID: NCSRD15577227412552</div>
-            <div>Deliverable Types: Onsite + Training</div>
-            <div>Tasks Completed: 80%</div>
-            <div>In Progress</div>
+            <div>Project ID: {{ operationsSummary?.project?.awardNumber }}</div>
+            <div>Deliverable Types:
+                <b *ngFor="let type of operationsSummary?.deliverableTypes; let isLast = last">
+                    {{ type }}<span *ngIf="!isLast">, </span>
+                </b>
+            </div>
+            <div>Tasks Completed: {{ operationsSummary?.tasksCompletedPercent }}%</div>
+            <div>{{ operationsSummary?.project?.projectStatus }}</div>
         </section>
 
         <section class="header-section-right">
             <div>TASK SUMMARY</div>
-            <div>Total No. of Events: <b>100</b></div>
-            <div>Budgeted No. of Events: <b>80</b></div>
-            <div>Remaining No. of Events: <b>20</b></div>
+            <div>Total No. of Events: <b>{{ operationsSummary?.totalNumberOfEvents }}</b></div>
+            <div>Budgeted No. of Events: <b>{{ operationsSummary?.budgetedNumberOfEvents }}</b></div>
+            <div>Remaining No. of Events: <b>{{ operationsSummary?.remainingNumberOfEvents }}</b></div>
         </section>
     </header>
 
@@ -34,28 +38,44 @@
                     <div class="latest-to-do-section-heading"><i class="pi pi-exclamation-triangle"></i> Latest to do's
                     </div>
                     <div class="latest-to-do-continer">
-                        No to do's available
-                    </div>
-                </section>
-
-                <section class="latest-finished-to-do-section">
-                    <div class="latest-finished-to-do-section-heading"><i class="pi pi-check"></i> Latest finished to
-                        do's
-                    </div>
-                    <div class="latest-finished-to-do-continer">
                         <ul>
-                            @for (item of finishedTodos; track $index) {
-                            <li class="latest-finished-to-do-item">
+                            @for (item of operationsSummary?.latestTodoTasks; track $index) {
+                            <li class="latest-to-do-item">
                                 <div>⋮⋮</div>
-                                <p-checkbox [binary]="true" />
-                                <div class="latest-finished-to-do-item-content">
-                                    <div class="latest-finished-to-do-item-title">{{ item.text }}</div>
+                                <!-- <p-checkbox [binary]="true" /> -->
+                                <div class="latest-to-do-item-content">
+                                    <div class="latest-to-do-item-title">{{ item.title }}</div>
                                     <div class="latest-finished-to-do-item-details">
-                                        <small class="latest-finished-to-do-item-date">{{ item.timestamp }}</small>
-                                        <div>
+                                        <small class="latest-finished-to-do-item-date">{{ item.endDate|
+                                            date:'mediumDate' }}</small>
+                                        <!-- <div>
                                             <i class="pi pi-pencil"></i>
                                             <i class="pi pi-times"></i>
-                                        </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </li>}
+                        </ul>
+                    </div>
+                    <div class="latest-finished-to-do-continer">
+                        <div class="latest-finished-to-do-section-heading"><i class="pi pi-check"></i> Latest finished
+                            to
+                            do's
+                        </div>
+                        <ul>
+                            @for (item of operationsSummary?.latestFinishedTasks; track $index) {
+                            <li class="latest-finished-to-do-item">
+                                <div>⋮⋮</div>
+                                <!-- <p-checkbox [binary]="true" /> -->
+                                <div class="latest-finished-to-do-item-content">
+                                    <div class="latest-finished-to-do-item-title">{{ item.title }}</div>
+                                    <div class="latest-finished-to-do-item-details">
+                                        <small class="latest-finished-to-do-item-date">{{ item.completedOn |
+                                            date:'mediumDate' }}</small>
+                                        <!-- <div>
+                                            <i class="pi pi-pencil"></i>
+                                            <i class="pi pi-times"></i>
+                                        </div> -->
                                     </div>
                                 </div>
                             </li>}
@@ -66,10 +86,32 @@
         </section>
         <section class="body-section-right">
             <header class="body-section-right-header">
-                <div>Activities Due Today</div>
-                <div>Activities Due This Week</div>
-                <div>Over Due Activities</div>
+                <div (click)="loadTasks('DUE_TODAY')">Activities Due Today</div>
+                <div (click)="loadTasks('DUE_THIS_WEEK')">Activities Due This Week</div>
+                <div (click)="loadTasks('OVERDUE')">Over Due Activities</div>
             </header>
+            <p-table [value]="operationsSummary?.tasks || []" dataKey="id">
+                <ng-template #header>
+                    <tr class="animate__animated animate__fadeIn">
+                        <!-- <th style="width: 4rem"><p-tableHeaderCheckbox /></th> -->
+                        <th>Title</th>
+                        <th>Activity Type</th>
+                        <th>Due Date</th>
+                        <th>Assigned To</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-task>
+                    <tr class="animate__animated animate__fadeIn animate__slow">
+                        <!-- <td>
+                            <p-tableCheckbox [value]="task" />
+                        </td> -->
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.activityTypeName }}</td>
+                        <td>{{ task.endDate | date:'mediumDate' }}</td>
+                        <td>{{ task.assigneeName }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </section>
     </div>
 </main>

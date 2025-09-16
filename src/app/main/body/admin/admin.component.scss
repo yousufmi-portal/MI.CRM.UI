@@ -1,116 +1,231 @@
+// main {
+//     display: flex;
+//     // border: 1px solid red;
+//     gap: 1.25rem;
+//     height: 80vh;
+// }
+
+
+
+// section {
+//     // background-color: white;
+//     width: 100%;
+//     height: auto;
+//     border-radius: 14px;
+// }
+
+// .left-section {
+//     width: 40%;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 1.25rem;
+//     // border: 1px solid green;
+
+// }
+
+// .profile-container {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     gap: 0.15rem;
+//     background-color: white;
+//     // border: 1px solid red;
+//     padding: 1rem;
+//     border-radius: 14px;
+//     height: 100%;
+// }
+
+// .profile-image {
+//     border: 5px solid hsl(193.18deg 75% 34.51%);
+//     border-radius: 14px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     // border: 1px solid red;
+//     // margin-bottom: 1rem;
+//     overflow: hidden;
+// }
+
+// .update-button {
+//     border: none;
+//     outline: none;
+//     background-color: hsl(193.18deg 75% 34.51%);
+//     color: white;
+//     font-size: 1rem;
+//     border-radius: 14px;
+//     padding: 0.5rem 2rem;
+// }
+
+// .user-info-container {
+//     // margin-top: 1.25rem;
+//     background-color: white;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 0.5rem;
+//     padding: 1rem;
+//     border-radius: 14px;
+//     height: 100%;
+//     // border: 1px solid gold;
+// }
+
+// .right-section {
+//     background-color: white;
+//     padding: 1rem;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+
+// }
+
+// .add-project-button {
+//     background: none;
+//     outline: none;
+//     width: 100%;
+//     padding: 1rem;
+//     border-radius: 14px;
+//     border: 2px dashed #ccc;
+//     cursor: pointer;
+//     margin-top: 1rem;
+// }
+
+// .projects-table-container {
+//     margin-top: 1rem;
+//     flex-grow: 1;
+//     overflow: auto;
+// }
+
+// :host ::ng-deep .projects-table .p-datatable-tbody>tr>td,
+// :host ::ng-deep .projects-table .p-datatable-thead>tr>th {
+//     border: none;
+//     background-color: rgb(237, 237, 237);
+//     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+//     padding: 2rem;
+// }
+
+// :host ::ng-deep .projects-table .p-datatable-tbody>tr:hover {
+//     transform: translateY(-2px);
+//     transition: transform 0.2s ease, box-shadow 0.2s ease;
+//     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+//     background-color: #f5f5f5;
+//     cursor: pointer;
+// }
+
+// .btns-container {
+//     display: flex;
+//     gap: 0.5rem;
+// }
+
 main {
-    display: flex;
-    // border: 1px solid red;
-    gap: 1.25rem;
-    height: 80vh;
-}
-
-
-
-section {
-    // background-color: white;
-    width: 100%;
-    height: auto;
-    border-radius: 14px;
-}
-
-.left-section {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    // border: 1px solid green;
-
-}
-
-.profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.15rem;
-    background-color: white;
     // border: 1px solid red;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+.top-section {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    // padding-bottom: 0.4rem;
+    // border: 1px solid red;
+}
+
+.top-section-sub-section,
+.projects-table-section {
     border-radius: 14px;
+    border: 1px solid rgb(0, 0, 0, 0.3);
+    background-color: white;
+}
+
+.top-section-sub-section {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
     height: 100%;
 }
 
-.profile-image {
-    border: 5px solid hsl(193.18deg 75% 34.51%);
-    border-radius: 14px;
+.top-section-item {
+    margin-top: 0.85rem;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     // border: 1px solid red;
-    // margin-bottom: 1rem;
-    overflow: hidden;
 }
 
-.update-button {
-    border: none;
-    outline: none;
-    background-color: hsl(193.18deg 75% 34.51%);
-    color: white;
+.top-section-label {
     font-size: 1rem;
-    border-radius: 14px;
-    padding: 0.5rem 2rem;
+
+    font-weight: bold;
+    // border: 1px solid red;
 }
 
-.user-info-container {
-    // margin-top: 1.25rem;
-    background-color: white;
+.top-section-value {
+    font-size: 3rem;
+    font-weight: bold;
+    // border: 1px solid red;
+}
+
+.top-section-actions-container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding: 1rem;
-    border-radius: 14px;
-    height: 100%;
-    // border: 1px solid gold;
 }
 
-.right-section {
-    background-color: white;
-    padding: 1rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-}
-
-.add-project-button {
-    background: none;
-    outline: none;
-    width: 100%;
-    padding: 1rem;
-    border-radius: 14px;
-    border: 2px dashed #ccc;
-    cursor: pointer;
-    margin-top: 1rem;
-}
-
-.projects-table-container {
-    margin-top: 1rem;
-    flex-grow: 1;
-    overflow: auto;
-}
-
-:host ::ng-deep .projects-table .p-datatable-tbody>tr>td,
-:host ::ng-deep .projects-table .p-datatable-thead>tr>th {
+.top-section-actions-container>button {
     border: none;
-    background-color: rgb(237, 237, 237);
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    outline: none;
+    background-color: #36a785;
+    text-wrap: nowrap;
+    color: white;
+    font-size: 1rem;
+    border-radius: 14px;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    width: 100%;
+
 }
 
-:host ::ng-deep .projects-table .p-datatable-tbody>tr:hover {
+.projects-table-section {
+    padding: 1rem;
+}
+
+:host ::ng-deep .p-datatable-thead>tr>th {
+    text-align: center !important;
+    background-color: #36a785 !important;
+    color: white !important;
+    font-weight: lighter !important;
+    // border: 1px solid red;
+}
+:host ::ng-deep .p-datatable-thead>tr>th>div {
+    // border: 1px solid gold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+:host ::ng-deep .p-datatable-thead>tr>th:first-child {
+    border-top-left-radius: 14px !important;
+    border-bottom-left-radius: 14px !important;
+}
+
+:host ::ng-deep .p-datatable-thead>tr>th:last-child {
+    border-top-right-radius: 14px !important;
+    border-bottom-right-radius: 14px !important;
+}
+
+:host ::ng-deep .p-datatable-tbody>tr>td {
+    text-align: center !important;
+    font-weight: lighter !important;
+}
+
+:host ::ng-deep .p-datatable-tbody>tr:hover {
     transform: translateY(-2px);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
     background-color: #f5f5f5;
     cursor: pointer;
-}
-
-.btns-container {
-    display: flex;
-    gap: 0.5rem;
 }

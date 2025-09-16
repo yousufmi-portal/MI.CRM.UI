@@ -103,7 +103,7 @@ export class LeftSideBarComponent implements OnInit {
           {
             label: 'Summary',
             icon: 'pi pi-file',
-            // command: () => this.router.navigate(['main/operations/summary/' + this.projectId])
+            command: () => this.router.navigate(['main/operations/summary/' + this.projectId])
           },
           {
             label: 'Timeline',

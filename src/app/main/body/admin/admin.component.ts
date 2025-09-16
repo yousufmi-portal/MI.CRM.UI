@@ -12,6 +12,8 @@ import { UsersService } from '../../../services/users-service/users.service';
 import { forkJoin } from 'rxjs';
 import { ROLES } from '../../../constants/roles.list';
 import { ProjectsPowerbiSummaryDialogComponent } from "../../shared/projects-powerbi-summary-dialog/projects-powerbi-summary-dialog.component";
+import { MainPageDataDto } from '../../../../api-dtos/main-page-data.dto';
+import { ShortenCurrencyPipe } from '../../../../pipes/shorten-currency.pipe';
 
 interface Column {
   field: string;
@@ -20,7 +22,7 @@ interface Column {
 }
 @Component({
   selector: 'app-admin',
-  imports: [ButtonModule, TableModule, CommonModule, AddProjectFormComponent, ProjectsPowerbiSummaryDialogComponent],
+  imports: [ButtonModule, TableModule, CommonModule, AddProjectFormComponent, ProjectsPowerbiSummaryDialogComponent, ShortenCurrencyPipe],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -51,7 +53,8 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     // this.loadProjectsData(true);
-    this.loadProjectsAndUser();
+    // this.loadProjectsAndUser();
+    this.loadMainPageData();
   }
 
   loadProjectsData(shouldCallData: boolean = false) {
@@ -87,5 +90,13 @@ export class AdminComponent implements OnInit {
   getRoleName(roleId: number): string {
     const role = this.roles.find(r => r.roleId === roleId);
     return role ? role.name : 'Unknown Role';
+  }
+
+  data: MainPageDataDto | null = null;
+  loadMainPageData() {
+    this.projectsService.getMainPageData().subscribe(data => {
+      this.data = data;
+    });
+
   }
 }

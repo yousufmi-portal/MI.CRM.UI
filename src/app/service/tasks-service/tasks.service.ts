@@ -29,11 +29,15 @@ export class TasksService {
   }
 
 
-  getTasksByProject(projectId: number, statusId?: number): Observable<TaskDto[]> {
+  getTasksByProject(projectId: number, statusId?: number, customFilter: string = ''): Observable<TaskDto[]> {
     let params = new HttpParams().set('projectId', projectId.toString());
 
     if (statusId !== undefined && statusId !== null) {
       params = params.set('statusId', statusId.toString());
+    }
+
+    if (customFilter) {
+      params = params.set('customFilter', customFilter);
     }
 
     return this.http.get<TaskDto[]>(`${this.baseUrl}/ProjectTasks`, { params });

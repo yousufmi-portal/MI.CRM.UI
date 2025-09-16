@@ -79,3 +79,23 @@ div[class^="drawer-open"] {
   // font-size: 1.25rem;
   // font-weight: bold;
 }
+
+
+:host ::ng-deep .p-button-icon {
+  color: white !important;
+}
+
+:host ::ng-deep .p-button {
+  padding: 0 !important;
+}
+
+:host ::ng-deep .p-button:hover{
+  background-color: #36a7855f !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+:host ::ng-deep .p-toolbar {
+  border-radius: 0;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}

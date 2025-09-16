@@ -40,7 +40,7 @@
                     <td>{{ task.description }}</td>
                     <td>{{ task.activityTypeName }}</td>
                     <td>{{ task.endDate | date:'mediumDate' }}</td>
-                    <td>{{ task.assignedTo }}</td>
+                    <td>{{ task.assigneeName }}</td>
                     <td>
                         <p-select [options]="statuses" [ngModel]="task.statusId"
                             (onChange)="onStatusChange(task, $event.value)" optionLabel="name" optionValue="id"

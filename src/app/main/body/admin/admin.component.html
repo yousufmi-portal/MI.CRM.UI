@@ -3,62 +3,94 @@
 
 <app-projects-powerbi-summary-dialog [(visible)]="isProjectsSummaryDialogVisible"></app-projects-powerbi-summary-dialog>
 
+
 <main class="animate__animated animate__fadeIn">
-    <!-- Left Section -->
-    <section class="left-section animate__animated animate__slideInLeft">
-        <div class="profile-container animate__animated animate__fadeInUp animate__delay-1s">
-            <div class="profile-image">
-                <img src="yousuf pic-01.webp" alt="">
+    <section class="top-section">
+        <section class="top-section-sub-section">
+            <div class="top-section-item">
+                <div class="top-section-label">No of projects</div>
+                <div class="top-section-value">{{ data?.totalProjects }}</div>
             </div>
-            <div>{{user()?.name}}</div>
-            <div>{{getRoleName(user()?.roleId ?? 0)}}</div>
-
-            <button class="update-button">
-                Update
-            </button>
-        </div>
-
-        <div class="user-info-container animate__animated animate__fadeIn animate__delay-1s">
-            <h4>Information</h4>
-            <div>Name: {{user()?.name}}</div>
-            <div>Email: {{user()?.email}}</div>
+            <div class="top-section-item">
+                <div class="top-section-label">No of states</div>
+                <div class="top-section-value">{{ data?.states }}</div>
+            </div>
+            <div class="top-section-item">
+                <div class="top-section-label">Total budget</div>
+                <div class="top-section-value" style="color: #36a785;">{{ data?.totalApprovedBudget || 0 |
+                    shortenCurrency }}
+                </div>
+            </div>
+        </section>
+        <div class="top-section-actions-container">
+            <button (click)="isProjectsSummaryDialogVisible = true">View Summary</button>
+            <button (click)="isAddProjectFormVisible = true">Add Project</button>
         </div>
     </section>
+    <section class="projects-table-section">
+        <div style="padding-bottom: 1rem; font-size: 1.5rem; font-weight: bold;">Projects</div>
+        <p-table [value]="data?.projects || []" dataKey="id"
+            [globalFilterFields]="['title', 'awardNumber', 'subContractorName', 'state', 'projectStatus']">
+            <ng-template #header>
+                <tr class="animate__animated animate__fadeIn">
+                    <th pSortableColumn="title">
+                        <div>
+                            <p-sortIcon field="title" />
+                            Project Title
+                            <p-columnFilter type="text" field="title" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="awardNumber">
+                        <div>
+                            <p-sortIcon field="awardNumber" />
+                            Award No
+                            <p-columnFilter type="text" field="awardNumber" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="totalApprovedBudget">
+                        <div>
 
-    <!-- Right Section -->
-    <section class="right-section animate__animated animate__slideInRight">
-        <h3 class="animate__animated animate__fadeInDown">Projects</h3>
+                            <p-sortIcon field="totalApprovedBudget" />
+                            Budget
+                            <p-columnFilter type="numeric" field="totalApprovedBudget" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="subContractorName">
+                        <div>
+                            <p-sortIcon field="subContractorName" />
+                            Subcontractor
+                            <p-columnFilter type="text" field="subContractorName" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="state">
+                        <div>
+                            <p-sortIcon field="state" />
+                            State
+                            <p-columnFilter type="text" field="state" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="projectStatus">
+                        <div>
+                            <p-sortIcon field="projectStatus" />
+                            Status
+                            <p-columnFilter type="text" field="projectStatus" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-project>
+                <tr class="animate__animated animate__fadeIn animate__slow"
+                    (click)="onProjectSelected(project.projectId)">
 
-        <div class="btns-container">
-            <button class="add-project-button" (click)="isAddProjectFormVisible = true">
-                + Add a project
-            </button>
+                    <td>{{ project.title }}</td>
+                    <td>{{ project.awardNumber }}</td>
+                    <td>{{ project.totalApprovedBudget | currency }}</td>
+                    <td>{{ project.subContractorName }}</td>
+                    <td>{{ project.state }}</td>
+                    <td>{{ project.projectStatus }}</td>
 
-            <button class="add-project-button" (click)="isProjectsSummaryDialogVisible = true">
-                View Summary Report
-            </button>
-        </div>
-
-
-        <div class="projects-table-container animate__animated animate__fadeInUp animate__delay-1s">
-            <p-table [columns]="cols" [value]="projects()" scrollable="true" class="projects-table">
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th *ngFor="let col of columns" style="width: 50%;" [ngStyle]="{ 'text-align': col.align }">
-                            {{ col.header }}
-                        </th>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="body" let-rowData let-columns="columns">
-                    <tr class="animate__animated animate__fadeIn" (click)="onProjectSelected(rowData.projectId)"
-                        [ngClass]="{ 'selected-row': selectedProjectId() === rowData.projectId }">
-                        <td *ngFor="let col of columns" [ngStyle]="{ 'text-align': col.align }">
-                            {{ rowData[col.field] }}
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+                </tr>
+            </ng-template>
+        </p-table>
     </section>
 </main>

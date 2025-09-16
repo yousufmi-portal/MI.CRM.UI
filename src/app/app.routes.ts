@@ -37,6 +37,10 @@ export const routes: Routes = [
                 component: AnalyticsComponent
             },
             {
+                path: 'operations/summary/:projectId',
+                component: TimelineComponent
+            },
+            {
                 path: 'operations/stakeholder-directory',
                 component: StakeholderDirectoryComponent,
             },
@@ -55,7 +59,7 @@ export const routes: Routes = [
             {
                 path: 'financials/page2/:projectId',
                 component: Page2Component
-            }
+            },
         ]
     },
     // ✅ Add 404 page route

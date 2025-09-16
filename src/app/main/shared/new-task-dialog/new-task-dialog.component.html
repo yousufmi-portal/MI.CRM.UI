@@ -16,17 +16,18 @@
                 <div class="p-field">
                     <label for="startDate">Start Date</label>
                     <p-datepicker formControlName="startDate" inputId="startDate" dateFormat="yy-mm-dd"
-                        [showTime]="true" />
+                        [showTime]="true" appendTo="body" />
                 </div>
                 <div class="p-field">
                     <label for="endDate">End Date</label>
-                    <p-datepicker formControlName="endDate" inputId="endDate" dateFormat="yy-mm-dd" [showTime]="true" />
+                    <p-datepicker formControlName="endDate" inputId="endDate" dateFormat="yy-mm-dd" [showTime]="true"
+                        appendTo="body" />
                 </div>
             </div>
 
             <div class="p-field">
                 <label for="assignedTo">Assigned To</label>
-                <p-select [options]="users" formControlName="assignedTo" optionLabel="name" optionValue="id"
+                <p-select [options]="users" formControlName="assignedTo" optionLabel="name" optionValue="userId"
                     placeholder="Select User" appendTo="body"></p-select>
             </div>
 
@@ -40,6 +41,11 @@
                 <label for="activityTypeId">Activity Type</label>
                 <p-select [options]="activityTypes" formControlName="activityTypeId" optionLabel="name" optionValue="id"
                     placeholder="Select Activity Type" appendTo="body"></p-select>
+            </div>
+
+            <div class="p-field">
+                <label for="deliverableType">Deliverable Type</label>
+                <input type="text" id="deliverableType" formControlName="deliverableType">
             </div>
         </div>
 

@@ -11,6 +11,8 @@ import { TaskDto } from '../../../../api-dtos/task.dto';
 import { NewTaskDto } from '../../../../api-dtos/new-task.dto';
 import { TasksService } from '../../../service/tasks-service/tasks.service';
 import { MessageService } from 'primeng/api';
+import { UsersService } from '../../../services/users-service/users.service';
+import { UserDto } from '../../../../api-dtos/user.dto';
 
 @Component({
   selector: 'app-new-task-dialog',
@@ -28,7 +30,7 @@ export class NewTaskDialogComponent {
   taskForm: FormGroup;
 
   // Dummy options for now
-  users = [{ id: 3, name: 'Umer' }];
+  users: UserDto[] = [];
   statuses = [
     { id: 1, name: 'To Do' },
     { id: 2, name: 'In Progress' },
@@ -39,7 +41,7 @@ export class NewTaskDialogComponent {
     { id: 1, name: 'Session' },
   ];
 
-  constructor(private fb: FormBuilder, private tasksService: TasksService, private messageService: MessageService) {
+  constructor(private fb: FormBuilder, private tasksService: TasksService, private messageService: MessageService, private usersService: UsersService) {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
       description: [''],
@@ -48,6 +50,15 @@ export class NewTaskDialogComponent {
       assignedTo: [null],
       statusId: [null, Validators.required],
       activityTypeId: [null, Validators.required],
+      deliverableType: ['']
+    });
+  }
+
+  ngOnInit() {
+    console.log('Project ID in NewTaskDialogComponent:', this.projectId);
+    // Load users from the service
+    this.usersService.getAllUsers().subscribe(users => {
+      this.users = users;
     });
   }
 
