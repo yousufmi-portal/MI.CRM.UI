@@ -14,6 +14,7 @@ import { TimelineCalendarComponent } from './main/body/operations/timeline-calen
 import { AdminComponent } from './main/body/admin/admin.component';
 import { ErrorPageComponent } from './main/shared/error-page/error-page.component';
 import { AnalyticsComponent } from './main/body/overview/analytics/analytics.component';
+import { ClaimsComponent } from './main/body/financials/claims/claims.component';
 
 export const routes: Routes = [
     {
@@ -60,6 +61,10 @@ export const routes: Routes = [
                 path: 'financials/page2/:projectId',
                 component: Page2Component
             },
+            {
+                path: 'financials/claims/:projectId',
+                component: ClaimsComponent
+            }
         ]
     },
     // ✅ Add 404 page route

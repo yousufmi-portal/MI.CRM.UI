@@ -141,15 +141,16 @@ export class LeftSideBarComponent implements OnInit {
           {
             label: 'Claims',
             icon: 'pi pi-file-edit',
+            command: () => this.router.navigate(['main/financials/claims/' + this.projectId])
           }
         ]
       },
-      {
-        label: 'Documents',
-        icon: 'pi pi-folder',
-        command: () => this.router.navigate(['main/documents']),
-        items: [] // No options currently
-      }
+      // {
+      //   label: 'Documents',
+      //   icon: 'pi pi-folder',
+      //   command: () => this.router.navigate(['main/documents']),
+      //   items: [] // No options currently
+      // }
     ];
 
   }
