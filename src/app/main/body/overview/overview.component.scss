@@ -52,7 +52,7 @@ main {
 
 .top-card-content a {
     text-decoration: none;
-    color: rgb(0 192 203);
+    color: #36a785;
     font-size: 0.75rem;
 }
 
@@ -61,7 +61,7 @@ main {
 }
 
 .top-card-footer span:first-of-type {
-    color: rgb(0 192 203);
+    color: #36a785;
     font-size: 0.75rem;
 }
 
@@ -121,18 +121,18 @@ main {
 
 .task-label {
     font-size: 0.75rem;
-    color: rgb(0 192 203);
+    color: #36a785;
     text-align: center;
     white-space: nowrap;
 }
 
 :host ::ng-deep .custom-progress {
     height: 50px;
-    background-color: rgb(0 192 203);
+    background-color: #36a78576;
     border-radius: 100px;
 
     .p-progressbar-value {
-        background-color: rgb(6 48 72);
+        background-color: #337361;
         border-radius: 100px;
     }
 
@@ -164,7 +164,7 @@ main {
 }
 
 .project-notifications-section i {
-    color: rgb(0 192 203);
+    color: #36a785;
 }
 
 .notifications-container {
@@ -226,7 +226,7 @@ main {
     display: inline-block;
     width: 0.7em;
     height: 0.7em;
-    background-color: rgb(0 192 203);
+    background-color: #36a785;
     border-radius: 3px;
     margin-right: 0.5em;
 }

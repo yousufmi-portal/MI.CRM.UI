@@ -93,7 +93,8 @@ export class LeftSideBarComponent implements OnInit {
           //   icon: 'pi pi-chart-line',
           //   command: () => this.router.navigate(['main/overview/analytics'])
           // }
-        ]
+        ],
+        style: {'margin-left': '12px'}
       },
       {
         label: 'Operations',

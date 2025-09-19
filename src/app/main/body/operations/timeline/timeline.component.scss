@@ -31,7 +31,7 @@ main {
 
 .header-section-left div:last-child,
 .header-section-right div:first-child {
-    color: rgb(0 192 203);
+    color: #36a785;
     font-weight: bold;
 }
 
@@ -75,7 +75,7 @@ main {
     background: none;
     text-decoration: solid;
     cursor: pointer;
-    color: #2053da;
+    color: #36a785;
 }
 
 
@@ -106,7 +106,7 @@ main {
 }
 
 .body-section-right-header div {
-    background-color: rgb(6 48 72);
+    background-color: #0e533f;
     color: white;
     padding: 0.5rem 1rem;
     border-top-left-radius: 14px;
@@ -121,7 +121,7 @@ main {
     background-color: white;
     border-radius: 14px;
     padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 6px #337361;
 }
 
 .latest-to-do-section-heading,
@@ -221,7 +221,7 @@ main {
 
 :host ::ng-deep .p-datatable-thead>tr>th {
     text-align: center !important;
-    background-color: #1d9ebd !important;
+    background-color: #36a785 !important;
     color: white !important;
     font-weight: lighter !important;
 }
