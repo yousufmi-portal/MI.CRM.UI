@@ -97,7 +97,7 @@ small {
 }
 
 .submit-btn {
-    background-color: rgb(6, 48, 72);
+    background-color: #337361;
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -111,8 +111,8 @@ small {
     align-items: center;
 }
 
-#submit-btn:hover {
-    background-color: rgb(20, 76, 109);
+.submit-btn:hover {
+    background-color: #36a785;
 }
 
 p {

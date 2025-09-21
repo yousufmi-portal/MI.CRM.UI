@@ -100,6 +100,7 @@ export class LeftSideBarComponent implements OnInit {
         label: 'Operations',
         icon: 'pi pi-cog',
         // command: () => this.router.navigate(['main/operations']),
+        expanded: true,
         items: [
           {
             label: 'Summary',
@@ -128,6 +129,7 @@ export class LeftSideBarComponent implements OnInit {
         icon: 'pi pi-wallet',
         // command: () => this.router.navigate(['main/financials/page1/' + this.projectId]),
         // command: () => this.router.navigate(['main/financials']),
+        expanded: true,
         items: [
           {
             label: 'Summary',

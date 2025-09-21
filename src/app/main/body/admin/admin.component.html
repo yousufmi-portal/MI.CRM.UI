@@ -30,7 +30,7 @@
     <section class="projects-table-section">
         <div style="padding-bottom: 1rem; font-size: 1.5rem; font-weight: bold;">Projects</div>
         <p-table [value]="data?.projects || []" dataKey="id"
-            [globalFilterFields]="['title', 'awardNumber', 'subContractorName', 'state', 'projectStatus']">
+            [globalFilterFields]="['title', 'awardNumber', 'company', 'totalApprovedBudget', 'subContractorName', 'state', 'projectStatus']">
             <ng-template #header>
                 <tr class="animate__animated animate__fadeIn">
                     <th pSortableColumn="title">
@@ -45,6 +45,13 @@
                             <p-sortIcon field="awardNumber" />
                             Award No
                             <p-columnFilter type="text" field="awardNumber" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn='company'>
+                        <div>
+                            <p-sortIcon field="company" />
+                            Company
+                            <p-columnFilter type="text" field="company" display="menu" class="ml-auto" />
                         </div>
                     </th>
                     <th pSortableColumn="totalApprovedBudget">
@@ -84,6 +91,7 @@
 
                     <td>{{ project.title }}</td>
                     <td>{{ project.awardNumber }}</td>
+                    <td>{{ project.company }}</td>
                     <td>{{ project.totalApprovedBudget | currency }}</td>
                     <td>{{ project.subContractorName }}</td>
                     <td>{{ project.state }}</td>

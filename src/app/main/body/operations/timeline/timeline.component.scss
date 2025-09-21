@@ -220,14 +220,14 @@ main {
 
 
 :host ::ng-deep .p-datatable-thead>tr>th {
-    text-align: center !important;
+    // text-align: center !important;
     background-color: #36a785 !important;
     color: white !important;
     font-weight: lighter !important;
 }
 
 :host ::ng-deep .p-datatable-tbody>tr>td {
-    text-align: center !important;
+    // text-align: center !important;
     // background-color: #1d9ebd !important;
     // color: white !important;
     font-weight: lighter !important;
