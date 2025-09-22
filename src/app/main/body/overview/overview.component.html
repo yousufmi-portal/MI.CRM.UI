@@ -42,9 +42,47 @@
                 <div class="info-value">{{ ProjectOverview?.project?.projectStatus }}</div>
             </div>
         </div>
+
+        <div class="top-info-card-row">
+            <div class="top-info-card">
+                <div class="info-label">Approved Budget</div>
+                <div class="info-value">{{ ProjectOverview?.project?.totalApprovedBudget | currency }}</div>
+            </div>
+            <div class="top-info-card">
+                <div class="info-label">Disbursed Budget</div>
+                <div class="info-value">{{ ProjectOverview?.project?.totalDisbursedBudget | currency }}</div>
+            </div>
+            <div class="top-info-card">
+                <div class="info-label">Remaining Budget</div>
+                <div class="info-value">{{ ProjectOverview?.project?.totalRemainingBudget | currency }}</div>
+            </div>
+        </div>
+
+        <div class="top-info-card-row">
+            <div class="top-info-card">
+                <div class="info-label">Start Date</div>
+                <div class="info-value">{{ ProjectOverview?.project?.startDate | date: 'MMM d, y' }}</div>
+            </div>
+
+            <div class="top-info-card">
+                <div class="info-label">End Date</div>
+                <div class="info-value">{{ ProjectOverview?.project?.endDate | date: 'MMM d, y' }}</div>
+            </div>
+
+            <div class="top-info-card">
+                <div class="info-label">Project Manager</div>
+                <div class="info-value">{{ ProjectOverview?.project?.projectManagerName }}</div>
+            </div>
+
+            <div class="top-info-card">
+                <div class="info-label">Subcontractor</div>
+                <div class="info-value">{{ ProjectOverview?.project?.subContractorName }}</div>
+            </div>
+        </div>
     </section>
 
     <section class="bottom-cards-section">
+
         <section class="bottom-cards-section-left">
             <section class="tasks-report-section animate__animated animate__fadeInLeft">
                 <header>
@@ -87,64 +125,6 @@
                     <small>See more</small>
                 </footer> -->
             </section>
-        </section>
-        <section class="right-cards-section animate__animated animate__fadeInDown">
-            <div class="right-card">
-                <div class="right-card-header">
-                    <div>Active Tasks</div>
-                </div>
-                <div class="right-card-body">
-                    <div class="right-card-content">
-                        <div>{{ ProjectOverview?.activeTasks }}</div>
-                        <a href="">See more</a>
-                    </div>
-                    <div class="right-card-footer">
-                        <!-- <span><i class="pi pi-wave-pulse"></i>15</span> vs <span>last 7 days</span> -->
-                    </div>
-                </div>
-            </div>
-            <div class="right-card">
-                <div class="right-card-header">
-                    <div>Upcoming Tasks</div>
-                </div>
-                <div class="right-card-body">
-                    <div class="right-card-content">
-                        <div>{{ ProjectOverview?.upcomingTasks }}</div>
-                        <a href="">See more</a>
-                    </div>
-                    <div class="right-card-footer">
-                        <span>View Calendar</span>
-                    </div>
-                </div>
-            </div>
-            <div class="right-card">
-                <div class="right-card-header">
-                    <div>Pending Tasks</div>
-                </div>
-                <div class="right-card-body">
-                    <div class="right-card-content">
-                        <div>{{ ProjectOverview?.pendingTasks }}</div>
-                        <a href="">See more</a>
-                    </div>
-                    <div class="right-card-footer">
-                        <!-- <span>Last Claim Approved 60 Days ago</span> -->
-                    </div>
-                </div>
-            </div>
-            <div class="right-card">
-                <div class="right-card-header">
-                    <div>Budget Status</div>
-                </div>
-                <div class="right-card-body">
-                    <div class="right-card-content">
-                        <div>{{ ProjectOverview?.budgetPercentageUsed }}%</div>
-                        <a href="">See more</a>
-                    </div>
-                    <div class="right-card-footer">
-                        <!-- <span>Last Budget Approved 2 Days ago</span> -->
-                    </div>
-                </div>
-            </div>
         </section>
     </section>
 

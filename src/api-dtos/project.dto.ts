@@ -7,6 +7,7 @@ export interface ProjectDto {
     company: string;
     state: string;
     projectManagerId?: number;
+    projectManagerName?: string;
     subContractorId?: number;
     subContractorName?: string;
     totalApprovedBudget?: number;
