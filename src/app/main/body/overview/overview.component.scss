@@ -9,16 +9,17 @@ main {
     margin: 0 auto;
 }
 
-.top-cards-section {
+.right-cards-section {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    /* two per row */
     gap: 1.5rem;
-    width: max-content;
-    align-items: stretch;
+    // width: 45%; /* let it expand instead of max-content */
+    // align-items: stretch;
 }
 
-.top-card {
+
+.right-card {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -28,39 +29,39 @@ main {
 
 }
 
-.top-card-header {
+.right-card-header {
     padding: 0.75rem 1.25rem;
     border-bottom: 3px solid rgb(237 237 237);
     font-size: 1.25rem;
 }
 
-.top-card-body {
+.right-card-body {
     padding: 0.75rem 1.25rem;
 }
 
-.top-card-content {
+.right-card-content {
     display: flex;
     gap: 0.25rem;
     align-items: baseline;
 }
 
-.top-card-content div {
+.right-card-content div {
 
     font-size: 3rem;
     font-weight: bold;
 }
 
-.top-card-content a {
+.right-card-content a {
     text-decoration: none;
     color: #36a785;
     font-size: 0.75rem;
 }
 
-.top-card-footer {
+.right-card-footer {
     white-space: nowrap;
 }
 
-.top-card-footer span:first-of-type {
+.right-card-footer span:first-of-type {
     color: #36a785;
     font-size: 0.75rem;
 }
@@ -70,6 +71,7 @@ main {
     gap: 1.5rem;
     // border: 1px solid red;
     width: 100%;
+    justify-content: center;
 }
 
 .bottom-cards-section-left {
@@ -233,4 +235,88 @@ main {
 
 .custom-list li {
     margin-bottom: 1rem;
+}
+
+.top-section {
+    display: flex;
+    // flex-wrap: wrap;
+    flex-direction: column;
+    // justify-content: center;
+    gap: 1.5rem;
+    // border: 1px solid blue;
+    width: 100%;
+}
+
+.top-info-card {
+    background-color: white;
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    // width: 40%;
+    // width: max-content;
+    flex: 1;
+    // border: 1px solid gold;
+}
+
+.top-info-card-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    // width: 100%;
+    // border: 1px solid red;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #36a785;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.status-description-section {
+    background-color: white;
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    width: 100%;
+}
+
+.status-description-section header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.description-text {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.editable-input {
+    font-size: inherit;
+    font-family: inherit;
+    color: #333;
+    background: #f9f9f9;
+    /* light background to show edit mode */
+    border: 1px solid #ccc;
+    /* visible border */
+    border-radius: 6px;
+    /* soft corners */
+    outline: none;
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* subtle shadow */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.editable-input:focus {
+    border-color: #36a785;
+    /* highlight border */
+    box-shadow: 0 0 5px rgba(54, 167, 133, 0.3);
 }

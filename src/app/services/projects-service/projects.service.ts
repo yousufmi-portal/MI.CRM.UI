@@ -52,4 +52,8 @@ export class ProjectsService {
   getMainPageData(): Observable<MainPageDataDto> {
     return this.http.get<MainPageDataDto>(`${this.baseUrl}/MainPageData`);
   }
+
+  updateProjectStatusDescription(projectId: number, statusDescription: string): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/UpdateProjectStatusDescription`, { projectId: projectId, status: statusDescription });
+  }
 }

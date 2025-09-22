@@ -1,4 +1,8 @@
+import { ProjectDto } from "./project.dto";
+
 export interface OverviewResponseDto {
+    project : ProjectDto;
+
     activeTasks: number;
     upcomingTasks: number;
     pendingTasks: number;

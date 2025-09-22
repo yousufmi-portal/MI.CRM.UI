@@ -8,10 +8,11 @@ import { SelectedProjectService } from '../../../services/selected-project-servi
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-overview',
-  imports: [ProgressBarModule, ProgressBar, CommonModule],
+  imports: [ProgressBarModule, ProgressBar, CommonModule, FormsModule],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
@@ -19,6 +20,7 @@ export class OverviewComponent implements OnInit {
   weekStartDate: Date;
   weekEndDate: Date;
   projectId = signal<number | null>(null);
+  isEditing: boolean = false;
 
   constructor(private projectService: ProjectsService, private selectedProjectService: SelectedProjectService, private route: ActivatedRoute) {
     const today = new Date();
@@ -54,11 +56,51 @@ export class OverviewComponent implements OnInit {
       next: (response) => {
         console.log('Project Overview:', response);
         this.ProjectOverview = response;
+        this.editableStatus = this.ProjectOverview?.project?.status || '';
       },
       error: (err) => {
         console.error('Error fetching project overview:', err);
       }
     });
+  }
+
+  enableEdit(): void {
+    this.isEditing = true;
+  }
+
+  editableStatus: string = '';
+
+  saveStatusDescription(): void {
+    if (!this.ProjectOverview || !this.ProjectOverview.project) {
+      console.error("No project loaded.");
+      return;
+    }
+
+    const projectId = this.ProjectOverview.project.projectId; // adjust if key is named differently
+    const status = this.editableStatus;
+
+    if (!status || status.trim() === '') {
+      console.warn("Status cannot be empty.");
+      return;
+    }
+
+    this.projectService.updateProjectStatusDescription(projectId, status)
+      .subscribe({
+        next: (response) => {
+          console.log("Status updated successfully:", response);
+
+          // update local project object with new status
+          if (this.ProjectOverview) {
+            this.ProjectOverview.project.status = status;
+          }
+
+          this.isEditing = false;
+        },
+        error: (err) => {
+          console.error("Error updating status:", err);
+          // optionally show toast/snackbar here
+        }
+      });
   }
 
 }

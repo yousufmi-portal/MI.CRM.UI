@@ -17,7 +17,7 @@ import { SelectedProjectService } from '../../services/selected-project-service/
 export class LeftSideBarComponent implements OnInit {
   @Input() isOpen: boolean = true;
   @Output() closed = new EventEmitter<void>();
-  projectId : number | null = null;
+  projectId: number | null = null;
 
   constructor(private router: Router, private selectedProjectService: SelectedProjectService) { }
 
@@ -94,7 +94,7 @@ export class LeftSideBarComponent implements OnInit {
           //   command: () => this.router.navigate(['main/overview/analytics'])
           // }
         ],
-        style: {'margin-left': '12px'}
+        style: { 'margin-left': '12px' }
       },
       {
         label: 'Operations',
@@ -105,22 +105,26 @@ export class LeftSideBarComponent implements OnInit {
           {
             label: 'Summary',
             icon: 'pi pi-file',
-            command: () => this.router.navigate(['main/operations/summary/' + this.projectId])
+            command: () => this.router.navigate(['main/operations/summary/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           },
           {
             label: 'Timeline',
             icon: 'pi pi-calendar',
-            command: () => this.router.navigate(['main/operations/timeline/' + this.projectId])
+            command: () => this.router.navigate(['main/operations/timeline/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           },
           {
             label: 'TaskManager',
             icon: 'pi pi-address-book',
-            command: () => this.router.navigate(['main/operations/taskmanager/' + this.projectId])
+            command: () => this.router.navigate(['main/operations/taskmanager/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           },
           {
             label: 'Stakeholder Directory',
             icon: 'pi pi-users',
-            command: () => this.router.navigate(['main/operations/stakeholder-directory'])
+            command: () => this.router.navigate(['main/operations/stakeholder-directory']),
+            style: { 'margin-left': '9px' }
           }
         ]
       },
@@ -134,26 +138,23 @@ export class LeftSideBarComponent implements OnInit {
           {
             label: 'Summary',
             icon: 'pi pi-file',
-            command: () => this.router.navigate(['main/financials/page1/' + this.projectId])
+            command: () => this.router.navigate(['main/financials/page1/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           },
           {
             label: 'Budget Category',
             icon: 'pi pi-file',
-            command: () => this.router.navigate(['main/financials/page2/' + this.projectId])
+            command: () => this.router.navigate(['main/financials/page2/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           },
           {
             label: 'Claims',
             icon: 'pi pi-file-edit',
-            command: () => this.router.navigate(['main/financials/claims/' + this.projectId])
+            command: () => this.router.navigate(['main/financials/claims/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           }
         ]
-      },
-      // {
-      //   label: 'Documents',
-      //   icon: 'pi pi-folder',
-      //   command: () => this.router.navigate(['main/documents']),
-      //   items: [] // No options currently
-      // }
+      }
     ];
 
   }

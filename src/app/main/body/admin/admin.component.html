@@ -31,8 +31,12 @@
         <div style="padding-bottom: 1rem; font-size: 1.5rem; font-weight: bold;">Projects</div>
         <p-table [value]="data?.projects || []" dataKey="id"
             [globalFilterFields]="['title', 'awardNumber', 'company', 'totalApprovedBudget', 'subContractorName', 'state', 'projectStatus']">
+
+            <!-- Header -->
             <ng-template #header>
                 <tr class="animate__animated animate__fadeIn">
+                    <th style="width: 60px;">S. no</th> <!-- New Column -->
+
                     <th pSortableColumn="title">
                         <div>
                             <p-sortIcon field="title" />
@@ -47,7 +51,7 @@
                             <p-columnFilter type="text" field="awardNumber" display="menu" class="ml-auto" />
                         </div>
                     </th>
-                    <th pSortableColumn='company'>
+                    <th pSortableColumn="company">
                         <div>
                             <p-sortIcon field="company" />
                             Company
@@ -56,7 +60,6 @@
                     </th>
                     <th pSortableColumn="totalApprovedBudget">
                         <div>
-
                             <p-sortIcon field="totalApprovedBudget" />
                             Budget
                             <p-columnFilter type="numeric" field="totalApprovedBudget" display="menu" class="ml-auto" />
@@ -85,9 +88,13 @@
                     </th>
                 </tr>
             </ng-template>
-            <ng-template #body let-project>
+
+            <!-- Body -->
+            <ng-template #body let-project let-rowIndex="rowIndex">
                 <tr class="animate__animated animate__fadeIn animate__slow"
                     (click)="onProjectSelected(project.projectId)">
+
+                    <td>{{ rowIndex + 1 }}</td> <!-- S. no -->
 
                     <td>{{ project.title }}</td>
                     <td>{{ project.awardNumber }}</td>
@@ -96,9 +103,9 @@
                     <td>{{ project.subContractorName }}</td>
                     <td>{{ project.state }}</td>
                     <td>{{ project.projectStatus }}</td>
-
                 </tr>
             </ng-template>
         </p-table>
+
     </section>
 </main>
