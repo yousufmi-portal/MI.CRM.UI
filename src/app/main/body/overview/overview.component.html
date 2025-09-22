@@ -11,6 +11,10 @@
     <section class="top-section animate__animated animate__fadeIn">
         <div class="top-info-card-row">
             <div class="top-info-card">
+                <div class="info-label">Project ID</div>
+                <div class="info-value">{{ ProjectOverview?.project?.awardNumber }}</div>
+            </div>
+            <div class="top-info-card">
                 <div class="info-label">Project Title</div>
                 <div class="info-value">{{ ProjectOverview?.project?.title }}</div>
             </div>
@@ -19,23 +23,23 @@
                 <div class="info-value">{{ ProjectOverview?.project?.company }}</div>
             </div>
             <div class="top-info-card">
-                <div class="info-label">Project Status</div>
-                <div class="info-value">{{ ProjectOverview?.project?.projectStatus }}</div>
+                <div class="info-label">Agency</div>
+                <div class="info-value">{{ ProjectOverview?.project?.agency }}</div>
             </div>
         </div>
 
         <div class="top-info-card-row">
             <div class="top-info-card">
-                <div class="info-label">Approved Budget</div>
-                <div class="info-value">{{ ProjectOverview?.project?.totalApprovedBudget | currency }}</div>
+                <div class="info-label">Category</div>
+                <div class="info-value">{{ ProjectOverview?.project?.category }}</div>
             </div>
             <div class="top-info-card">
-                <div class="info-label">Disbursed Budget</div>
-                <div class="info-value">{{ ProjectOverview?.project?.totalDisbursedBudget | currency }}</div>
+                <div class="info-label">State</div>
+                <div class="info-value">{{ ProjectOverview?.project?.state }}</div>
             </div>
             <div class="top-info-card">
-                <div class="info-label">Remaining Budget</div>
-                <div class="info-value">{{ ProjectOverview?.project?.totalRemainingBudget | currency }}</div>
+                <div class="info-label">Project Status</div>
+                <div class="info-value">{{ ProjectOverview?.project?.projectStatus }}</div>
             </div>
         </div>
     </section>
@@ -150,14 +154,17 @@
             <button *ngIf="!isEditing" (click)="enableEdit()" class="icon-btn" style="cursor: pointer;">
                 <i class="pi pi-pencil"></i>
             </button>
-            <button *ngIf="isEditing" (click)="saveStatusDescription()" class="icon-btn" style="cursor: pointer;">
+            <button *ngIf="isEditing" (click)="saveStatusDescription()" class="icon-btn" style="cursor: pointer;"
+                [disabled]="isSaving">
                 <i class="pi pi-check"></i>
+                <i class="pi pi-spinner" *ngIf="isSaving"></i>
             </button>
         </header>
 
         <div class="description-text">
             <span *ngIf="!isEditing">{{ ProjectOverview?.project?.status }}</span>
-            <input *ngIf="isEditing" [(ngModel)]="editableStatus" type="text" class="editable-input" />
+            <input *ngIf="isEditing" [(ngModel)]="editableStatus" type="text" class="editable-input"
+                [disabled]="isSaving" />
         </div>
     </section>
 

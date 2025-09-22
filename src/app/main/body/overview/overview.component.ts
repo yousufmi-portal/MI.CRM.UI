@@ -70,6 +70,8 @@ export class OverviewComponent implements OnInit {
 
   editableStatus: string = '';
 
+  isSaving: boolean = false;
+
   saveStatusDescription(): void {
     if (!this.ProjectOverview || !this.ProjectOverview.project) {
       console.error("No project loaded.");
@@ -84,6 +86,8 @@ export class OverviewComponent implements OnInit {
       return;
     }
 
+    this.isSaving = true;
+
     this.projectService.updateProjectStatusDescription(projectId, status)
       .subscribe({
         next: (response) => {
@@ -95,6 +99,7 @@ export class OverviewComponent implements OnInit {
           }
 
           this.isEditing = false;
+          this.isSaving = false;
         },
         error: (err) => {
           console.error("Error updating status:", err);
