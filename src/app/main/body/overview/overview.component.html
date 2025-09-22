@@ -146,11 +146,11 @@
 
     <section class="status-description-section animate__animated animate__fadeInUp">
         <header class="flex items-center justify-between">
-            <span>Status & Description</span>
-            <button *ngIf="!isEditing" (click)="enableEdit()" class="icon-btn">
+            <span>Status</span>
+            <button *ngIf="!isEditing" (click)="enableEdit()" class="icon-btn" style="cursor: pointer;">
                 <i class="pi pi-pencil"></i>
             </button>
-            <button *ngIf="isEditing" (click)="saveStatusDescription()" class="icon-btn">
+            <button *ngIf="isEditing" (click)="saveStatusDescription()" class="icon-btn" style="cursor: pointer;">
                 <i class="pi pi-check"></i>
             </button>
         </header>
