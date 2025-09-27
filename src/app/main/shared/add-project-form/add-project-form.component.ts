@@ -10,10 +10,12 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { TableModule } from 'primeng/table';
 import { CreateProjectDto } from '../../../../api-dtos/create-project.dto';
 import { ProjectsService } from '../../../services/projects-service/projects.service';
+import { DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-add-project-form',
-  imports: [CommonModule, ButtonModule, StepperModule, Dialog, ReactiveFormsModule, InputTextModule, FloatLabelModule, TableModule],
+  imports: [CommonModule, ButtonModule, StepperModule, Dialog, ReactiveFormsModule, InputTextModule, FloatLabelModule, TableModule, DatePickerModule, SelectModule],
   templateUrl: './add-project-form.component.html',
   styleUrl: './add-project-form.component.scss'
 })
@@ -31,7 +33,10 @@ export class AddProjectFormComponent {
         category: ['', Validators.required],
         agency: ['', Validators.required],
         company: ['', Validators.required],
-        state: ['', Validators.required]
+        state: ['', Validators.required],
+        startDate: ['', Validators.required],
+        endDate: ['', Validators.required],
+        projectStatus: ['', Validators.required]
       }),
       subcontractorDetails: this.fb.group({
         subcontractorName: ['', Validators.required],
@@ -62,7 +67,7 @@ export class AddProjectFormComponent {
   }
 
   getCategoryName(id: number): string {
-      return this.budgetCategories.find(c => c.id === id)?.name ?? '';
+    return this.budgetCategories.find(c => c.id === id)?.name ?? '';
   }
 
   get projectBudgetInfo(): FormArray {
@@ -80,7 +85,10 @@ export class AddProjectFormComponent {
           category: formData.projectDetails.category,
           agency: formData.projectDetails.agency,
           company: formData.projectDetails.company,
-          state: formData.projectDetails.state
+          state: formData.projectDetails.state,
+          startDate: formData.projectDetails.startDate,
+          endDate: formData.projectDetails.endDate,
+          projectStatus: formData.projectDetails.projectStatus
         },
         subcontractorDetails: {
           subcontractorName: formData.subcontractorDetails.subcontractorName,

@@ -6,6 +6,9 @@ export interface CreateProjectDto {
         agency: string;
         company: string;
         state: string;
+        startDate: string;
+        endDate: string;
+        projectStatus: string;
     };
     subcontractorDetails: {
         subcontractorName: string;

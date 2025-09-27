@@ -4,16 +4,14 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { Select } from "primeng/select";
 import { DisbursementsService } from '../../../services/disbursements/disbursements.service';
-import { DisbursementDto, NewDisbursementDto } from '../../../../api-dtos/disbursement.dto';
+import { NewDisbursementDto } from '../../../../api-dtos/disbursement.dto';
 import { DatePickerModule } from 'primeng/datepicker';
-import { SelectedProjectService } from '../../../services/selected-project-service/selected-project.service';
 import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-add-disbursed-dialog',
-  imports: [FormsModule, CommonModule, DialogModule, ButtonModule, InputTextModule, Select, ReactiveFormsModule, DatePickerModule, DropdownModule],
+  imports: [FormsModule, CommonModule, DialogModule, ButtonModule, InputTextModule, ReactiveFormsModule, DatePickerModule, DropdownModule],
   templateUrl: './add-disbursed-dialog.component.html',
   styleUrl: './add-disbursed-dialog.component.scss'
 })

@@ -59,9 +59,7 @@ export class AdminComponent implements OnInit {
 
   loadProjectsData(shouldCallData: boolean = false) {
     if (shouldCallData) {
-      this.projectsService.getAllProjects().subscribe(projects => {
-        this.projects.set(projects);
-      });
+      this.loadMainPageData();
     }
   }
 
