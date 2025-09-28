@@ -4,6 +4,8 @@ export interface DisbursementDto {
     description?: string;
     disbursementDate: string; // ISO string format for DateTime
     disbursedAmount: number;
+    units?: number;
+    rate?: number;
 }
 
 

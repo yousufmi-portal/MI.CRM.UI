@@ -28,6 +28,11 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
   claimNumbers: number[] = [];
 
   ngOnInit(): void {
+
+    // Whenever units or rate changes → recalc amount
+    this.form.get('units')?.valueChanges.subscribe(() => this.updateAmount());
+    this.form.get('rate')?.valueChanges.subscribe(() => this.updateAmount());
+
     this.loadClaimNumbers();
   }
 
@@ -43,7 +48,9 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
       amount: [null],
       date: [''],
       documentId: [null],
-      claimNumber: [null]
+      claimNumber: [null],
+      units: [null],
+      rate: [null]
     });
   }
 
@@ -68,7 +75,9 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
       disbursementDate: this.form.value.date.toISOString(), // Convert to ISO string
       disbursedAmount: this.form.value.amount,
       documentId: this.form.value.documentId, // Optional, handle file upload separately if needed
-      claimNumber: this.form.value.claimNumber // Optional claim number
+      claimNumber: this.form.value.claimNumber, // Optional claim number
+      units: this.form.value.units,
+      rate: this.form.value.rate
     };
     this.disbursementsService.createDisbursement(disbursementData).subscribe({
       next: () => {
@@ -111,6 +120,21 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
 
       // Select it
       this.form.patchValue({ claimNumber: newClaim });
+    }
+  }
+
+  updateAmount() {
+    if (this.categoryId == 2) return; // skip for fringe benefits
+
+    // Calculate amount based on units and rate
+    const units = this.form.get('units')?.value || 0;
+    const rate = this.form.get('rate')?.value || 0;
+    const autoAmount = units * rate;
+
+    // ✅ Only update if user hasn't manually changed amount right now
+    const currentAmount = this.form.get('amount')?.value;
+    if (currentAmount !== autoAmount) {
+      this.form.patchValue({ amount: autoAmount }, { emitEvent: false });
     }
   }
 }
