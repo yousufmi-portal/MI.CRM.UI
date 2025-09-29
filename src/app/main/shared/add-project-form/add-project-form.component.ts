@@ -50,9 +50,13 @@ export class AddProjectFormComponent {
     this.budgetCategories.forEach(category => {
       budgetArray.push(this.fb.group({
         categoryId: [category.id], // hidden/fixed
-        approvedAmount: ['', Validators.required]
+        approvedAmount: [0]
       }));
     });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // force 00:00
+    this.projectForm.get('endDate')?.setValue(today);
   }
 
   @Input() visible: boolean = false;
