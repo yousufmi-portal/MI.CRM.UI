@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Button, ButtonModule } from 'primeng/button';
@@ -86,8 +86,8 @@ export class AddProjectFormComponent {
           agency: formData.projectDetails.agency,
           company: formData.projectDetails.company,
           state: formData.projectDetails.state,
-          startDate: formData.projectDetails.startDate,
-          endDate: formData.projectDetails.endDate,
+          startDate: formatDate(formData.projectDetails.startDate, 'yyyy-MM-dd', 'en-US'),
+          endDate: formatDate(formData.projectDetails.endDate, 'yyyy-MM-dd', 'en-US'),
           projectStatus: formData.projectDetails.projectStatus
         },
         subcontractorDetails: {
