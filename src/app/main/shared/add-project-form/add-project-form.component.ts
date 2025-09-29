@@ -100,6 +100,7 @@ export class AddProjectFormComponent {
       this.projectsService.createProject(projectData).subscribe({
         next: (response) => {
           console.log('Project created successfully:', response);
+          this.projectForm.reset();
           this.close(true); // Close the dialog after successful submission
         }
       });
