@@ -56,4 +56,8 @@ export class ProjectsService {
   updateProjectStatusDescription(projectId: number, statusDescription: string): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/UpdateProjectStatusDescription`, { projectId: projectId, status: statusDescription });
   }
+
+  updateOverviewData(projectId: number, field: string, value: string | number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/OverviewEdit`, { projectId: projectId, field: field, value: value });
+  }
 }
