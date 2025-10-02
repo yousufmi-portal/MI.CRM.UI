@@ -164,39 +164,21 @@
             <div class="top-info-card">
                 <div class="info-label">Approved Budget</div>
                 <div class="info-value">
-                    <p-inplace closable="true">
-                        <ng-template pTemplate="display">{{ ProjectOverview?.project?.totalApprovedBudget | currency
-                            }}</ng-template>
-                        <ng-template pTemplate="content">
-                            <input type="number" pInputText />
-                        </ng-template>
-                    </p-inplace>
+                    {{ ProjectOverview?.project?.totalApprovedBudget | currency }}
                 </div>
             </div>
 
             <div class="top-info-card">
                 <div class="info-label">Disbursed Budget</div>
                 <div class="info-value">
-                    <p-inplace closable="true">
-                        <ng-template pTemplate="display">{{ ProjectOverview?.project?.totalDisbursedBudget | currency
-                            }}</ng-template>
-                        <ng-template pTemplate="content">
-                            <input type="number" pInputText />
-                        </ng-template>
-                    </p-inplace>
+                    {{ ProjectOverview?.project?.totalDisbursedBudget | currency }}
                 </div>
             </div>
 
             <div class="top-info-card">
                 <div class="info-label">Remaining Budget</div>
                 <div class="info-value">
-                    <p-inplace closable="true">
-                        <ng-template pTemplate="display">{{ ProjectOverview?.project?.totalRemainingBudget | currency
-                            }}</ng-template>
-                        <ng-template pTemplate="content">
-                            <input type="number" pInputText />
-                        </ng-template>
-                    </p-inplace>
+                    {{ ProjectOverview?.project?.totalRemainingBudget | currency }}
                 </div>
             </div>
         </div>
