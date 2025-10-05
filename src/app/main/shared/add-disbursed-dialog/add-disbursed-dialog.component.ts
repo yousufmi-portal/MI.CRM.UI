@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { DisbursementsService } from '../../../services/disbursements/disbursements.service';
-import { NewDisbursementDto } from '../../../../api-dtos/disbursement.dto';
+import { DisbursementDto, NewDisbursementDto } from '../../../../api-dtos/disbursement.dto';
 import { DatePickerModule } from 'primeng/datepicker';
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -27,6 +27,10 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
 
   claimNumbers: number[] = [];
 
+  @Input() disbursementLogId: number | null = null; // null means new disbursement, otherwise edit existing
+  @Output() disbursementLogIdChange = new EventEmitter<number | null>();
+  @Output() disbursementAdded = new EventEmitter<void>();
+
   ngOnInit(): void {
 
     // Whenever units or rate changes → recalc amount
@@ -39,6 +43,32 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['projectId'] && !changes['projectId'].firstChange) {
       this.loadClaimNumbers();
+    }
+
+    if (changes['disbursementLogId']) {
+      const newId = changes['disbursementLogId'].currentValue;
+
+      if (newId && newId !== 0) {
+        // 🟢 Edit mode → load existing disbursement data
+        this.display = true;
+        this.disbursementsService.getDisbursementById(newId).subscribe({
+          next: (data) => {
+            this.form.patchValue({
+              description: data.description,
+              amount: data.disbursedAmount,
+              date: new Date(data.disbursementDate),
+              documentId: data.documentId || null,
+              claimNumber: data.claimNumber || null,
+              units: data.units || null,
+              rate: data.rate || null
+            });
+          }
+        })
+      } else {
+        // ⚪ New mode → reset form
+        this.form.reset();
+        this.disbursementLogId = null;
+      }
     }
   }
 
@@ -60,35 +90,64 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
 
   close() {
     this.display = false;
+    this.disbursementLogId = null;
     this.displayChange.emit(this.display);
     this.form.reset();
   }
 
   submit() {
-    console.log('Form Data:', this.form.value);
-    const disbursementData: NewDisbursementDto = {
+    if (!this.form.valid) {
+      console.warn('⚠️ Form is invalid');
+      return;
+    }
 
+    // Base form values
+    const baseDisbursementData = {
       projectId: this.projectId,
       categoryId: this.categoryId,
-      budgetEntryId: this.budgetEntryId,
       description: this.form.value.description,
-      disbursementDate: this.form.value.date.toISOString(), // Convert to ISO string
+      disbursementDate: this.form.value.date?.toISOString(),
       disbursedAmount: this.form.value.amount,
-      documentId: this.form.value.documentId, // Optional, handle file upload separately if needed
-      claimNumber: this.form.value.claimNumber, // Optional claim number
+      documentId: this.form.value.documentId,
+      claimNumber: this.form.value.claimNumber,
       units: this.form.value.units,
       rate: this.form.value.rate
     };
-    this.disbursementsService.createDisbursement(disbursementData).subscribe({
-      next: () => {
-        console.log('Disbursement created successfully');
-        this.close();
-      },
-      error: (error) => {
-        console.error('Error creating disbursement:', error);
-      }
-    });
+
+    const isUpdate = this.disbursementLogId && this.disbursementLogId > 0;
+
+    if (isUpdate) {
+      // Existing disbursement - update
+      const updatedDisbursement: DisbursementDto = {
+        ...baseDisbursementData,
+        disbursementLogId: this.disbursementLogId
+      } as DisbursementDto;
+      this.disbursementsService.updateDisbursement(updatedDisbursement).subscribe({
+        next: () => {
+          console.log('✅ Disbursement updated successfully');
+          this.disbursementAdded.emit();
+          this.close();
+        }
+      });
+    }
+    else {
+      // New disbursement
+      const newDisbursement: NewDisbursementDto = {
+        ...baseDisbursementData,
+        budgetEntryId: this.budgetEntryId
+      } as NewDisbursementDto;
+
+      this.disbursementsService.createDisbursement(newDisbursement).subscribe({
+        next: () => {
+          console.log('✅ Disbursement created successfully');
+          this.disbursementAdded.emit();
+          this.close();
+        }
+      });
+    }
   }
+
+
 
   private loadClaimNumbers(): void {
     if (this.projectId) {

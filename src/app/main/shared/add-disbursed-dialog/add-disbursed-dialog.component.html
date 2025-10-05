@@ -47,7 +47,7 @@
         <!-- Button -->
         <div class="submit-btn-container animate__animated animate__fadeInUp animate__faster"
             style="animation-delay: 0.3s;">
-            <button pButton type="button" label="Submit Now" class="submit-btn" (click)="submit()"></button>
+            <button pButton type="button" [label]="disbursementLogId ? 'Update' : 'Submit Now'" class="submit-btn" (click)="submit()"></button>
         </div>
     </form>
 </p-dialog>

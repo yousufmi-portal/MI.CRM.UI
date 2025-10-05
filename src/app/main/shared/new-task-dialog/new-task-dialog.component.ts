@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -21,11 +21,13 @@ import { UserDto } from '../../../../api-dtos/user.dto';
   templateUrl: './new-task-dialog.component.html',
   styleUrl: './new-task-dialog.component.scss'
 })
-export class NewTaskDialogComponent {
+export class NewTaskDialogComponent implements OnInit, OnChanges {
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   @Input() projectId!: number;
   // @Output() projectIdChange = new EventEmitter<number>();
+  @Input() taskToEdit: TaskDto | null = null;
+  @Output() taskToEditChange = new EventEmitter<TaskDto | null>();
 
   taskForm: FormGroup;
 
@@ -62,6 +64,28 @@ export class NewTaskDialogComponent {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.taskToEdit) {
+      const startDate = this.taskToEdit.startDate
+        ? new Date(this.taskToEdit.startDate)
+        : null;
+      const endDate = this.taskToEdit.endDate
+        ? new Date(this.taskToEdit.endDate)
+        : null;
+
+      this.taskForm.patchValue({
+        title: this.taskToEdit.title,
+        description: this.taskToEdit.description,
+        startDate: startDate,
+        endDate: endDate,
+        assignedTo: this.taskToEdit.assignedTo,
+        statusId: this.taskToEdit.statusId,
+        activityTypeId: this.taskToEdit.activityTypeId,
+        deliverableType: this.taskToEdit.deliverableType
+      });
+    }
+  }
+
   close() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
@@ -71,22 +95,29 @@ export class NewTaskDialogComponent {
 
 
   onSubmit() {
-    if (this.taskForm.valid) {
-      let newTaskDto: NewTaskDto = {
-        projectId: this.projectId,
-        ...this.taskForm.value
-      }
-      this.tasksService.createTask(newTaskDto).subscribe({
-        next: (response) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'New task created successfully' });
+    if (this.taskForm.invalid) return;
+
+    const formData = this.taskForm.value;
+
+    if (this.taskToEdit) {
+      // EDIT mode
+      this.tasksService.updateTask(this.taskToEdit.id, formData).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Updated', detail: 'Task updated successfully' });
           this.close();
-        },
-        error: (error) => {
-          console.error('Error creating task:', error);
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to create task' });
+        }
+      });
+    } else {
+      // CREATE mode
+      this.tasksService.createTask(formData).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Created', detail: 'Task created successfully' });
+          this.close();
         }
       });
     }
   }
+
+
 }
 

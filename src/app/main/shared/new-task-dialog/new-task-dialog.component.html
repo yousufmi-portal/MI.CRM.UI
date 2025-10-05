@@ -1,5 +1,6 @@
-<p-dialog header="New Task" [(visible)]="visible" [modal]="true" [style]="{ width: '40vw', height: '80vh' }"
-    [closable]="true" [draggable]="false" [contentStyle]="{ padding: '0' }" (onHide)="close()">
+<p-dialog [header]="taskToEdit ? 'Edit Task' : 'New Task'" [(visible)]="visible" [modal]="true"
+    [style]="{ width: '40vw', height: '80vh' }" [closable]="true" [draggable]="false" [contentStyle]="{ padding: '0' }"
+    (onHide)="close()">
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="new-task-form">
         <div class="form-content animate__animated animate__fadeIn animate__slow">
             <div class="p-field">
@@ -52,7 +53,7 @@
         <p-footer>
             <div class="form-actions">
                 <button pButton type="button" label="Cancel" class="p-button-outlined" (click)="close()"></button>
-                <button pButton type="submit" label="Save" [disabled]="taskForm.invalid"
+                <button pButton type="submit" [label]="taskToEdit ? 'Update' : 'Create'" [disabled]="taskForm.invalid"
                     class="p-button-primary"></button>
             </div>
         </p-footer>

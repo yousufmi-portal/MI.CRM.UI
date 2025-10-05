@@ -28,5 +28,16 @@ export class DisbursementsService {
     return this.http.get<number[]>(`${this.baseUrl}/ClaimNumbers/${projectId}`);
   }
 
+  getDisbursementById(disbursementLogId: number): Observable<DisbursementDto> {
+    return this.http.get<DisbursementDto>(`${this.baseUrl}/DisbursementLog/${disbursementLogId}`);
+  }
+
+  updateDisbursement(disbursement: DisbursementDto): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update-disbursement`, disbursement);
+  }
+
+  deleteDisbursement(disbursementLogId: number) {
+    return this.http.delete(`${this.baseUrl}/delete-disbursement/${disbursementLogId}`);
+  }
 
 }

@@ -13,10 +13,14 @@ import { DisbursementsService } from '../../../../services/disbursements/disburs
 import { DisbursementDto } from '../../../../../api-dtos/disbursement.dto';
 import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
 import { ActivatedRoute } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-page2',
-  imports: [CommonModule, TableModule, FormsModule, SelectModule, AddDisbursedDialogComponent],
+  imports: [CommonModule, TableModule, FormsModule, SelectModule, AddDisbursedDialogComponent, ButtonModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './page2.component.html',
   styleUrl: './page2.component.scss'
 })
@@ -29,11 +33,13 @@ export class Page2Component implements OnInit {
   selectedBudgetCategory = signal<{ id: number; name: string; description: string | null } | null>(this.budgetCategoryList[0]);
 
   projectId: number | null = null;
-  constructor(private projectsService: ProjectsService, private disbursementsService: DisbursementsService, private selectedProjectService: SelectedProjectService, private route: ActivatedRoute) {
+  constructor(private projectsService: ProjectsService, private disbursementsService: DisbursementsService, private selectedProjectService: SelectedProjectService, private route: ActivatedRoute, private messageService: MessageService) {
     this.route.paramMap.subscribe(params => {
       this.projectId = (Number(params.get('projectId')));
     });
   }
+
+  currentDisbursementLogId: number | null = null;
 
   ngOnInit(): void {
     this.selectedProjectService.projectId$
@@ -45,7 +51,7 @@ export class Page2Component implements OnInit {
 
   disbursementEntries = signal<DisbursementDto[]>([]);
   loadProjectBudgetEntries() {
-
+    this.currentDisbursementLogId = null;
     forkJoin({
       projectBudgetEntries: this.projectsService.getProjectBudgetEntriesByCategory(this.projectId || 0, this.selectedBudgetCategory()?.id ?? 0),
       disbursements: this.disbursementsService.getDisbursementsByProjectId(this.projectId || 0, this.selectedBudgetCategory()?.id ?? 0)
@@ -86,6 +92,25 @@ export class Page2Component implements OnInit {
   getBudgetAmount(index: number): number {
     const entries = this.projectBudgetEntries();
     return entries.length > index ? entries[index].amount : 0;
+  }
+
+  openEditDisbursementDialog(disbursementLogId: number) {
+    console.log('Editing disbursement with ID:', disbursementLogId);
+    this.currentDisbursementLogId = disbursementLogId;
+    this.visibleAddDisbursedDialog = true;
+  }
+
+  deleteDisbursement(disbursementLogId: number) {
+    this.disbursementsService.deleteDisbursement(disbursementLogId).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Deleted', detail: 'Disbursement deleted successfully.' });
+        this.loadProjectBudgetEntries(); // reload everything
+      },
+      error: (err) => {
+        console.error(err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete disbursement.' });
+      }
+    });
   }
 
 }

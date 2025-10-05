@@ -9,10 +9,11 @@ import { NewTaskDialogComponent } from '../../../shared/new-task-dialog/new-task
 import { UpdateTaskStatusDto } from '../../../../../api-dtos/update-task-status.dto';
 import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
 import { ActivatedRoute } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-taskmanager',
-  imports: [CommonModule, TableModule, SelectModule, FormsModule, NewTaskDialogComponent],
+  imports: [CommonModule, TableModule, SelectModule, FormsModule, NewTaskDialogComponent, ButtonModule],
   templateUrl: './taskmanager.component.html',
   styleUrl: './taskmanager.component.scss'
 })
@@ -27,6 +28,7 @@ export class TaskmanagerComponent {
 
   projectId: number | null = null;
   showTaskDialog: boolean = false;
+  editTaskData: TaskDto | null = null;
 
   constructor(private tasksService: TasksService, private selectedProjectService: SelectedProjectService, private route: ActivatedRoute) {
     this.projectId = localStorage.getItem('selectedProjectId') ? Number(localStorage.getItem('selectedProjectId')) : null;
@@ -78,5 +80,23 @@ export class TaskmanagerComponent {
       }
     });
   }
+
+  editTask(task: TaskDto) {
+    this.editTaskData = { ...task }; // copy task
+    this.showTaskDialog = true;
+  }
+
+  deleteTask(task: TaskDto) {
+
+    this.tasksService.deleteTask(task.id).subscribe({
+      next: () => {
+        this.loadTasks();
+      },
+      error: (err) => {
+        console.error('Failed to delete task', err);
+      }
+    });
+  }
+
 
 }

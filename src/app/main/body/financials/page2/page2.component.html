@@ -1,7 +1,9 @@
 <app-add-disbursed-dialog [(display)]="visibleAddDisbursedDialog" [projectId]="projectId || 0"
     [categoryId]="selectedBudgetCategory()?.id ?? 0" [budgetEntryId]="selectedDisbursedBudgetEntry?.id ?? 0"
-    (displayChange)="loadProjectBudgetEntries()">
+    (displayChange)="loadProjectBudgetEntries()" [(disbursementLogId)]="currentDisbursementLogId">
 </app-add-disbursed-dialog>
+
+<p-toast></p-toast>
 
 <main class="animate__animated animate__fadeIn animate__faster">
     <!-- Budget Types -->
@@ -53,24 +55,43 @@
                 <button class="add-new-btn" (click)="showAddDisbursedDialog()">Add New</button>
             </div>
 
-            <p-table [value]="disbursementEntries()" *ngIf="disbursementEntries()?.length; else noData"
-                class="p-datatable-sm">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                    </tr>
-                </ng-template>
+            <ng-container *ngIf="disbursementEntries() as entries; else noData">
+                <p-table [value]="entries" class="p-datatable-sm">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
 
-                <ng-template pTemplate="body" let-entry>
-                    <tr>
-                        <td>{{ entry.disbursementDate | date: 'shortDate' }}</td>
-                        <td>{{ entry.description || '—' }}</td>
-                        <td>{{ entry.disbursedAmount | currency: 'USD' }}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
+                    <ng-template pTemplate="body" let-entry>
+                        <tr>
+                            <td>{{ entry.disbursementDate | date: 'shortDate' }}</td>
+                            <td>{{ entry.description || '—' }}</td>
+                            <td>{{ entry.disbursedAmount | currency: 'USD' }}</td>
+                            <td>
+                                <button pButton type="button" icon="pi pi-pencil" label="Edit"
+                                    class="p-button-text p-button-sm p-button-info"
+                                    (click)="openEditDisbursementDialog(entry.disbursementLogId)">
+                                </button>
+
+                                <button pButton type="button" icon="pi pi-trash" label="Delete"
+                                    class="p-button-text p-button-sm p-button-danger"
+                                    (click)="deleteDisbursement(entry.disbursementLogId)">
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ng-container>
+
+            <ng-template #noData>
+                <p>No disbursement entries available.</p>
+            </ng-template>
+
+
 
             <ng-template #noData>
                 <div class="animate__animated animate__fadeIn animate__faster">

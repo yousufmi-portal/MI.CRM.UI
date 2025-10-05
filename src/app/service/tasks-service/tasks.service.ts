@@ -42,4 +42,13 @@ export class TasksService {
 
     return this.http.get<TaskDto[]>(`${this.baseUrl}/ProjectTasks`, { params });
   }
+
+  updateTask(id: number, taskData: any) {
+    return this.http.put(`${this.baseUrl}/${id}`, taskData);
+  }
+
+  deleteTask(taskId: number) {
+    return this.http.delete(`${this.baseUrl}/delete/${taskId}`);
+  }
+
 }
