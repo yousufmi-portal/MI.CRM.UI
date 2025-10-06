@@ -45,6 +45,7 @@ export class NewTaskDialogComponent implements OnInit, OnChanges {
 
   constructor(private fb: FormBuilder, private tasksService: TasksService, private messageService: MessageService, private usersService: UsersService) {
     this.taskForm = this.fb.group({
+      projectId: [this.projectId],
       title: ['', Validators.required],
       description: [''],
       startDate: [null, Validators.required],
@@ -74,6 +75,7 @@ export class NewTaskDialogComponent implements OnInit, OnChanges {
         : null;
 
       this.taskForm.patchValue({
+        projectId: this.projectId,
         title: this.taskToEdit.title,
         description: this.taskToEdit.description,
         startDate: startDate,
@@ -98,13 +100,18 @@ export class NewTaskDialogComponent implements OnInit, OnChanges {
     if (this.taskForm.invalid) return;
 
     const formData = this.taskForm.value;
-
+    formData.projectId = this.projectId;
+    console.log("projectId in formData:", this.projectId);
     if (this.taskToEdit) {
       // EDIT mode
       this.tasksService.updateTask(this.taskToEdit.id, formData).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Updated', detail: 'Task updated successfully' });
           this.close();
+        },
+        error: (err) => {
+          console.error('Error updating task', err);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update task' });
         }
       });
     } else {
@@ -113,6 +120,10 @@ export class NewTaskDialogComponent implements OnInit, OnChanges {
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Created', detail: 'Task created successfully' });
           this.close();
+        },
+        error: (err) => {
+          console.error('Error creating task', err);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to create task' });
         }
       });
     }
