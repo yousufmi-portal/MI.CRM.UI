@@ -1,0 +1,55 @@
+.documents-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.upload-btn {
+    background-color: #007ad9;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background-color: #006ac1;
+}
+
+.documents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.document-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+}
+
+.document-card:hover {
+    transform: translateY(-3px);
+}
+
+.card-content {
+    line-height: 1.5;
+}
+
+.status-pill {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    color: white;
+}
+
+.status-pill.active {
+    background-color: #28a745;
+}
+
+.status-pill.deleted {
+    background-color: #dc3545;
+}

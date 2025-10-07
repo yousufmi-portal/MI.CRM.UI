@@ -1,0 +1,32 @@
+<main>
+    <header class="documents-header animate__animated animate__fadeIn animate__slow">
+        <h2>Documents</h2>
+        <p-fileupload mode="basic" chooseIcon="pi pi-upload" (onSelect)="onFileSelect($event)" [auto]="true"
+            chooseLabel="Browse" />
+    </header>
+
+    <section class="documents-grid animate__animated animate__fadeIn animate__slow">
+        <p-card *ngFor="let doc of documents" class="document-card" [header]="doc.documentName"
+            [subheader]="doc.projectName">
+            <div class="card-content">
+                <p><strong>Uploaded By:</strong> {{ doc.uploadedBy }}</p>
+                <p><strong>Uploaded At:</strong> {{ doc.uploadedAt | date: 'medium' }}</p>
+                <p>
+                    <strong>Status:</strong>
+                    <span class="status-pill" [ngClass]="{ 'active': !doc.deletedAt, 'deleted': doc.deletedAt }">
+                        {{ doc.deletedAt ? 'Deleted' : 'Active' }}
+                    </span>
+                </p>
+            </div>
+
+            <ng-template pTemplate="footer">
+                <div class="flex justify-content-between align-items-center">
+                    <button pButton label="View" icon="pi pi-eye" class="p-button-sm p-button-outlined"
+                        (click)="viewDocument(doc)"></button>
+                    <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger p-button-text"
+                        (click)="deleteDocument(doc)"></button>
+                </div>
+            </ng-template>
+        </p-card>
+    </section>
+</main>

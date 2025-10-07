@@ -154,6 +154,12 @@ export class LeftSideBarComponent implements OnInit {
             style: { 'margin-left': '9px' }
           }
         ]
+      },
+      {
+        label: 'Documents',
+        icon: 'pi pi-folder',
+        command: () => this.router.navigate(['main/documents/' + this.projectId]),
+        style: { 'margin-left': '12px' }
       }
     ];
 

@@ -49,22 +49,28 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
       const newId = changes['disbursementLogId'].currentValue;
 
       if (newId && newId !== 0) {
-        // 🟢 Edit mode → load existing disbursement data
         this.display = true;
         this.disbursementsService.getDisbursementById(newId).subscribe({
           next: (data) => {
-            this.form.patchValue({
-              description: data.description,
-              amount: data.disbursedAmount,
-              date: new Date(data.disbursementDate),
-              documentId: data.documentId || null,
-              claimNumber: data.claimNumber || null,
-              units: data.units || null,
-              rate: data.rate || null
+            this.disbursementsService.getClaimNumbers(this.projectId).subscribe(claimNumbers => {
+              this.claimNumbers = claimNumbers;
+              this.buildClaimOptions();
+
+              // Now patch form after options exist
+              this.form.patchValue({
+                description: data.description,
+                amount: data.disbursedAmount,
+                date: new Date(data.disbursementDate),
+                documentId: data.documentId || null,
+                claimNumber: data.claimNumber || null,
+                units: data.units || null,
+                rate: data.rate || null
+              });
             });
           }
-        })
-      } else {
+        });
+      }
+      else {
         // ⚪ New mode → reset form
         this.form.reset();
         this.disbursementLogId = null;
