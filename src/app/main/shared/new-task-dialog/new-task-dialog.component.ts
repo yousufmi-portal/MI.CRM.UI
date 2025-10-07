@@ -52,7 +52,7 @@ export class NewTaskDialogComponent implements OnInit, OnChanges {
       endDate: [null, Validators.required],
       assignedTo: [null],
       statusId: [null, Validators.required],
-      activityTypeId: [null, Validators.required],
+      activityTypeId: [1],
       deliverableType: ['']
     });
   }
@@ -82,7 +82,7 @@ export class NewTaskDialogComponent implements OnInit, OnChanges {
         endDate: endDate,
         assignedTo: this.taskToEdit.assignedTo,
         statusId: this.taskToEdit.statusId,
-        activityTypeId: this.taskToEdit.activityTypeId,
+        activityTypeId: 1,
         deliverableType: this.taskToEdit.deliverableType
       });
     }
