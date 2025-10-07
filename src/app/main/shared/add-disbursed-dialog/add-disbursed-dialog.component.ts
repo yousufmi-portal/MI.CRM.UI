@@ -67,6 +67,8 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
                 rate: data.rate || null
               });
             });
+
+            this.loadClaimNumbers(data.claimNumber);
           }
         });
       }
@@ -155,14 +157,20 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
 
 
 
-  private loadClaimNumbers(): void {
+  private loadClaimNumbers(claimNumber?: number): void {
     if (this.projectId) {
       this.disbursementsService.getClaimNumbers(this.projectId).subscribe(claimNumbers => {
         this.claimNumbers = claimNumbers;
         this.buildClaimOptions();
+
+        // ✅ Preselect existing claim if available
+        if (claimNumber) {
+          this.form.patchValue({ claimNumber: claimNumber });
+        }
       });
     }
   }
+
 
   claimOptions: { label: string; value: number | 'new' }[] = [];
   private buildClaimOptions(): void {
