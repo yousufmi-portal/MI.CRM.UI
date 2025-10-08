@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs/internal/Observable';
+import { DocumentDto } from '../../../api-dtos/document.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,8 @@ export class DocumentsService {
     return this.http.post(`${this.baseUrl}/upload`, formData);
   }
 
-  getDocuments(projectId?: number): Observable<any[]> {
-    const url = projectId
-      ? `${this.baseUrl}?projectId=${projectId}`
-      : `${this.baseUrl}`;
-    return this.http.get<any[]>(url);
+  getDocumentsByProject(projectId: number): Observable<DocumentDto[]> {
+    return this.http.get<DocumentDto[]>(`${this.baseUrl}/project/${projectId}`);
   }
 
   deleteDocument(documentId: number): Observable<any> {

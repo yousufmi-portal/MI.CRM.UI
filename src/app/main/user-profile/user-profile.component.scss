@@ -1,0 +1,48 @@
+.user-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // height: 100vh;
+    /* full screen vertical centering */
+    // background: #f8f9fa;
+    /* light neutral background */
+    margin-top: 3rem;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 5px 30px #36a78564;
+    padding: 30px 40px;
+    max-width: 600px;
+    width: 90%;
+    transition: transform 0.2s ease-in-out;
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+}
+
+.user-image img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 30px;
+    border: 3px solid #36a785;
+    /* PrimeNG primary color */
+}
+
+.user-details h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.user-details p {
+    margin: 6px 0;
+    color: #555;
+    font-size: 1rem;
+}

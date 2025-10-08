@@ -6,43 +6,27 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DocumentsService } from '../../../services/documents-service/documents.service';
 import { MessageService } from 'primeng/api';
 import { SelectedProjectService } from '../../../services/selected-project-service/selected-project.service';
+import { DocumentDto } from '../../../../api-dtos/document.dto';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-documents',
-  imports: [TableModule, CommonModule, CardModule, FileUploadModule],
+  imports: [TableModule, CommonModule, CardModule, FileUploadModule, ButtonModule],
   providers: [MessageService],
   templateUrl: './documents.component.html',
-  styleUrl: './documents.component.scss'
+  styleUrl: './documents.component.scss',
+  
 })
 export class DocumentsComponent implements OnInit {
   projectId: number | null = null;
   constructor(private documentsService: DocumentsService, private messageService: MessageService, private selectedProjectService: SelectedProjectService) { }
-  documents = [
-    {
-      id: 1,
-      documentName: 'Contract.pdf',
-      uploadedBy: 'Umer Imran',
-      uploadedAt: new Date('2025-10-05T11:00:00'),
-      projectName: 'CRM Revamp',
-      documentUrl: 'https://example.com/docs/contract.pdf',
-      deletedAt: null
-    },
-    {
-      id: 2,
-      documentName: 'Financial_Report.xlsx',
-      uploadedBy: 'Ali Raza',
-      uploadedAt: new Date('2025-10-06T09:30:00'),
-      projectName: 'Marketing Portal',
-      documentUrl: 'https://example.com/docs/financial_report.xlsx',
-      deletedAt: new Date('2025-10-07T12:00:00')
-    }
-  ];
+  documents: DocumentDto[] = [];
 
   ngOnInit(): void {
     this.selectedProjectService.projectId$
       .subscribe(projectId => {
         this.projectId = projectId;
-        // this.loadDocuments();
+        this.loadDocuments();
       });
   }
 
@@ -77,7 +61,7 @@ export class DocumentsComponent implements OnInit {
           summary: 'Uploaded',
           detail: 'Document uploaded successfully.'
         });
-        // this.loadDocuments(); // refresh list
+        this.loadDocuments(); // refresh list
       },
       error: (err) => {
         console.error('Upload failed:', err);
@@ -86,6 +70,19 @@ export class DocumentsComponent implements OnInit {
           summary: 'Error',
           detail: 'Failed to upload document.'
         });
+      }
+    });
+  }
+
+  loadDocuments(): void {
+    if (!this.projectId) return;
+
+    this.documentsService.getDocumentsByProject(this.projectId).subscribe({
+      next: (documents) => {
+        this.documents = documents;
+      },
+      error: (err) => {
+        console.error('Failed to load documents:', err);
       }
     });
   }

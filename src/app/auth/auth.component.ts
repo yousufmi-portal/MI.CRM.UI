@@ -18,6 +18,7 @@ import { LoginDto } from '../../api-dtos/login.dto';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner'
+import { FileUploadModule } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-auth',
@@ -32,7 +33,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner'
     RouterModule,
     SelectModule,
     ToastModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    FileUploadModule
   ],
   providers: [MessageService],
   templateUrl: './auth.component.html',
@@ -44,12 +46,6 @@ export class AuthComponent {
 
   Roles = ROLES;
   loading = false;
-
-  mockUsers: LoginModel[] = [
-    { email: 'umerdev@noemail.com', password: '12345678' },
-    { email: 'ziadev@noemail.com', password: '12345678' }
-  ];
-
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private messageService: MessageService) { }
 
@@ -83,12 +79,9 @@ export class AuthComponent {
         },
         error: (error) => {
           console.error('Login failed:', error);
-          if (this.mockLoginAuth(loginDto.email, loginDto.password)) {
-            this.messageService.add({ severity: 'info', summary: 'Mock Login', detail: 'Logged in via mock!' });
-            // this.router.navigate(['/main/overview']);
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password' });
-          }
+
+          this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password' });
+
           this.loading = false;
         }
       });
@@ -99,7 +92,8 @@ export class AuthComponent {
         name: this.authForm.value.fullName,
         email: this.authForm.value.email,
         roleId: this.authForm.value.roleId,
-        password: this.authForm.value.password
+        password: this.authForm.value.password,
+        imageFile: this.selectedFile || undefined // 👈 add this line
       }
       this.authService.registerUser(registerDto).subscribe({
         next: (response) => {
@@ -140,10 +134,19 @@ export class AuthComponent {
     });
   }
 
-  private mockLoginAuth(email: string, password: string): boolean {
-    return this.mockUsers.some(
-      user => user.email === email && user.password === password
-    );
+  selectedFile: File | null = null;
+  selectedImageUrl: string | null = null;
+
+  onImageSelect(event: any) {
+    const file = event.files[0];
+    if (file) {
+      this.selectedFile = file;
+
+    }
   }
 
+  removeSelectedImage() {
+    this.selectedFile = null;
+    this.selectedImageUrl = null;
+  }
 }

@@ -1,32 +1,37 @@
-<main>
-    <header class="documents-header animate__animated animate__fadeIn animate__slow">
+<main class="documents-main">
+    <header class="documents-header">
         <h2>Documents</h2>
         <p-fileupload mode="basic" chooseIcon="pi pi-upload" (onSelect)="onFileSelect($event)" [auto]="true"
-            chooseLabel="Browse" />
+            chooseLabel="Upload" class="upload-btn" />
     </header>
 
-    <section class="documents-grid animate__animated animate__fadeIn animate__slow">
-        <p-card *ngFor="let doc of documents" class="document-card" [header]="doc.documentName"
-            [subheader]="doc.projectName">
-            <div class="card-content">
-                <p><strong>Uploaded By:</strong> {{ doc.uploadedBy }}</p>
-                <p><strong>Uploaded At:</strong> {{ doc.uploadedAt | date: 'medium' }}</p>
-                <p>
-                    <strong>Status:</strong>
-                    <span class="status-pill" [ngClass]="{ 'active': !doc.deletedAt, 'deleted': doc.deletedAt }">
-                        {{ doc.deletedAt ? 'Deleted' : 'Active' }}
-                    </span>
-                </p>
+    <section class="documents-grid" *ngIf="documents && documents.length > 0; else noDocuments">
+        <div *ngFor="let doc of documents" class="document-card">
+            <div class="document-card-header">
+                {{ doc.documentName }}
             </div>
-
-            <ng-template pTemplate="footer">
-                <div class="flex justify-content-between align-items-center">
-                    <button pButton label="View" icon="pi pi-eye" class="p-button-sm p-button-outlined"
-                        (click)="viewDocument(doc)"></button>
-                    <button pButton icon="pi pi-trash" class="p-button-sm p-button-danger p-button-text"
-                        (click)="deleteDocument(doc)"></button>
+            <div class="document-card-body">
+                <div class="document-info">
+                    <span class="info-label">Uploaded By:</span>
+                    <span class="info-value">{{ doc.uploadedByName }}</span>
                 </div>
-            </ng-template>
-        </p-card>
+                <div class="document-info">
+                    <span class="info-label">Uploaded At:</span>
+                    <span class="info-value">{{ doc.uploadedAt | date: 'medium' }}</span>
+                </div>
+            </div>
+            <div class="document-card-footer">
+                <button pButton label="View" icon="pi pi-eye" class="p-button-sm p-button-outlined"
+                    (click)="viewDocument(doc)"></button>
+            </div>
+        </div>
     </section>
+
+    <ng-template #noDocuments>
+        <div class="no-documents animate__animated animate__fadeIn animate__slow">
+            <i class="pi pi-folder-open"></i>
+            <h3>No documents found</h3>
+            <p>You can upload a document from the top!</p>
+        </div>
+    </ng-template>
 </main>

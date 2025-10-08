@@ -3,4 +3,5 @@ export interface UserDto {
     name: string;
     email: string;
     roleId: number;
+    imageUrl?: string; // Optional URL for profile image
 }

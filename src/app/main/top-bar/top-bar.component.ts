@@ -15,6 +15,8 @@ import { SelectModule } from 'primeng/select';
 import { SelectedProjectService } from '../../services/selected-project-service/selected-project.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { UsersService } from '../../services/users-service/users.service';
+import { UserDto } from '../../../api-dtos/user.dto';
 
 @Component({
   selector: 'app-top-bar',
@@ -34,16 +36,26 @@ import { CommonModule } from '@angular/common';
 })
 export class TopBarComponent implements OnInit {
   currentUrl = '';
-  hiddenRoutes = ['/main/admin'];
+  hiddenRoutes = ['/main/admin', '/main/profile'];
   selectVisible = false;
-  constructor(private router: Router, private projectsService: ProjectsService, private route: ActivatedRoute, private selectedProjectService: SelectedProjectService) {
+  constructor(private router: Router, private projectsService: ProjectsService, private route: ActivatedRoute, private selectedProjectService: SelectedProjectService, private usersService: UsersService) {
     this.router.events.subscribe(() => {
       this.currentUrl = this.router.url;
       this.selectVisible = !this.hiddenRoutes.includes(this.currentUrl);
     });
   }
 
+  currentUser: UserDto | null = null;
   ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.currentUser = user;
+      },
+      error: (err) => {
+        console.error('Error fetching current user:', err);
+      }
+
+    });
     this.selectedProjectService.projectId$
       .subscribe(projectId => {
         this.projectId = projectId ?? 0;
@@ -74,6 +86,11 @@ export class TopBarComponent implements OnInit {
           label: 'Log Out',
           icon: 'pi pi-sign-out',
           command: () => this.logout()
+        },
+        {
+          label: 'Profile',
+          icon: 'pi pi-user',
+          routerLink: ['/main/profile']
         }
       ]
     }

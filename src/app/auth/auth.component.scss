@@ -82,7 +82,7 @@ form {
     border-radius: 13px;
     outline: none;
     width: 100% !important;
-    padding: 0.6rem 1rem;
+    padding: 0.5rem 0.75rem;
     transition: border-color 0.3s ease;
 }
 
@@ -115,6 +115,10 @@ small {
     background-color: #36a785;
 }
 
+#register-btn {
+    font-size: 1rem;
+}
+
 p {
     text-align: center;
 }
@@ -138,4 +142,10 @@ p {
 
 :host ::ng-deep .auth-form .p-select.p-focus {
     border-color: rgb(6, 48, 72);
+}
+
+.profile-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

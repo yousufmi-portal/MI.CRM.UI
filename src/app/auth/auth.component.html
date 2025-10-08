@@ -1,6 +1,6 @@
 <main>
     <p-toast></p-toast>
-    <div id="login-container" [ngStyle]="isLogin ? { 'height': '65vh' } : { 'height': '80vh' }">
+    <div id="login-container" [ngStyle]="isLogin ? { 'height': '65vh' } : { 'height': '85vh' }">
         <img src="/MCL Jasco logo 2.avif" alt="logo" width="130" height="130" id="logo-img"
             class="animate__animated animate__fadeIn animate__slower" />
         <form *ngIf="isLogin" [formGroup]="authForm"
@@ -31,7 +31,7 @@
             </div>
         </form>
 
-        <form *ngIf="!isLogin" [formGroup]="authForm" class="auth-form">
+        <form *ngIf="!isLogin" [formGroup]="authForm" class="auth-form" style="gap: 0.5rem;">
             <div class="form-field-container">
                 <label for="fullname" class="form-field-label">Full Name</label>
                 <input id="fullname" type="text" formControlName="fullName" />
@@ -65,6 +65,22 @@
                     </ng-template>
                 </p-password>
             </div>
+
+            <div class="form-field-container">
+                <div class="profile-image-container">
+                    <p-fileUpload mode="basic" name="image" accept="image/*" chooseLabel="Image" [auto]="false"
+                        (onSelect)="onImageSelect($event)" styleClass="p-button-sm upload-btn">
+                    </p-fileUpload>
+
+                    <!-- Show preview & remove option -->
+                    <div *ngIf="selectedFile" class="image-preview">
+                        <button pButton type="button" icon="pi pi-times" class="p-button-text p-button-danger p-0"
+                            (click)="removeSelectedImage()"></button>
+                    </div>
+                </div>
+            </div>
+
+
 
             <div class="form-field-container">
                 <button class="submit-btn" id="register-btn" (click)="onSubmit()" [disabled]="loading">

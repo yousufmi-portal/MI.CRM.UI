@@ -1,5 +1,6 @@
 <div [class.drawer-open]="isDrawerOpen">
-    <p-toolbar [style]="{'padding': '1rem 1.5rem', 'background': 'linear-gradient(90deg, #337361, #36a785 )', 'color': 'white'}">
+    <p-toolbar
+        [style]="{'padding': '1rem 1.5rem', 'background': 'linear-gradient(90deg, #337361, #36a785 )', 'color': 'white'}">
         <ng-template #start>
             <p-button icon="pi pi-bars" class="mr-2" (onClick)="hamburgerBtnClickHandler()" text />
             <!-- 
@@ -36,7 +37,7 @@
 
         <ng-template #end>
             <p-menu #menu [model]="topMenuItems" [popup]="true" />
-            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+            <p-avatar [image]="currentUser?.imageUrl || 'https://www.w3schools.com/howto/img_avatar.png'" shape="circle"
                 [style]="{ width: '32px', height: '32px', cursor: 'pointer' }" (click)="menu.toggle($event)" />
         </ng-template>
     </p-toolbar>

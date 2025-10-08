@@ -1,0 +1,15 @@
+<h2>User Profile</h2>
+
+<div class="user-card-container">
+    <div class="user-card">
+        <div class="user-image">
+            <img [src]="user?.imageUrl || 'assets/default-avatar.png'" alt="User Image" />
+        </div>
+
+        <div class="user-details">
+            <h2>{{ user?.name }}</h2>
+            <p><strong>Email:</strong> {{ user?.email }}</p>
+            <p><strong>Role ID:</strong> {{ user?.roleId }}</p>
+        </div>
+    </div>
+</div>
