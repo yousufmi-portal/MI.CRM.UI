@@ -1,12 +1,18 @@
-<main class="animate__animated animate__fadeIn animate__faster">
-    <h2 class="animate__animated animate__fadeInDown animate__faster">Stakeholder Directory</h2>
+<app-add-subcontractor-dialog [(display)]="addSubcontractorDialogVisible"
+    [projectId]="projectId" (subcontractorAdded)="loadStakeholders()"></app-add-subcontractor-dialog>
 
+<main class="animate__animated animate__fadeIn animate__faster">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="animate__animated animate__fadeInDown animate__faster">Stakeholder Directory</h2>
+        <button pButton type="button" label="Add Subcontractor" icon="pi pi-plus"
+            class="p-button-sm p-button-outlined add-subcontractor-btn animate__animated animate__fadeInDown animate__faster"
+            style="animation-delay: 0.1s;" (click)="addSubcontractorDialogVisible = true"></button>
+    </div>
     <section class="stakeholders-section">
         <ng-container *ngFor="let stakeholder of stakeholders(); let i = index">
-            <div
-                class="stakeholder-container animate__animated animate__zoomIn animate__faster"
+            <div class="stakeholder-container animate__animated animate__zoomIn animate__faster"
                 [style.animationDelay]="(i * 0.1) + 's'">
-                
+
                 <div class="stakeholder-name">
                     {{ stakeholder.projectManageer?.name || stakeholder.subcontractor?.name }}
                 </div>

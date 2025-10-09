@@ -9,6 +9,7 @@ import { OverviewResponseDto } from '../../../api-dtos/overview-response.dto';
 import { CreateProjectDto } from '../../../api-dtos/create-project.dto';
 import { OperationsSummaryDto } from '../../../api-dtos/operations-summary.dto';
 import { MainPageDataDto } from '../../../api-dtos/main-page-data.dto';
+import { NewSubcontractorDto } from '../../../api-dtos/new-subcontractor.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +60,9 @@ export class ProjectsService {
 
   updateOverviewData(projectId: number, field: string, value: string | number): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/OverviewEdit`, { projectId: projectId, field: field, value: value });
+  }
+
+  addSubcontractor(subcontractor: NewSubcontractorDto): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/AddSubcontractor`, subcontractor);
   }
 }

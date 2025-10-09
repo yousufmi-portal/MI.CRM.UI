@@ -10,6 +10,7 @@ import { MenuModule } from 'primeng/menu';
 import { StakeHolderDto } from '../../../../../api-dtos/stakeholder.dto';
 import { StakeholdersService } from '../../../../services/stakeholders-service/stakeholders.service';
 import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
+import { AddSubcontractorDialogComponent } from '../../../add-subcontractor-dialog/add-subcontractor-dialog.component';
 
 @Component({
   selector: 'app-stakeholder-directory',
@@ -20,7 +21,8 @@ import { SelectedProjectService } from '../../../../services/selected-project-se
     BadgeModule,
     RippleModule,
     MenuModule,
-    ButtonModule
+    ButtonModule,
+    AddSubcontractorDialogComponent
   ],
   templateUrl: './stakeholder-directory.component.html',
   styleUrl: './stakeholder-directory.component.scss'
@@ -30,6 +32,8 @@ export class StakeholderDirectoryComponent implements OnInit {
   selectedStakeholder = signal<StakeHolderDto | null>(null);
 
   projectId: number = 0;
+
+  addSubcontractorDialogVisible = false;
 
   constructor(private stakeholdersService: StakeholdersService, private selectedProjectService: SelectedProjectService) {
 
