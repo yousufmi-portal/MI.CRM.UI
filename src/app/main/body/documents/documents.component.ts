@@ -15,7 +15,7 @@ import { ButtonModule } from 'primeng/button';
   providers: [MessageService],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss',
-  
+
 })
 export class DocumentsComponent implements OnInit {
   projectId: number | null = null;
@@ -41,7 +41,16 @@ export class DocumentsComponent implements OnInit {
 
   deleteDocument(doc: any) {
     console.log('Deleting document:', doc);
-    // add confirmation + API integration later
+    this.documentsService.deleteDocument(doc.id).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Deleted', detail: 'Document deleted successfully.' });
+        this.loadDocuments(); // refresh list
+      },
+      error: (err) => {
+        console.error('Delete failed:', err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete document.' });
+      }
+    });
   }
 
   filterDocuments(type: string) {

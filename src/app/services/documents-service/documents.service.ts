@@ -25,6 +25,6 @@ export class DocumentsService {
   }
 
   deleteDocument(documentId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${documentId}`);
+    return this.http.delete(`${this.baseUrl}/delete/${documentId}`);
   }
 }
