@@ -23,4 +23,17 @@ export class UsersService {
   getCurrentUser(): Observable<UserDto> {
     return this.http.get<UserDto>(`${this.baseUrl}/current`);
   }
+
+  updateUser(formData: FormData): Observable<UserDto> {
+    return this.http.put<UserDto>(`${this.baseUrl}/update`, formData);
+  }
+
+  verifyPassword(userId: number, currentPassword: string) {
+    return this.http.post<boolean>(`${this.baseUrl}/verify-password`, { userId, currentPassword });
+  }
+
+  updatePassword(userId: number, newPassword: string) {
+    return this.http.put(`${this.baseUrl}/update-password`, { userId, newPassword });
+  }
+
 }

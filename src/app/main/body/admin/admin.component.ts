@@ -14,6 +14,7 @@ import { ROLES } from '../../../constants/roles.list';
 import { ProjectsPowerbiSummaryDialogComponent } from "../../shared/projects-powerbi-summary-dialog/projects-powerbi-summary-dialog.component";
 import { MainPageDataDto } from '../../../../api-dtos/main-page-data.dto';
 import { ShortenCurrencyPipe } from '../../../../pipes/shorten-currency.pipe';
+import { MessageService } from 'primeng/api';
 
 interface Column {
   field: string;
@@ -23,6 +24,7 @@ interface Column {
 @Component({
   selector: 'app-admin',
   imports: [ButtonModule, TableModule, CommonModule, AddProjectFormComponent, ProjectsPowerbiSummaryDialogComponent, ShortenCurrencyPipe],
+  providers: [MessageService],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -30,7 +32,7 @@ interface Column {
 
 export class AdminComponent implements OnInit {
 
-  constructor(private projectsService: ProjectsService, private router: Router, private selectedProjectService: SelectedProjectService, private usersService: UsersService) { }
+  constructor(private projectsService: ProjectsService, private router: Router, private selectedProjectService: SelectedProjectService, private usersService: UsersService, private messageService: MessageService) { }
 
   projects = signal<ProjectDto[]>([]);
   user = signal<UserDto | null>(null);
@@ -96,5 +98,18 @@ export class AdminComponent implements OnInit {
       this.data = data;
     });
 
+  }
+
+  deleteProject(projectId: number) {
+    this.projectsService.deleteProject(projectId).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Project deleted successfully' });
+        this.loadMainPageData();
+      },
+      error: (err) => {
+        console.error('Error deleting project:', err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete project' });
+      }
+    });
   }
 }

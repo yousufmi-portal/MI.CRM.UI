@@ -66,3 +66,18 @@ h2 {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.stakeholder-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.stakeholder-actions button {
+    margin-left: 6px;
+}

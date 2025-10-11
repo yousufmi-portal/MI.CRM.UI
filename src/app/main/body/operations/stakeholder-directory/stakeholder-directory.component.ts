@@ -7,10 +7,12 @@ import { RippleModule } from 'primeng/ripple';
 import { Menu } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-import { StakeHolderDto } from '../../../../../api-dtos/stakeholder.dto';
+import { StakeHolderDto, SubcontractorDto } from '../../../../../api-dtos/stakeholder.dto';
 import { StakeholdersService } from '../../../../services/stakeholders-service/stakeholders.service';
 import { SelectedProjectService } from '../../../../services/selected-project-service/selected-project.service';
 import { AddSubcontractorDialogComponent } from '../../../add-subcontractor-dialog/add-subcontractor-dialog.component';
+import { ProjectsService } from '../../../../services/projects-service/projects.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-stakeholder-directory',
@@ -24,6 +26,7 @@ import { AddSubcontractorDialogComponent } from '../../../add-subcontractor-dial
     ButtonModule,
     AddSubcontractorDialogComponent
   ],
+  providers: [MessageService],
   templateUrl: './stakeholder-directory.component.html',
   styleUrl: './stakeholder-directory.component.scss'
 })
@@ -35,7 +38,10 @@ export class StakeholderDirectoryComponent implements OnInit {
 
   addSubcontractorDialogVisible = false;
 
-  constructor(private stakeholdersService: StakeholdersService, private selectedProjectService: SelectedProjectService) {
+  isEditMode = false;
+  selectedSubcontractor: SubcontractorDto | null = null;
+
+  constructor(private stakeholdersService: StakeholdersService, private selectedProjectService: SelectedProjectService, private projectsService: ProjectsService, private messageService: MessageService) {
 
   }
 
@@ -53,6 +59,30 @@ export class StakeholderDirectoryComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching stakeholders:', err);
+      }
+    });
+  }
+
+  openAddDialog() {
+    this.isEditMode = false;
+    this.selectedSubcontractor = null;
+    this.addSubcontractorDialogVisible = true;
+  }
+
+  openEditDialog(subcontractor: SubcontractorDto) {
+    this.isEditMode = true;
+    this.selectedSubcontractor = subcontractor;
+    this.addSubcontractorDialogVisible = true;
+  }
+
+  deleteSubcontractor(subcontractorId: number) {
+    this.projectsService.deleteSubcontractor(this.projectId, subcontractorId).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Deleted', detail: 'Subcontractor deleted successfully!' });
+        this.loadStakeholders();
+      },
+      error: (err) => {
+        console.error('Error deleting subcontractor:', err);
       }
     });
   }

@@ -1,6 +1,8 @@
 <p-toast></p-toast>
+
 <p-dialog [(visible)]="display" [modal]="true" [closeOnEscape]="true" [dismissableMask]="true" (onHide)="close()"
-    [style]="{ width: '400px', borderRadius: '20px' }" header="Add a Subcontractor"
+    [style]="{ width: '400px', borderRadius: '20px' }"
+    [header]="editMode ? 'Edit Subcontractor' : 'Add a Subcontractor'"
     contentStyleClass="animate__animated animate__zoomIn animate__faster">
     <form [formGroup]="form" class="p-fluid">
         <!-- Name Field -->
@@ -26,8 +28,8 @@
             <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-text"
                 (click)="close()"></button>
 
-            <button pButton type="submit" label="Add" icon="pi pi-check" [disabled]="form.invalid"
-                class="p-button-primary" (click)="submit()"></button>
+            <button pButton type="submit" [label]="editMode ? 'Save Changes' : 'Add'" icon="pi pi-check"
+                [disabled]="form.invalid" class="p-button-primary" (click)="submit()"></button>
         </div>
     </form>
 </p-dialog>

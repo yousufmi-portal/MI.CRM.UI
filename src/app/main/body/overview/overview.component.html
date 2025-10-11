@@ -207,27 +207,29 @@
             <div class="top-info-card">
                 <div class="info-label">Project Manager</div>
                 <div class="info-value">
-                    <p-inplace closable="true">
-                        <ng-template pTemplate="display">{{ ProjectOverview?.project?.projectManagerName
-                            }}</ng-template>
-                        <ng-template pTemplate="content">
-                            <input type="text" pInputText />
-                        </ng-template>
-                    </p-inplace>
+                    {{ ProjectOverview?.project?.projectManagerName
+                    }}
+
                 </div>
             </div>
 
             <div class="top-info-card">
                 <div class="info-label">Subcontractor</div>
+
                 <div class="info-value">
-                    <p-inplace closable="true">
-                        <ng-template pTemplate="display">{{ ProjectOverview?.project?.subContractorName }}</ng-template>
-                        <ng-template pTemplate="content">
-                            <input type="text" pInputText />
-                        </ng-template>
-                    </p-inplace>
+                    <ng-container *ngIf="ProjectOverview?.project?.subContractorName; else noSubcontractor">
+                        {{ ProjectOverview?.project?.subContractorName }}
+                    </ng-container>
+
+                    <ng-template #noSubcontractor>
+                        <span class="text-gray-500 flex items-center gap-1">
+                            <i class="pi pi-exclamation-triangle text-yellow-500 text-sm"></i>
+                            NONE
+                        </span>
+                    </ng-template>
                 </div>
             </div>
+
         </div>
     </section>
 

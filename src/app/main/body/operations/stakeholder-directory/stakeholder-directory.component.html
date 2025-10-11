@@ -1,13 +1,18 @@
-<app-add-subcontractor-dialog [(display)]="addSubcontractorDialogVisible"
-    [projectId]="projectId" (subcontractorAdded)="loadStakeholders()"></app-add-subcontractor-dialog>
+<app-add-subcontractor-dialog [(display)]="addSubcontractorDialogVisible" [projectId]="projectId"
+    [editMode]="isEditMode" [subcontractorToEdit]="selectedSubcontractor" (subcontractorAdded)="loadStakeholders()"
+    (subcontractorEdited)="loadStakeholders()">
+</app-add-subcontractor-dialog>
+
 
 <main class="animate__animated animate__fadeIn animate__faster">
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h2 class="animate__animated animate__fadeInDown animate__faster">Stakeholder Directory</h2>
         <button pButton type="button" label="Add Subcontractor" icon="pi pi-plus"
             class="p-button-sm p-button-outlined add-subcontractor-btn animate__animated animate__fadeInDown animate__faster"
-            style="animation-delay: 0.1s;" (click)="addSubcontractorDialogVisible = true"></button>
+            style="animation-delay: 0.1s;" (click)="openAddDialog()">
+        </button>
     </div>
+
     <section class="stakeholders-section">
         <ng-container *ngFor="let stakeholder of stakeholders(); let i = index">
             <div class="stakeholder-container animate__animated animate__zoomIn animate__faster"
@@ -21,10 +26,22 @@
                     {{ stakeholder.projectManageer?.email || stakeholder.subcontractor?.email }}
                 </div>
 
-                <div class="stakeholder-role"
-                    [ngClass]="(stakeholder.projectManageer != null) ? 'project-manager-role' : (stakeholder.subcontractor != null ? 'subcontractor-role' : 'unknown-role')">
-                    {{ (stakeholder.projectManageer != null) ? 'Project Manager' : (stakeholder.subcontractor != null ?
-                    'Subcontractor' : 'Unknown') }}
+                <div class="stakeholder-role" [ngClass]="(stakeholder.projectManageer != null) ? 'project-manager-role' : 
+                    (stakeholder.subcontractor != null ? 'subcontractor-role' : 'unknown-role')">
+                    {{ (stakeholder.projectManageer != null) ? 'Project Manager' :
+                    (stakeholder.subcontractor != null ? 'Subcontractor' : 'Unknown') }}
+                </div>
+
+                <!-- Buttons for Subcontractors Only -->
+                <div class="stakeholder-actions" *ngIf="stakeholder.subcontractor != null">
+                    <button pButton label="Edit" icon="pi pi-pencil" class="p-button-sm p-button-outlined"
+                        (click)="openEditDialog(stakeholder.subcontractor)">
+                    </button>
+
+                    <button pButton label="Delete" icon="pi pi-trash"
+                        class="p-button-sm p-button-outlined p-button-danger"
+                        (click)="deleteSubcontractor(stakeholder.subcontractor.id)">
+                    </button>
                 </div>
             </div>
         </ng-container>

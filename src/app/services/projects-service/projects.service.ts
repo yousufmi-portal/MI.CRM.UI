@@ -10,6 +10,7 @@ import { CreateProjectDto } from '../../../api-dtos/create-project.dto';
 import { OperationsSummaryDto } from '../../../api-dtos/operations-summary.dto';
 import { MainPageDataDto } from '../../../api-dtos/main-page-data.dto';
 import { NewSubcontractorDto } from '../../../api-dtos/new-subcontractor.dto';
+import { SubcontractorDto } from '../../../api-dtos/stakeholder.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,17 @@ export class ProjectsService {
 
   addSubcontractor(subcontractor: NewSubcontractorDto): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/AddSubcontractor`, subcontractor);
+  }
+
+  updateSubcontractor(id: number, dto: SubcontractorDto): Observable<SubcontractorDto> {
+    return this.http.put<SubcontractorDto>(`${this.baseUrl}/UpdateSubcontractor/${id}`, dto);
+  }
+
+  deleteSubcontractor(projectId: number, subcontractorId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/DeleteSubcontractor/${projectId}/${subcontractorId}`);
+  }
+
+  deleteProject(projectId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/DeleteProject/${projectId}`);
   }
 }

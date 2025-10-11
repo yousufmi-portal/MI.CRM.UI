@@ -86,6 +86,7 @@
                             <p-columnFilter type="text" field="projectStatus" display="menu" class="ml-auto" />
                         </div>
                     </th>
+                    <th style="width: max-content;"></th>
                 </tr>
             </ng-template>
 
@@ -100,9 +101,27 @@
                     <td>{{ project.awardNumber }}</td>
                     <td>{{ project.company }}</td>
                     <td>{{ project.totalApprovedBudget | currency }}</td>
-                    <td>{{ project.subContractorName }}</td>
+                    <td>
+                        <ng-container *ngIf="project.subContractorName; else noSubcontractor">
+                            {{ project.subContractorName }}
+                        </ng-container>
+
+                        <ng-template #noSubcontractor>
+                            <span class="flex items-center gap-1 text-gray-500">
+                                <i class="pi pi-exclamation-triangle text-yellow-500 text-sm"></i>
+                                NONE
+                            </span>
+                        </ng-template>
+                    </td>
+
                     <td>{{ project.state }}</td>
                     <td>{{ project.projectStatus }}</td>
+                    <td>
+                        <button pButton icon="pi pi-trash" class="p-button-sm p-button-outlined p-button-danger"
+                            (click)="deleteProject(project.projectId); $event.stopPropagation()">
+                        </button>
+                    </td>
+
                 </tr>
             </ng-template>
         </p-table>
