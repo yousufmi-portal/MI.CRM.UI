@@ -12,7 +12,7 @@
 
             <div class="form-field-container">
                 <label for="password" class="form-field-label">Password</label>
-                <p-password formControlName="password" [feedback]="false" />
+                <p-password formControlName="password" [feedback]="false" [toggleMask]="true"/>
                 <small id="forgot-password">Forgot Password</small>
             </div>
 
@@ -50,7 +50,7 @@
 
             <div class="form-field-container">
                 <label for="reg-password" class="form-field-label">Password</label>
-                <p-password formControlName="password" autocomplete="off">
+                <p-password formControlName="password" autocomplete="off" [toggleMask]="true">
                     <ng-template #header>
                         <div class="font-semibold text-xm mb-4">Pick a password</div>
                     </ng-template>

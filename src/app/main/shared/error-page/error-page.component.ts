@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-error-page',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './error-page.component.html',
   styleUrl: './error-page.component.scss'
 })
