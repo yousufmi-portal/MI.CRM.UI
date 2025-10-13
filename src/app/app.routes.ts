@@ -17,6 +17,7 @@ import { AnalyticsComponent } from './main/body/overview/analytics/analytics.com
 import { ClaimsComponent } from './main/body/financials/claims/claims.component';
 import { DocumentsComponent } from './main/body/documents/documents.component';
 import { UserProfileComponent } from './main/user-profile/user-profile.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -26,6 +27,7 @@ export const routes: Routes = [
     {
         path: 'main',
         component: MainComponent,
+        canActivate: [authGuard],
         children: [
             {
                 path: 'admin',

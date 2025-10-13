@@ -173,6 +173,7 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
 
 
   claimOptions: { label: string; value: number | 'new' }[] = [];
+  hasNewClaim: boolean = false;
   private buildClaimOptions(): void {
     this.claimOptions = this.claimNumbers.map(num => ({
       label: `Claim ${num}`,
@@ -180,11 +181,15 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
     }));
 
     // Always add the "Add new claim" option
-    this.claimOptions.push({ label: '+ Add new claim', value: 'new' });
+    if (!this.hasNewClaim)
+      this.claimOptions.push({ label: '+ Add new claim', value: 'new' });
   }
 
   onClaimChange(event: any) {
     if (event.value === 'new') {
+      if (this.hasNewClaim) return;
+
+      this.hasNewClaim = true;
       const newClaim = (this.claimNumbers.length > 0 ? Math.max(...this.claimNumbers) : 0) + 1;
 
       // Add it to list
@@ -193,6 +198,7 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
 
       // Select it
       this.form.patchValue({ claimNumber: newClaim });
+
     }
   }
 
