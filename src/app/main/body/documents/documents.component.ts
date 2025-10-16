@@ -8,10 +8,11 @@ import { MessageService } from 'primeng/api';
 import { SelectedProjectService } from '../../../services/selected-project-service/selected-project.service';
 import { DocumentDto } from '../../../../api-dtos/document.dto';
 import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-documents',
-  imports: [TableModule, CommonModule, CardModule, FileUploadModule, ButtonModule],
+  imports: [TableModule, CommonModule, CardModule, FileUploadModule, ButtonModule, ProgressSpinnerModule],
   providers: [MessageService],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss',
@@ -21,6 +22,7 @@ export class DocumentsComponent implements OnInit {
   projectId: number | null = null;
   constructor(private documentsService: DocumentsService, private messageService: MessageService, private selectedProjectService: SelectedProjectService) { }
   documents: DocumentDto[] = [];
+  isLoading = false;
 
   ngOnInit(): void {
     this.selectedProjectService.projectId$
@@ -85,14 +87,43 @@ export class DocumentsComponent implements OnInit {
 
   loadDocuments(): void {
     if (!this.projectId) return;
+    this.isLoading = true;
 
     this.documentsService.getDocumentsByProject(this.projectId).subscribe({
       next: (documents) => {
         this.documents = documents;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Failed to load documents:', err);
+        this.isLoading = false;
       }
     });
   }
+
+  upload(event: any) {
+    const files: File[] = event.files;
+    if (!files || files.length === 0) return;
+
+    this.isLoading = true;
+
+    const formData = new FormData();
+    for (const file of files) {
+      formData.append('files', file);
+    }
+    formData.append('projectId', this.projectId?.toString() ?? '0');
+
+    this.documentsService.uploadDocuments(formData).subscribe({
+      next: (res: any) => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
+        this.loadDocuments();
+      },
+      error: (err) => {
+        console.error('Upload failed:', err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Upload failed.' });
+        this.isLoading = false;
+      }
+    });
+  }
+
 }

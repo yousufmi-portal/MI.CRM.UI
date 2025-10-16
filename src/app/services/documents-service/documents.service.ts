@@ -27,4 +27,9 @@ export class DocumentsService {
   deleteDocument(documentId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/delete/${documentId}`);
   }
+
+  uploadDocuments(formData: FormData) {
+    return this.http.post(`${this.baseUrl}/upload`, formData);
+  }
+
 }
