@@ -1,0 +1,58 @@
+<main>
+    <h2>Claims</h2>
+
+    <p-table [value]="data || []" dataKey="id"
+        [globalFilterFields]="['claimNumber', 'disbursedAmount', 'categoryName', 'description', 'disbursementDate']">
+        <ng-template #header>
+            <tr class="animate__animated animate__fadeIn">
+                <th pSortableColumn="claimNumber">
+                    <div>
+                        <p-sortIcon field="claimNumber" />
+                        Claim Number
+                        <p-columnFilter type="number" field="claimNumber" display="menu" class="ml-auto" />
+                    </div>
+                </th>
+                <th pSortableColumn="disbursedAmount">
+                    <div>
+                        <p-sortIcon field="disbursedAmount" />
+                        Disbursed Amount
+                        <p-columnFilter type="number" field="disbursedAmount" display="menu" class="ml-auto" />
+                    </div>
+                </th>
+                <th pSortableColumn="categoryName">
+                    <div>
+
+                        <p-sortIcon field="categoryName" />
+                        Category
+                        <p-columnFilter type="text" field="categoryName" display="menu" class="ml-auto" />
+                    </div>
+                </th>
+                <th pSortableColumn="description">
+                    <div>
+                        <p-sortIcon field="description" />
+                        Description
+                        <p-columnFilter type="text" field="description" display="menu" class="ml-auto" />
+                    </div>
+                </th>
+                <th pSortableColumn="disbursementDate">
+                    <div>
+                        <p-sortIcon field="disbursementDate" />
+                        Date
+                        <p-columnFilter type="date" field="disbursementDate" display="menu" class="ml-auto" />
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-claim>
+            <tr class="animate__animated animate__fadeIn animate__slow">
+
+                <td>{{ claim.claimNumber }}</td>
+                <td>{{ claim.disbursedAmount | currency }}</td>
+                <td>{{ claim.categoryName }}</td>
+                <td>{{ claim.description }}</td>
+                <td>{{ claim.disbursementDate | date }}</td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</main>

@@ -4,14 +4,14 @@ main {
 }
 
 :host ::ng-deep .p-datatable-thead>tr>th {
-    text-align: center !important;
-    background-color: #1d9ebd !important;
+    // text-align: center !important;
+    background-color: #36a785 !important;
     color: white !important;
     font-weight: lighter !important;
 }
 
 :host ::ng-deep .p-datatable-tbody>tr>td {
-    text-align: center !important;
+    // text-align: center !important;
     // background-color: #1d9ebd !important;
     // color: white !important;
     font-weight: lighter !important;
@@ -44,35 +44,45 @@ main {
     border-radius: 4px;
     padding: 0.5rem;
     text-wrap: nowrap;
+    cursor: pointer;
 }
 
-:host ::ng-deep .p-select {
-    background-color: rgb(0 192 203) !important;
-    border: none !important;
-    color: white !important;
-    font-weight: bolder !important;
-    border-radius: 8px !important;
-}
+// :host ::ng-deep .p-select {
+//     background-color: rgb(0 192 203) !important;
+//     border: none !important;
+//     color: white !important;
+//     font-weight: bolder !important;
+//     border-radius: 8px !important;
+// }
 
-:host ::ng-deep .p-select-dropdown {
-    background-color: rgb(0 192 203) !important;
-    border: none !important;
-    color: white !important;
-    font-weight: bolder !important;
-    border-radius: 8px !important;
-    overflow: hidden;
-}
+// :host ::ng-deep .p-select-dropdown {
+//     background-color: rgb(0 192 203) !important;
+//     border: none !important;
+//     color: white !important;
+//     font-weight: bolder !important;
+//     border-radius: 8px !important;
+//     overflow: hidden;
+// }
 
-:host ::ng-deep .p-select-dropdown {
-    border-radius: 8px !important;
-    overflow: hidden;
-}
+// :host ::ng-deep .p-select-dropdown {
+//     border-radius: 8px !important;
+//     overflow: hidden;
+// }
 
+// :host ::ng-deep .p-select-label {
+//     text-align: center !important;
+//     background-color: #00c0cb !important;
+//     color: white !important;
+//     font-weight: lighter !important;
+//     font-weight: bolder !important;
+//     border-radius: 8px !important;
+// }
+
+:host ::ng-deep .p-select,
+:host ::ng-deep .p-select-dropdown,
 :host ::ng-deep .p-select-label {
-    text-align: center !important;
-    background-color: #00c0cb !important;
-    color: white !important;
-    font-weight: lighter !important;
+    border: none !important;
     font-weight: bolder !important;
     border-radius: 8px !important;
+    text-align: center !important;
 }

@@ -2,10 +2,11 @@ import { Component, EventEmitter, Input, Output, HostListener, OnInit } from '@a
 
 import { DrawerModule } from 'primeng/drawer'
 import { ButtonModule } from 'primeng/button';
-import { SelectModule } from 'primeng/select';
+import { Select, SelectModule } from 'primeng/select';
 import { PanelMenuModule } from 'primeng/panelmenu'
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { SelectedProjectService } from '../../services/selected-project-service/selected-project.service';
 
 @Component({
   selector: 'app-left-side-bar',
@@ -14,14 +15,20 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './left-side-bar.component.scss'
 })
 export class LeftSideBarComponent implements OnInit {
-  @Input() isOpen: boolean = false;
+  @Input() isOpen: boolean = true;
   @Output() closed = new EventEmitter<void>();
+  projectId: number | null = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private selectedProjectService: SelectedProjectService) { }
 
   ngOnInit(): void {
     // Initialize menu items
     this.buildMenuItems();
+
+    this.selectedProjectService.projectId$
+      .subscribe(projectId => {
+        this.projectId = projectId!;
+      });
   }
 
   // Close on Escape key press
@@ -56,12 +63,12 @@ export class LeftSideBarComponent implements OnInit {
       case 'overview':
         this.router.navigate(['/overview']);
         break;
-      case 'operations':
-        this.router.navigate(['/operations']);
-        break;
-      case 'financials':
-        this.router.navigate(['/financials']);
-        break;
+      // case 'operations':
+      //   this.router.navigate(['/operations']);
+      //   break;
+      // case 'financials':
+      //   this.router.navigate(['/financials']);
+      //   break;
       case 'documents':
         this.router.navigate(['/documents']);
         break;
@@ -79,59 +86,80 @@ export class LeftSideBarComponent implements OnInit {
       {
         label: 'Overview',
         icon: 'pi pi-chart-bar',
-        command: () => this.router.navigate(['main/overview']),
+        command: () => this.router.navigate(['main/overview/' + this.projectId]),
         items: [
-          {
-            label: 'Analytics',
-            icon: 'pi pi-chart-line',
-            command: () => this.router.navigate(['main/overview/analytics'])
-          }
-        ]
+          // {
+          //   label: 'Analytics',
+          //   icon: 'pi pi-chart-line',
+          //   command: () => this.router.navigate(['main/overview/analytics'])
+          // }
+        ],
+        style: { 'margin-left': '12px' }
       },
       {
         label: 'Operations',
         icon: 'pi pi-cog',
-        command: () => this.router.navigate(['main/operations']),
+        // command: () => this.router.navigate(['main/operations']),
+        expanded: true,
         items: [
+          {
+            label: 'Summary',
+            icon: 'pi pi-file',
+            command: () => this.router.navigate(['main/operations/summary/' + this.projectId]),
+            style: { 'margin-left': '9px' }
+          },
           {
             label: 'Timeline',
             icon: 'pi pi-calendar',
-            command: () => this.router.navigate(['main/operations/timeline'])
+            command: () => this.router.navigate(['main/operations/timeline/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           },
           {
             label: 'TaskManager',
             icon: 'pi pi-address-book',
-            command: () => this.router.navigate(['main/operations/taskmanager'])
+            command: () => this.router.navigate(['main/operations/taskmanager/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           },
           {
             label: 'Stakeholder Directory',
             icon: 'pi pi-users',
-            command: () => this.router.navigate(['main/operations/stakeholder-directory'])
+            command: () => this.router.navigate(['main/operations/stakeholder-directory']),
+            style: { 'margin-left': '9px' }
           }
         ]
       },
       {
         label: 'Financials',
         icon: 'pi pi-wallet',
-        command: () => this.router.navigate(['main/financials']),
+        // command: () => this.router.navigate(['main/financials/page1/' + this.projectId]),
+        // command: () => this.router.navigate(['main/financials']),
+        expanded: true,
         items: [
           {
-            label: 'Page1',
+            label: 'Summary',
             icon: 'pi pi-file',
-            command: () => this.router.navigate(['main/financials/page1'])
+            command: () => this.router.navigate(['main/financials/page1/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           },
           {
-            label: 'Page2',
+            label: 'Budget Category',
+            icon: 'pi pi-file',
+            command: () => this.router.navigate(['main/financials/page2/' + this.projectId]),
+            style: { 'margin-left': '9px' }
+          },
+          {
+            label: 'Claims',
             icon: 'pi pi-file-edit',
-            command: () => this.router.navigate(['main/financials/page2'])
+            command: () => this.router.navigate(['main/financials/claims/' + this.projectId]),
+            style: { 'margin-left': '9px' }
           }
         ]
       },
       {
         label: 'Documents',
         icon: 'pi pi-folder',
-        command: () => this.router.navigate(['main/documents']),
-        items: [] // No options currently
+        command: () => this.router.navigate(['main/documents/' + this.projectId]),
+        style: { 'margin-left': '12px' }
       }
     ];
 

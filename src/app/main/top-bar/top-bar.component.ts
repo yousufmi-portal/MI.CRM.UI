@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 
 import { ButtonModule } from 'primeng/button';
@@ -6,6 +6,17 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
+import { Menu } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProjectDto } from '../../../api-dtos/project.dto';
+import { ProjectsService } from '../../services/projects-service/projects.service';
+import { SelectModule } from 'primeng/select';
+import { SelectedProjectService } from '../../services/selected-project-service/selected-project.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { UsersService } from '../../services/users-service/users.service';
+import { UserDto } from '../../../api-dtos/user.dto';
 
 @Component({
   selector: 'app-top-bar',
@@ -15,17 +26,109 @@ import { AvatarModule } from 'primeng/avatar';
     InputIconModule,
     FormsModule,
     ToolbarModule,
-    AvatarModule
+    AvatarModule,
+    Menu,
+    SelectModule,
+    CommonModule
   ],
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss'
 })
-export class TopBarComponent {
-  @Input() isDrawerOpen: boolean = false
+export class TopBarComponent implements OnInit {
+  currentUrl = '';
+  hiddenRoutes = ['/main/admin', '/main/profile'];
+  selectVisible = false;
+  constructor(private router: Router, private projectsService: ProjectsService, private route: ActivatedRoute, private selectedProjectService: SelectedProjectService, private usersService: UsersService) {
+    this.router.events.subscribe(() => {
+      this.currentUrl = this.router.url;
+      this.selectVisible = !this.hiddenRoutes.includes(this.currentUrl);
+    });
+  }
+
+  currentUser: UserDto | null = null;
+  ngOnInit(): void {
+    this.usersService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.currentUser = user;
+      },
+      error: (err) => {
+        console.error('Error fetching current user:', err);
+      }
+
+    });
+    this.selectedProjectService.projectId$
+      .subscribe(projectId => {
+        this.projectId = projectId ?? 0;
+        this.getProjects();
+      });
+
+  }
+
+  @Input() isDrawerOpen: boolean = true;
   @Output() toggleLeftSideBar = new EventEmitter<void>();
   search: string = '';
 
+  projects: ProjectDto[] = [];
+  selectedProject?: ProjectDto;
+
+  projectId!: number;
+
+  topMenuItems: MenuItem[] = [
+    {
+      label: 'Options',
+      items: [
+        {
+          label: 'Admin',
+          icon: 'pi pi-arrow-up-right',
+          routerLink: ['/main/admin']
+        },
+        {
+          label: 'Log Out',
+          icon: 'pi pi-sign-out',
+          command: () => this.logout()
+        },
+        {
+          label: 'Profile',
+          icon: 'pi pi-user',
+          routerLink: ['/main/profile']
+        }
+      ]
+    }
+  ];
+
+
   hamburgerBtnClickHandler(): void {
     this.toggleLeftSideBar.emit();
+  }
+
+  avatarClickHandler() {
+    console.log('Avatar clicked');
+  }
+
+  logout() {
+    // Remove token from localStorage
+    localStorage.removeItem('token');
+
+    // Navigate to base URL
+    this.router.navigate(['/']);
+  }
+
+  getProjects() {
+    this.projectsService.getAllProjects().subscribe({
+      next: (res) => {
+        this.projects = res;
+        this.selectedProject = this.projects.find(p => p.projectId === this.projectId);
+        console.log(this.selectedProject);
+      }
+    })
+  }
+
+  onProjectSelected() {
+    this.selectedProjectService.setProjectId(this.selectedProject?.projectId ?? null);
+  }
+
+  shouldShowSelector(): boolean {
+    this.selectVisible = !this.hiddenRoutes.includes(this.currentUrl);
+    return this.selectVisible;
   }
 }

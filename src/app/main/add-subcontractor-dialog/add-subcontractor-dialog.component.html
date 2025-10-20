@@ -1,0 +1,35 @@
+<p-toast></p-toast>
+
+<p-dialog [(visible)]="display" [modal]="true" [closeOnEscape]="true" [dismissableMask]="true" (onHide)="close()"
+    [style]="{ width: '400px', borderRadius: '20px' }"
+    [header]="editMode ? 'Edit Subcontractor' : 'Add a Subcontractor'"
+    contentStyleClass="animate__animated animate__zoomIn animate__faster">
+    <form [formGroup]="form" class="p-fluid">
+        <!-- Name Field -->
+        <div class="field" style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem;">
+            <label for="name">Name</label>
+            <input id="name" type="text" pInputText formControlName="name" placeholder="Enter subcontractor name" />
+            <small *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="p-error">
+                Name is required
+            </small>
+        </div>
+
+        <!-- Email Field -->
+        <div class="field" style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem;">
+            <label for="email">Email</label>
+            <input id="email" type="email" pInputText formControlName="email" placeholder="Enter subcontractor email" />
+            <small *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="p-error">
+                Valid email is required
+            </small>
+        </div>
+
+        <!-- Buttons -->
+        <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;">
+            <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="close()"></button>
+
+            <button pButton type="submit" [label]="editMode ? 'Save Changes' : 'Add'" icon="pi pi-check"
+                [disabled]="form.invalid" class="p-button-primary" (click)="submit()"></button>
+        </div>
+    </form>
+</p-dialog>

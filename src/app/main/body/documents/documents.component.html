@@ -1,0 +1,48 @@
+<main class="documents-main">
+    <header class="documents-header">
+        <h2>Documents</h2>
+        <p-fileupload mode="basic" [auto]="true" [multiple]="true" chooseLabel="Upload Files"
+            (onSelect)="upload($event)" chooseIcon="pi pi-upload"
+            accept=".pdf,.docx,.xlsx,.png,.jpg,.jpeg,.zip,.rar,.csv" class="upload-btn"></p-fileupload>
+    </header>
+
+    <!-- Loader -->
+    <div *ngIf="isLoading" class="loader-container">
+        <p-progressSpinner strokeWidth="4" styleClass="loader-spinner"></p-progressSpinner>
+        <p>Loading documents...</p>
+    </div>
+
+    <!-- Documents -->
+    <section class="documents-grid" *ngIf="!isLoading && (documents || []).length > 0; else noDocuments">
+        <div *ngFor="let doc of documents" class="document-card">
+            <div class="document-card-header">
+                {{ doc.documentName }}
+            </div>
+            <div class="document-card-body">
+                <div class="document-info">
+                    <span class="info-label">Uploaded By:</span>
+                    <span class="info-value">{{ doc.uploadedByName }}</span>
+                </div>
+                <div class="document-info">
+                    <span class="info-label">Uploaded At:</span>
+                    <span class="info-value">{{ doc.uploadedAt | date: 'medium' }}</span>
+                </div>
+            </div>
+            <div class="document-card-footer">
+                <button pButton label="View" icon="pi pi-eye" class="p-button-sm p-button-outlined"
+                    (click)="viewDocument(doc)"></button>
+
+                <button pButton label="Delete" icon="pi pi-trash" class="p-button-sm p-button-outlined p-button-danger"
+                    (click)="deleteDocument(doc)"></button>
+            </div>
+        </div>
+    </section>
+
+    <ng-template #noDocuments>
+        <div class="no-documents animate__animated animate__fadeIn animate__slow" *ngIf="!isLoading">
+            <i class="pi pi-folder-open"></i>
+            <h3>No documents found</h3>
+            <p>You can upload a document from the top!</p>
+        </div>
+    </ng-template>
+</main>

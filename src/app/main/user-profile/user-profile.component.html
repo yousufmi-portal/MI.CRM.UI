@@ -1,0 +1,75 @@
+<app-change-password [userId]="user?.userId ??0" [(visible)]="displayChangePasswordDialog"></app-change-password>
+<p-toast></p-toast>
+
+<div class="user-profile-container animate__animated animate__fadeIn">
+    <div class="user-card animate__animated animate__zoomIn animate__faster">
+        <div class="user-image animate__animated animate__infinite">
+            <p-avatar [image]="user?.imageUrl"
+                [label]="!user?.imageUrl ? (user?.name ? user?.name?.charAt(0)?.toUpperCase() ?? '?' : '?') : ''"
+                shape="circle" [style]="{ width: '150px', height: '150px'}" />
+
+
+            <button *ngIf="isEditMode" pButton type="button" icon="pi pi-camera"
+                class="upload-btn p-button-rounded p-button-outlined animate__animated animate__fadeInUp"
+                (click)="onImageUploadClick()" pTooltip="Change Profile Image">
+            </button>
+        </div>
+
+        <div class="user-details animate__animated animate__fadeInUp animate__delay-1s">
+            <p-table [value]="userFields" [tableStyle]="{ 'width': '100%' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-detail>
+                    <tr *ngIf="user" class="animate__animated animate__fadeInUp animate__faster">
+                        <td class="label">{{ detail.label }}</td>
+                        <td class="value-cell">
+                            <!-- Name -->
+                            <ng-container *ngIf="detail.field === 'name'">
+                                <input *ngIf="isEditMode" pInputText [(ngModel)]="user.name" />
+                                <span *ngIf="!isEditMode">{{ user.name }}</span>
+                            </ng-container>
+
+                            <!-- Email -->
+                            <ng-container *ngIf="detail.field === 'email'">
+                                <input *ngIf="isEditMode" pInputText [(ngModel)]="user.email" />
+                                <span *ngIf="!isEditMode">{{ user.email }}</span>
+                            </ng-container>
+
+                            <!-- Role -->
+                            <ng-container *ngIf="detail.field === 'roleId'">
+                                <span>{{ getRoleName(user.roleId) }}</span>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="button-group animate__animated animate__fadeInUp animate__delay-2s">
+            <button pButton type="button" label="Change Password"
+                class="p-button-sm p-button-outlined animate__animated animate__fadeInUp" icon="pi pi-key" (click)="
+                displayChangePasswordDialog = true">
+            </button>
+
+            <div *ngIf="isEditMode" class="edit-mode-buttons animate__animated animate__fadeInUp animate__faster">
+                <button pButton type="button" label="Save" icon="pi pi-check"
+                    class="p-button-sm p-button-outlined animate__animated animate__infinite" (click)="updateUser()">
+                </button>
+
+                <button pButton type="button" label="Cancel" icon="pi pi-times"
+                    class="p-button-sm p-button-outlined p-button-danger animate__animated animate__fadeInUp"
+                    (click)="toggleEdit(false)">
+                </button>
+            </div>
+
+            <button *ngIf="!isEditMode" pButton type="button" label="Edit" icon="pi pi-pencil"
+                class="p-button-sm p-button-outlined animate__animated animate__fadeInUp" (click)="toggleEdit(true)">
+            </button>
+        </div>
+    </div>
+</div>

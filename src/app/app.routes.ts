@@ -10,40 +10,81 @@ import { DashboardComponent } from './main/body/dashboard/dashboard.component';
 import { CompletedCashflowByAwardComponent } from './main/charts/completed-cashflow-by-award/completed-cashflow-by-award.component';
 import { Page1Component } from './main/body/financials/page1/page1.component';
 import { Page2Component } from './main/body/financials/page2/page2.component';
+import { TimelineCalendarComponent } from './main/body/operations/timeline-calendar/timeline-calendar.component';
+import { AdminComponent } from './main/body/admin/admin.component';
+import { ErrorPageComponent } from './main/shared/error-page/error-page.component';
+import { AnalyticsComponent } from './main/body/overview/analytics/analytics.component';
+import { ClaimsComponent } from './main/body/financials/claims/claims.component';
+import { DocumentsComponent } from './main/body/documents/documents.component';
+import { UserProfileComponent } from './main/user-profile/user-profile.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
         path: '',
-        component: MainComponent
+        component: AuthComponent
     },
     {
         path: 'main',
         component: MainComponent,
+        canActivate: [authGuard],
         children: [
             {
-                path: 'overview',
+                path: 'admin',
+                component: AdminComponent
+            },
+            {
+                path: 'overview/:projectId',
                 component: OverviewComponent,
+            },
+            {
+                path: 'overview/analytics',
+                component: AnalyticsComponent
+            },
+            {
+                path: 'operations/summary/:projectId',
+                component: TimelineComponent
             },
             {
                 path: 'operations/stakeholder-directory',
                 component: StakeholderDirectoryComponent,
             },
             {
-                path: 'operations/timeline',
-                component: TimelineComponent,
+                path: 'operations/timeline/:projectId',
+                component: TimelineCalendarComponent,
             },
             {
-                path: 'operations/taskmanager',
+                path: 'operations/taskmanager/:projectId',
                 component: TaskmanagerComponent
             },
             {
-                path: 'financials/page1',
+                path: 'financials/page1/:projectId',
                 component: Page1Component
             },
             {
-                path: 'financials/page2',
+                path: 'financials/page2/:projectId',
                 component: Page2Component
+            },
+            {
+                path: 'financials/claims/:projectId',
+                component: ClaimsComponent
+            },
+            {
+                path: 'documents/:projectId',
+                component: DocumentsComponent
+            },
+            {
+                path: 'profile',
+                component: UserProfileComponent
             }
         ]
-    }
+    },
+    // ✅ Add 404 page route
+    { path: '404', component: ErrorPageComponent, data: { errorCode: '404', errorMessage: 'Page not found' } },
+
+    // ✅ Optional: Add 500 page route
+    { path: '500', component: ErrorPageComponent, data: { errorCode: '500', errorMessage: 'Internal server error' } },
+
+    // ✅ Wildcard: catch-all unknown routes
+    { path: '**', redirectTo: '404' }
 ];

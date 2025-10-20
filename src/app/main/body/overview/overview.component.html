@@ -1,122 +1,301 @@
 <main>
-    <section class="top-cards-section">
-        <div class="top-card">
-            <div class="top-card-header">
-                <div>Active Tasks</div>
-            </div>
-            <div class="top-card-body">
-                <div class="top-card-content">
-                    <div>10</div>
-                    <a href="">See more</a>
+    <section class="animate__animated animate__fadeIn animate__slower">
+        <h1>
+            Weekly Overview
+            <span class="overview-date">
+                ({{ weekStartDate | date: 'MMM d, y' }} - {{ weekEndDate | date: 'MMM d, y' }})
+            </span>
+        </h1>
+    </section>
+
+    <!-- Top Info Section -->
+    <section class="top-section animate__animated animate__fadeIn">
+
+        <!-- Row 1 -->
+        <div class="top-info-card-row">
+            <div class="top-info-card" [ngClass]="{ 'card-in-edit': editingField['awardNumber'] }">
+                <div class="info-label">
+                    Project ID
+                    <i class="pi pi-pencil edit-icon" (click)="startEdit('awardNumber')"></i>
                 </div>
-                <div class="top-card-footer">
-                    <span><i class="pi pi-wave-pulse"></i>15</span> vs <span>last 7 days</span>
+                <div class="info-value">
+                    <ng-container *ngIf="!editingField['awardNumber']; else editAwardNumber">
+                        {{ ProjectOverview?.project?.awardNumber }}
+                    </ng-container>
+                    <ng-template #editAwardNumber>
+                        <div class="edit-container">
+                            <textarea pInputTextarea [(ngModel)]="editableValues.awardNumber"
+                                autoResize="true"></textarea>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="edit-actions-container" *ngIf="editingField['awardNumber']">
+                    <i class="pi pi-check edit-actions" (click)="saveEdit('awardNumber')"></i>
+                    <i class="pi pi-times edit-actions" (click)="cancelEdit('awardNumber')"></i>
+                </div>
+            </div>
+
+            <div class="top-info-card" [ngClass]="{ 'card-in-edit': editingField['title'] }">
+                <div class="info-label">
+                    Project Title
+                    <i class="pi pi-pencil edit-icon" (click)="startEdit('title')"></i>
+                </div>
+                <div class="info-value">
+                    <ng-container *ngIf="!editingField['title']; else editTitle">
+                        {{ ProjectOverview?.project?.title }}
+                    </ng-container>
+                    <ng-template #editTitle>
+                        <div class="edit-container">
+                            <textarea pInputTextarea [(ngModel)]="editableValues.title" autoResize="true"></textarea>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="edit-actions-container" *ngIf="editingField['title']">
+                    <i class="pi pi-check edit-actions" (click)="saveEdit('title')"></i>
+                    <i class="pi pi-times edit-actions" (click)="cancelEdit('title')"></i>
+                </div>
+            </div>
+
+
+            <div class="top-info-card" [ngClass]="{ 'card-in-edit': editingField['company'] }">
+                <div class="info-label">
+                    Company Name
+                    <i class="pi pi-pencil edit-icon" (click)="startEdit('company')"></i>
+                </div>
+                <div class="info-value">
+                    <ng-container *ngIf="!editingField['company']; else editCompany">
+                        {{ ProjectOverview?.project?.company }}
+                    </ng-container>
+                    <ng-template #editCompany>
+                        <div class="edit-container">
+                            <textarea pInputTextarea [(ngModel)]="editableValues.company" autoResize="true"></textarea>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="edit-actions-container" *ngIf="editingField['company']">
+                    <i class="pi pi-check edit-actions" (click)="saveEdit('company')"></i>
+                    <i class="pi pi-times edit-actions" (click)="cancelEdit('company')"></i>
+                </div>
+            </div>
+
+            <div class="top-info-card" [ngClass]="{ 'card-in-edit': editingField['agency'] }">
+                <div class="info-label">
+                    Agency
+                    <i class="pi pi-pencil edit-icon" (click)="startEdit('agency')"></i>
+                </div>
+                <div class="info-value">
+                    <ng-container *ngIf="!editingField['agency']; else editAgency">
+                        {{ ProjectOverview?.project?.agency }}
+                    </ng-container>
+                    <ng-template #editAgency>
+                        <div class="edit-container">
+                            <textarea pInputTextarea [(ngModel)]="editableValues.agency" autoResize="true"></textarea>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="edit-actions-container" *ngIf="editingField['agency']">
+                    <i class="pi pi-check edit-actions" (click)="saveEdit('agency')"></i>
+                    <i class="pi pi-times edit-actions" (click)="cancelEdit('agency')"></i>
                 </div>
             </div>
         </div>
-        <div class="top-card">
-            <div class="top-card-header">
-                <div>Upcoming Event</div>
-            </div>
-            <div class="top-card-body">
-                <div class="top-card-content">
-                    <div>05</div>
-                    <a href="">See more</a>
+
+        <!-- Row 2 -->
+        <div class="top-info-card-row">
+            <div class="top-info-card" [ngClass]="{ 'card-in-edit': editingField['category'] }">
+                <div class="info-label">
+                    Category
+                    <i class="pi pi-pencil edit-icon" (click)="startEdit('category')"></i>
                 </div>
-                <div class="top-card-footer">
-                    <span>View Calendar</span>
+                <div class="info-value">
+                    <ng-container *ngIf="!editingField['category']; else editCategory">
+                        {{ ProjectOverview?.project?.category }}
+                    </ng-container>
+                    <ng-template #editCategory>
+                        <div class="edit-container">
+                            <textarea pInputTextarea [(ngModel)]="editableValues.category" autoResize="true"></textarea>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="edit-actions-container" *ngIf="editingField['category']">
+                    <i class="pi pi-check edit-actions" (click)="saveEdit('category')"></i>
+                    <i class="pi pi-times edit-actions" (click)="cancelEdit('category')"></i>
+                </div>
+            </div>
+
+            <div class="top-info-card" [ngClass]="{ 'card-in-edit': editingField['state'] }">
+                <div class="info-label">
+                    State
+                    <i class="pi pi-pencil edit-icon" (click)="startEdit('state')"></i>
+                </div>
+                <div class="info-value">
+                    <ng-container *ngIf="!editingField['state']; else editState">
+                        {{ ProjectOverview?.project?.state }}
+                    </ng-container>
+                    <ng-template #editState>
+                        <div class="edit-container">
+                            <textarea pInputTextarea [(ngModel)]="editableValues.state" autoResize="true"></textarea>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="edit-actions-container" *ngIf="editingField['state']">
+                    <i class="pi pi-check edit-actions" (click)="saveEdit('state')"></i>
+                    <i class="pi pi-times edit-actions" (click)="cancelEdit('state')"></i>
+                </div>
+            </div>
+
+            <div class="top-info-card">
+                <div class="info-label">Project Status</div>
+                <div class="info-value">
+                    <p-select [options]="[
+        { label: 'Completed', value: 'Completed' },
+        { label: 'Ongoing', value: 'Ongoing' },
+        { label: 'Cancelled', value: 'Cancelled' }
+      ]" [(ngModel)]="editableValues.projectStatus" placeholder="Select a status" appendTo="body"
+                        (onChange)="saveEdit('projectStatus')">
+                    </p-select>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Row 3 -->
+        <div class="top-info-card-row">
+            <div class="top-info-card">
+                <div class="info-label">Approved Budget</div>
+                <div class="info-value">
+                    {{ ProjectOverview?.project?.totalApprovedBudget | currency }}
+                </div>
+            </div>
+
+            <div class="top-info-card">
+                <div class="info-label">Disbursed Budget</div>
+                <div class="info-value">
+                    {{ ProjectOverview?.project?.totalDisbursedBudget | currency }}
+                </div>
+            </div>
+
+            <div class="top-info-card">
+                <div class="info-label">Remaining Budget</div>
+                <div class="info-value">
+                    {{ ProjectOverview?.project?.totalRemainingBudget | currency }}
                 </div>
             </div>
         </div>
-        <div class="top-card">
-            <div class="top-card-header">
-                <div>Pending Claims</div>
-            </div>
-            <div class="top-card-body">
-                <div class="top-card-content">
-                    <div>01</div>
-                    <a href="">See more</a>
-                </div>
-                <div class="top-card-footer">
-                    <span>Last Claim Approved 60 Days ago</span>
+
+        <!-- Row 4 -->
+        <div class="top-info-card-row">
+            <div class="top-info-card">
+                <div class="info-label">Start Date</div>
+                <div class="info-value">
+                    <p-datepicker dateFormat="yy-mm-dd" appendTo="body" [(ngModel)]="editableValues.startDate"
+                        (onSelect)="saveEdit('startDate')">
+                    </p-datepicker>
                 </div>
             </div>
-        </div>
-        <div class="top-card">
-            <div class="top-card-header">
-                <div>Budget Status</div>
-            </div>
-            <div class="top-card-body">
-                <div class="top-card-content">
-                    <div>75%</div>
-                    <a href="">See more</a>
-                </div>
-                <div class="top-card-footer">
-                    <span>Last Budget Approved 2 Days ago</span>
+
+            <div class="top-info-card">
+                <div class="info-label">End Date</div>
+                <div class="info-value">
+                    <p-datepicker dateFormat="yy-mm-dd" appendTo="body" [(ngModel)]="editableValues.endDate"
+                        (onSelect)="saveEdit('endDate')">
+                    </p-datepicker>
                 </div>
             </div>
+
+
+            <div class="top-info-card">
+                <div class="info-label">Project Manager</div>
+                <div class="info-value">
+                    {{ ProjectOverview?.project?.projectManagerName
+                    }}
+
+                </div>
+            </div>
+
+            <div class="top-info-card">
+                <div class="info-label">Subcontractor</div>
+
+                <div class="info-value">
+                    <ng-container *ngIf="ProjectOverview?.project?.subContractorName; else noSubcontractor">
+                        {{ ProjectOverview?.project?.subContractorName }}
+                    </ng-container>
+
+                    <ng-template #noSubcontractor>
+                        <span class="text-gray-500 flex items-center gap-1">
+                            <i class="pi pi-exclamation-triangle text-yellow-500 text-sm"></i>
+                            NONE
+                        </span>
+                    </ng-template>
+                </div>
+            </div>
+
         </div>
     </section>
+
+    <!-- Bottom Left: Tasks + Notifications -->
     <section class="bottom-cards-section">
         <section class="bottom-cards-section-left">
-            <section class="tasks-report-section">
+            <!-- Tasks Report (non-editable) -->
+            <section class="tasks-report-section animate__animated animate__fadeInLeft">
                 <header>
                     Tasks Report
+                    <small style="display: block;">(Overall project)</small>
                 </header>
                 <div class="tasks-report-section-content-container">
                     <div class="tasks-count-container">
-                        <div class="task-count">23</div>
+                        <div class="task-count">{{ ProjectOverview?.toDoTasks }}</div>
                         <div class="task-label">To-do Tasks</div>
                     </div>
                     <div class="tasks-count-container">
-                        <div class="task-count">07</div>
+                        <div class="task-count">{{ ProjectOverview?.completedTasks }}</div>
                         <div class="task-label">Completed Tasks</div>
                     </div>
                     <div class="tasks-count-container">
-                        <div class="task-count">16</div>
+                        <div class="task-count">{{ ProjectOverview?.remainingTasks }}</div>
                         <div class="task-label">Remaining</div>
                     </div>
                 </div>
                 <footer>
-                    <p-progressbar [value]="43" styleClass="custom-progress" />
+                    <p-progressbar [value]="ProjectOverview?.progressPercentage"
+                        styleClass="custom-progress"></p-progressbar>
                 </footer>
             </section>
 
-            <section class="project-notifications-section">
-                <header>
-                    <i class="pi pi-bell"></i>Project Notification
-                </header>
-
+            <!-- Notifications -->
+            <section class="project-notifications-section animate__animated animate__fadeInUp">
+                <header><i class="pi pi-bell"></i> Project Notification</header>
                 <div class="notifications-container">
-                    <div class="notification-container">
+                    <div class="notification-container" *ngFor="let notification of ProjectOverview?.notifications">
                         <i class="pi pi-caret-right"></i>
-                        <p>Task 02 is scheduled in 02 days</p>
-                    </div>
-                    <div class="notification-container">
-                        <i class="pi pi-caret-right"></i>
-                        <p>Personal Cost Claim is being declined</p>
+                        <p>{{ notification.title }} in {{ notification.timeRemaining }}</p>
                     </div>
                 </div>
-
-                <footer>
-                    <small>See more</small>
-                </footer>
             </section>
         </section>
-        <section class="bottom-cards-section-right">
-            <header>
-                Recent Updates
-            </header>
-
-            <div class="recent-updates-container">
-                <ul class="custom-list">
-                    <li>Task 02 is scheduled in 02 days</li>
-                    <li>Task 02 is scheduled in 02 days</li>
-                    <li>Task 02 is scheduled in 02 days</li>
-                    <li>Task 02 is scheduled in 02 days</li>
-                </ul>
-            </div>
-
-        </section>
     </section>
+
+    <!-- Status Description -->
+    <div class="top-info-card-row" style="width: 100%;">
+        <div class="top-info-card" [ngClass]="{ 'card-in-edit': editingField['status'] }">
+            <div class="info-label">
+                Status
+                <i class="pi pi-pencil edit-icon" (click)="startEdit('status')"></i>
+            </div>
+            <div class="info-value">
+                <ng-container *ngIf="!editingField['status']; else editStatus">
+                    {{ ProjectOverview?.project?.status }}
+                </ng-container>
+                <ng-template #editStatus>
+                    <div class="edit-container">
+                        <textarea pInputTextarea [(ngModel)]="editableValues.status" autoResize="true"></textarea>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="edit-actions-container" *ngIf="editingField['status']">
+                <i class="pi pi-check edit-actions" (click)="saveEdit('status')"></i>
+                <i class="pi pi-times edit-actions" (click)="cancelEdit('status')"></i>
+            </div>
+        </div>
+    </div>
 </main>

@@ -31,7 +31,7 @@ main {
 
 .header-section-left div:last-child,
 .header-section-right div:first-child {
-    color: rgb(0 192 203);
+    color: #36a785;
     font-weight: bold;
 }
 
@@ -75,7 +75,7 @@ main {
     background: none;
     text-decoration: solid;
     cursor: pointer;
-    color: #2053da;
+    color: #36a785;
 }
 
 
@@ -88,55 +88,6 @@ main {
 .main-body-to-do-body {
     margin-top: 1rem;
     padding: 0.25rem 0.5rem;
-}
-
-.latest-to-do-section-heading {
-    color: #ca8a04;
-}
-
-.latest-to-do-continer {
-    padding: 2rem 0rem;
-    color: #ccc;
-    font-size: 0.8rem;
-}
-
-.latest-finished-to-do-section-heading {
-    color: #40a675;
-}
-
-.latest-finished-to-do-continer ul {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1rem;
-    // gap: 0.5rem;
-}
-
-.latest-finished-to-do-item {
-    display: flex;
-    // align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1rem;
-    width: 100%;
-    // border: 1px solid red;
-    border-bottom: 1px solid #ccc;
-}
-
-.latest-finished-to-do-item-content {
-    // border: 1px solid green;
-    width: 100%;
-}
-
-.latest-finished-to-do-item-details {
-    display: flex;
-    justify-content: space-between;
-}
-
-.latest-finished-to-do-item-title {
-    text-decoration: line-through;
-}
-
-.latest-finished-to-do-item-date {
-    color: #8f8f8f;
 }
 
 .body-section-right {
@@ -155,9 +106,139 @@ main {
 }
 
 .body-section-right-header div {
-    background-color: rgb(6 48 72);
+    background-color: #0e533f;
     color: white;
     padding: 0.5rem 1rem;
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
+}
+
+/* ===========================
+   Latest To-Do Section
+=========================== */
+.latest-to-do-section {
+    // margin-top: 1rem;
+    background-color: white;
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px #337361;
+}
+
+.latest-to-do-section-heading,
+.latest-finished-to-do-section-heading {
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    // margin-bottom: 0.5rem;
+}
+
+.latest-to-do-section-heading {
+    color: #ca8a04;
+    /* amber / warning color */
+}
+
+.latest-finished-to-do-section-heading {
+    color: #40a675;
+    /* green / success color */
+}
+
+/* ===========================
+   To-Do Items
+=========================== */
+.latest-to-do-continer ul,
+.latest-finished-to-do-continer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.latest-to-do-item,
+.latest-finished-to-do-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.latest-to-do-item:hover,
+.latest-finished-to-do-item:hover {
+    background-color: #f9fafb;
+    /* light hover effect */
+}
+
+.latest-to-do-item div:first-child,
+.latest-finished-to-do-item div:first-child {
+    cursor: grab;
+    color: #999;
+}
+
+.latest-to-do-item-content,
+.latest-finished-to-do-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===========================
+   Finished Task Styles
+=========================== */
+.latest-finished-to-do-item-title {
+    text-decoration: line-through;
+    color: #6b7280;
+    /* muted gray */
+    font-size: 0.9rem;
+}
+
+.latest-finished-to-do-item-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    // margin-top: 0.25rem;
+}
+
+.latest-finished-to-do-item-date {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+/* ===========================
+   Pending Task Styles
+=========================== */
+.latest-to-do-item-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #374151;
+    /* dark gray */
+}
+
+
+:host ::ng-deep .p-datatable-thead>tr>th {
+    // text-align: center !important;
+    background-color: #36a785 !important;
+    color: white !important;
+    font-weight: lighter !important;
+}
+
+:host ::ng-deep .p-datatable-tbody>tr>td {
+    // text-align: center !important;
+    // background-color: #1d9ebd !important;
+    // color: white !important;
+    font-weight: lighter !important;
+}
+
+.body-section-right-header > div {
+    cursor: pointer;
+    user-select: none;
+    transition: box-shadow 0.2s ease;
+}
+
+.body-section-right-header > div:hover {
+    box-shadow: 0 6px 12px rgb(0, 0, 0);
 }

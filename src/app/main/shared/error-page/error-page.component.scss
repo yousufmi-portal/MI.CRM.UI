@@ -1,0 +1,75 @@
+$error-primary: rgb(240, 250, 255); // very light background
+$error-accent: rgb(0, 192, 203); // your bright cyan
+$error-text: rgb(6, 48, 72); // your deep blue
+
+
+.error-page-container {
+    min-height: 100vh;
+    background: lighten($error-primary, 40%); // lighter backdrop
+    color: $error-primary;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.error-logo img {
+    width: 175px;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-size: 6rem;
+    color: darken($error-accent, 20%);
+}
+
+.error-message {
+    font-size: 1.4rem;
+    margin: 1rem 0;
+    color: $error-text; // your brand deep blue
+    font-weight: 500;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+
+    a {
+        text-decoration: none;
+        padding: 0.7rem 1.5rem;
+        border-radius: 8px;
+        font-weight: bold;
+
+        &.home-btn {
+            background: $error-accent;
+            color: white;
+
+            &:hover {
+                background: lighten($error-accent, 10%);
+            }
+        }
+
+        &.contact-btn {
+            border: 2px solid $error-accent;
+            color: $error-accent;
+
+            &:hover {
+                background: $error-accent;
+                color: white;
+            }
+        }
+    }
+}
+
+.error-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+
+    a {
+        color: $error-accent;
+        text-decoration: underline;
+    }
+}

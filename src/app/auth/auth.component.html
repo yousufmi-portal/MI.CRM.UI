@@ -1,7 +1,10 @@
 <main>
-    <div id="login-container" [ngStyle]="isLogin ? { 'height': '55vh' } : { 'height': '70vh' }">
-        <img src="/mi_logo.png" alt="logo" width="50" height="50" id="logo-img" />
-        <form *ngIf="isLogin" [formGroup]="authForm" class="auth-form">
+    <p-toast></p-toast>
+    <div id="login-container" [ngStyle]="isLogin ? { 'height': '65vh' } : { 'height': '85vh' }">
+        <img src="/MCL Jasco logo 2.avif" alt="logo" width="130" height="130" id="logo-img"
+            class="animate__animated animate__fadeIn animate__slower" />
+        <form *ngIf="isLogin" [formGroup]="authForm"
+            class="auth-form animate__animated animate__fadeInRight animate__slow">
             <div class="form-field-container">
                 <label for="email" class="form-field-label">Email</label>
                 <input id="email" type="text" formControlName="email" />
@@ -9,12 +12,18 @@
 
             <div class="form-field-container">
                 <label for="password" class="form-field-label">Password</label>
-                <p-password formControlName="password" [feedback]="false" />
+                <p-password formControlName="password" [feedback]="false" [toggleMask]="true"/>
                 <small id="forgot-password">Forgot Password</small>
             </div>
 
             <div class="form-field-container">
-                <button class="submit-btn" (click)="onSubmit()">Login</button>
+                <button class="submit-btn" (click)="onSubmit()" [disabled]="loading">
+                    <ng-container *ngIf="!loading">
+                        Login
+                    </ng-container>
+                    <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+                        [style]="{ width: '24px', height: '24px' }" *ngIf="loading" />
+                </button>
             </div>
             <div class="form-field-container">
                 <p><small>Don't have an account. <b style="cursor: pointer;" (click)="toggleAuthMode()">Sign Up
@@ -22,7 +31,7 @@
             </div>
         </form>
 
-        <form *ngIf="!isLogin" [formGroup]="authForm" class="auth-form">
+        <form *ngIf="!isLogin" [formGroup]="authForm" class="auth-form" style="gap: 0.5rem;">
             <div class="form-field-container">
                 <label for="fullname" class="form-field-label">Full Name</label>
                 <input id="fullname" type="text" formControlName="fullName" />
@@ -30,7 +39,8 @@
 
             <div class="form-field-container">
                 <label for="role" class="form-field-label">Role</label>
-                <input id="role" type="text" formControlName="role" />
+                <p-select formControlName="roleId" [options]="Roles" optionLabel="name" optionValue="roleId"
+                    placeholder="Select a Role" />
             </div>
 
             <div class="form-field-container">
@@ -40,7 +50,7 @@
 
             <div class="form-field-container">
                 <label for="reg-password" class="form-field-label">Password</label>
-                <p-password formControlName="password" autocomplete="off">
+                <p-password formControlName="password" autocomplete="off" [toggleMask]="true">
                     <ng-template #header>
                         <div class="font-semibold text-xm mb-4">Pick a password</div>
                     </ng-template>
@@ -57,7 +67,29 @@
             </div>
 
             <div class="form-field-container">
-                <button class="submit-btn" id="register-btn">Register Now</button>
+                <div class="profile-image-container">
+                    <p-fileUpload mode="basic" name="image" accept="image/*" chooseLabel="Image" [auto]="false"
+                        (onSelect)="onImageSelect($event)" styleClass="p-button-sm upload-btn">
+                    </p-fileUpload>
+
+                    <!-- Show preview & remove option -->
+                    <div *ngIf="selectedFile" class="image-preview">
+                        <button pButton type="button" icon="pi pi-times" class="p-button-text p-button-danger p-0"
+                            (click)="removeSelectedImage()"></button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-field-container">
+                <button class="submit-btn" id="register-btn" (click)="onSubmit()" [disabled]="loading">
+                    <ng-container *ngIf="!loading">
+                        Register Now
+                    </ng-container>
+                    <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+                        [style]="{ width: '24px', height: '24px' }" *ngIf="loading" />
+                </button>
             </div>
             <div class="form-field-container">
                 <p><small>Already have an account? <b (click)="toggleAuthMode()"

@@ -1,0 +1,140 @@
+<app-add-project-form [(visible)]="isAddProjectFormVisible" (projectCreated)="loadProjectsData($event)">
+</app-add-project-form>
+
+<app-projects-powerbi-summary-dialog [(visible)]="isProjectsSummaryDialogVisible"></app-projects-powerbi-summary-dialog>
+
+
+<main class="animate__animated animate__fadeIn">
+    <section class="top-section">
+        <section class="top-section-sub-section">
+            <div class="top-section-item">
+                <div class="top-section-label">No of projects</div>
+                <div class="top-section-value">{{ data?.totalProjects }}</div>
+            </div>
+            <div class="top-section-item">
+                <div class="top-section-label">No of states</div>
+                <div class="top-section-value">{{ data?.states }}</div>
+            </div>
+            <div class="top-section-item">
+                <div class="top-section-label">Total budget</div>
+                <div class="top-section-value" style="color: #36a785;">{{ data?.totalApprovedBudget || 0 |
+                    shortenCurrency }}
+                </div>
+            </div>
+        </section>
+        <div class="top-section-actions-container">
+            <button (click)="isProjectsSummaryDialogVisible = true">View Summary</button>
+            <button (click)="isAddProjectFormVisible = true">Add Project</button>
+        </div>
+    </section>
+    <section class="projects-table-section">
+        <div style="padding-bottom: 1rem; font-size: 1.5rem; font-weight: bold;">Projects</div>
+        <p-table [value]="data?.projects || []" dataKey="id"
+            [globalFilterFields]="['title', 'awardNumber', 'company', 'totalApprovedBudget', 'subContractorName', 'state', 'projectStatus']">
+
+            <!-- Header -->
+            <ng-template #header>
+                <tr class="animate__animated animate__fadeIn">
+                    <th style="width: max-content; text-wrap: nowrap;">S. No</th> <!-- New Column -->
+
+                    <th pSortableColumn="title">
+                        <div>
+                            <p-sortIcon field="title" />
+                            Project Title
+                            <p-columnFilter type="text" field="title" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="awardNumber">
+                        <div>
+                            <p-sortIcon field="awardNumber" />
+                            Award No
+                            <p-columnFilter type="text" field="awardNumber" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="company">
+                        <div>
+                            <p-sortIcon field="company" />
+                            Company
+                            <p-columnFilter type="text" field="company" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="totalApprovedBudget">
+                        <div>
+                            <p-sortIcon field="totalApprovedBudget" />
+                            Budget
+                            <p-columnFilter type="numeric" field="totalApprovedBudget" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="subContractorName">
+                        <div>
+                            <p-sortIcon field="subContractorName" />
+                            Subcontractor
+                            <p-columnFilter type="text" field="subContractorName" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="state">
+                        <div>
+                            <p-sortIcon field="state" />
+                            State
+                            <p-columnFilter type="text" field="state" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th pSortableColumn="projectStatus">
+                        <div>
+                            <p-sortIcon field="projectStatus" />
+                            Status
+                            <p-columnFilter type="text" field="projectStatus" display="menu" class="ml-auto" />
+                        </div>
+                    </th>
+                    <th style="width: max-content;"></th>
+                </tr>
+            </ng-template>
+
+            <!-- Body -->
+            <ng-template #body let-project let-rowIndex="rowIndex">
+                <tr class="animate__animated animate__fadeIn animate__slow"
+                    (click)="onProjectSelected(project.projectId)">
+
+                    <td>{{ rowIndex + 1 }}</td> <!-- S. no -->
+
+                    <td>{{ project.title }}</td>
+                    <td>{{ project.awardNumber }}</td>
+                    <td>{{ project.company }}</td>
+                    <td>{{ project.totalApprovedBudget | currency }}</td>
+                    <td>
+                        <ng-container *ngIf="project.subContractorName; else noSubcontractor">
+                            {{ project.subContractorName }}
+                        </ng-container>
+
+                        <ng-template #noSubcontractor>
+                            <span class="flex items-center gap-1 text-gray-500">
+                                <i class="pi pi-exclamation-triangle text-yellow-500 text-sm"></i>
+                                NONE
+                            </span>
+                        </ng-template>
+                    </td>
+
+                    <td>{{ project.state }}</td>
+                    <td>{{ project.projectStatus }}</td>
+                    <td>
+                        <button pButton icon="pi pi-trash" class="p-button-sm p-button-outlined p-button-danger" style="margin-bottom: 0.25rem;"
+                            (click)="deleteProject(project.projectId); $event.stopPropagation()"></button>
+
+                        <ng-container *ngIf="reportGeneratingIds.has(project.projectId); else generateBtn">
+                            <p-progressSpinner strokeWidth="4" styleClass="w-3rem h-3rem"
+                                [style]="{ width: '1.5rem', height: '1.5rem' }"></p-progressSpinner>
+                        </ng-container>
+
+                        <ng-template #generateBtn>
+                            <button pButton icon="pi pi-file-pdf" class="p-button-sm p-button-outlined p-button-warning"
+                                (click)="generateProjectReport(project.projectId, project.awardNumber); $event.stopPropagation()"></button>
+                        </ng-template>
+                    </td>
+
+
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </section>
+</main>

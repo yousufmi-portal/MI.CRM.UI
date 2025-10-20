@@ -1,3 +1,5 @@
+import { DisbursementDto } from "./disbursement.dto";
+
 export interface ProjectBudgetEntryDto {
   id: number;
   projectId: number;
@@ -8,4 +10,5 @@ export interface ProjectBudgetEntryDto {
   notes?: string;
   categoryName?: string;
   typeName?: string;
+  disbursements: DisbursementDto[];
 }

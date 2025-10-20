@@ -9,16 +9,17 @@ main {
     margin: 0 auto;
 }
 
-.top-cards-section {
+.right-cards-section {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    /* two per row */
     gap: 1.5rem;
-    width: max-content;
-    align-items: stretch;
+    // width: 45%; /* let it expand instead of max-content */
+    // align-items: stretch;
 }
 
-.top-card {
+
+.right-card {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -28,40 +29,40 @@ main {
 
 }
 
-.top-card-header {
+.right-card-header {
     padding: 0.75rem 1.25rem;
     border-bottom: 3px solid rgb(237 237 237);
     font-size: 1.25rem;
 }
 
-.top-card-body {
+.right-card-body {
     padding: 0.75rem 1.25rem;
 }
 
-.top-card-content {
+.right-card-content {
     display: flex;
     gap: 0.25rem;
     align-items: baseline;
 }
 
-.top-card-content div {
+.right-card-content div {
 
     font-size: 3rem;
     font-weight: bold;
 }
 
-.top-card-content a {
+.right-card-content a {
     text-decoration: none;
-    color: rgb(0 192 203);
+    color: #36a785;
     font-size: 0.75rem;
 }
 
-.top-card-footer {
+.right-card-footer {
     white-space: nowrap;
 }
 
-.top-card-footer span:first-of-type {
-    color: rgb(0 192 203);
+.right-card-footer span:first-of-type {
+    color: #36a785;
     font-size: 0.75rem;
 }
 
@@ -70,12 +71,14 @@ main {
     gap: 1.5rem;
     // border: 1px solid red;
     width: 100%;
+    justify-content: center;
 }
 
 .bottom-cards-section-left {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    flex: 1;
     // align-self: flex-start;
 }
 
@@ -121,18 +124,18 @@ main {
 
 .task-label {
     font-size: 0.75rem;
-    color: rgb(0 192 203);
+    color: #36a785;
     text-align: center;
     white-space: nowrap;
 }
 
 :host ::ng-deep .custom-progress {
     height: 50px;
-    background-color: rgb(0 192 203);
+    background-color: #36a78576;
     border-radius: 100px;
 
     .p-progressbar-value {
-        background-color: rgb(6 48 72);
+        background-color: #337361;
         border-radius: 100px;
     }
 
@@ -164,7 +167,7 @@ main {
 }
 
 .project-notifications-section i {
-    color: rgb(0 192 203);
+    color: #36a785;
 }
 
 .notifications-container {
@@ -226,11 +229,237 @@ main {
     display: inline-block;
     width: 0.7em;
     height: 0.7em;
-    background-color: rgb(0 192 203);
+    background-color: #36a785;
     border-radius: 3px;
     margin-right: 0.5em;
 }
 
 .custom-list li {
     margin-bottom: 1rem;
+}
+
+.top-section {
+    display: flex;
+    // flex-wrap: wrap;
+    flex-direction: column;
+    // justify-content: center;
+    gap: 1.5rem;
+    // border: 1px solid blue;
+    width: 100%;
+}
+
+.top-info-card {
+    background-color: white;
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    // width: 40%;
+    // width: max-content;
+    flex: 1;
+    // border: 1px solid gold;
+}
+
+.top-info-card-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    // width: 100%;
+    // border: 1px solid red;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #36a785;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.status-description-section {
+    background-color: white;
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    width: 100%;
+}
+
+.status-description-section header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.description-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.description-text span {
+    text-wrap: wrap;
+}
+
+.editable-input {
+    font-size: inherit;
+    font-family: inherit;
+    color: #333;
+    background: #f9f9f9;
+    /* light background to show edit mode */
+    border: 1px solid #ccc;
+    /* visible border */
+    border-radius: 6px;
+    /* soft corners */
+    outline: none;
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* subtle shadow */
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-wrap: wrap;
+}
+
+.editable-input:focus {
+    border-color: #36a785;
+    /* highlight border */
+    box-shadow: 0 0 5px rgba(54, 167, 133, 0.3);
+}
+
+
+/* === Clean Styling 30-Sep-25 === */
+
+.top-info-card-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.top-info-card {
+    flex: 1;
+    min-width: 220px;
+    min-height: 70px;
+    /* keeps cards stable */
+    background: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    // color: #666;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #222;
+    display: block;
+    width: 100%;
+    min-height: 32px;
+    /* stable single-line height */
+    word-break: break-word;
+    white-space: pre-wrap;
+    /* keeps line breaks */
+}
+
+/* Edit mode */
+.edit-container {
+    display: flex;
+    align-items: flex-start;
+    /* aligns buttons with top if textarea grows */
+    width: 100%;
+    gap: 0.5rem;
+    // position: relative;
+}
+
+.edit-container input,
+.edit-container textarea {
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    min-height: 32px;
+}
+
+.edit-container textarea {
+    resize: none;
+    /* rely on autoResize */
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.25rem;
+    position: absolute;
+    top: 10px;
+}
+
+.edit-actions {
+    cursor: pointer;
+
+}
+
+.edit-actions-container {
+    display: flex;
+    gap: 0.25rem;
+    justify-content: flex-end;
+    // position: absolute;
+    // bottom: -15px;
+}
+
+/* Pencil icon */
+.edit-icon {
+    font-size: 0.9rem;
+    color: #888;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+.edit-icon:hover {
+    color: #000;
+}
+
+/* Sections */
+.status-description-section,
+.tasks-report-section,
+.project-notifications-section {
+    margin-top: 1rem;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.description-text {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+.notifications-container {
+    margin-top: 0.5rem;
+}
+
+.notification-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.card-in-edit {
+    border: 2px solid #36a785;
+    box-shadow: 0 0 10px rgba(54, 167, 133, 0.3);
 }
