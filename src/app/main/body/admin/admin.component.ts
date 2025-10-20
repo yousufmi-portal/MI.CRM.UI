@@ -15,6 +15,8 @@ import { ProjectsPowerbiSummaryDialogComponent } from "../../shared/projects-pow
 import { MainPageDataDto } from '../../../../api-dtos/main-page-data.dto';
 import { ShortenCurrencyPipe } from '../../../../pipes/shorten-currency.pipe';
 import { MessageService } from 'primeng/api';
+import { HttpResponse } from '@angular/common/http';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 interface Column {
   field: string;
@@ -23,7 +25,7 @@ interface Column {
 }
 @Component({
   selector: 'app-admin',
-  imports: [ButtonModule, TableModule, CommonModule, AddProjectFormComponent, ProjectsPowerbiSummaryDialogComponent, ShortenCurrencyPipe],
+  imports: [ButtonModule, TableModule, CommonModule, AddProjectFormComponent, ProjectsPowerbiSummaryDialogComponent, ShortenCurrencyPipe, ProgressSpinnerModule],
   providers: [MessageService],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
@@ -112,4 +114,41 @@ export class AdminComponent implements OnInit {
       }
     });
   }
+
+  reportGeneratingIds = new Set<number>();
+  generateProjectReport(projectId: number, awardNumber: string) {
+    this.reportGeneratingIds.add(projectId);
+    this.projectsService.generateProjectReport(projectId).subscribe({
+      next: (response: HttpResponse<Blob>) => {
+        // ✅ Extract filename from Content-Disposition header
+        let fileName = `ProjectReport_${awardNumber}.pdf`; // default filename
+        
+
+        // ✅ Create blob and open in new tab
+        const blob = response.body!;
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = fileName;
+        // document.body.appendChild(a);
+        a.click();
+        // document.body.removeChild(a);
+
+        // (Optional) Clean up memory
+        this.reportGeneratingIds.delete(projectId);
+        setTimeout(() => window.URL.revokeObjectURL(blobUrl), 5000);
+      },
+      error: (err) => {
+        this.reportGeneratingIds.delete(projectId);
+        console.error('Error generating project report:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to generate project report'
+        });
+      }
+    });
+  }
+
 }

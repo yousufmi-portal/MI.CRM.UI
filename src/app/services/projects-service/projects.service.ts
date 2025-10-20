@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProjectDto } from '../../../api-dtos/project.dto';
@@ -78,4 +78,12 @@ export class ProjectsService {
   deleteProject(projectId: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/DeleteProject/${projectId}`);
   }
+
+  generateProjectReport(projectId: number): Observable<HttpResponse<Blob>> {
+    return this.http.get(`${this.baseUrl}/Report/${projectId}`, {
+      responseType: 'blob',
+      observe: 'response'
+    });
+  }
+
 }

@@ -2,6 +2,7 @@ export interface DisbursementDto {
     disbursementLogId: number; 
     projectId: number;
     categoryId: number;
+    categoryName?: string;
     description?: string;
     disbursementDate: string; // ISO string format for DateTime
     disbursedAmount: number;

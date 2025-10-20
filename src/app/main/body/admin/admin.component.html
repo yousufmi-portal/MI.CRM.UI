@@ -117,10 +117,20 @@
                     <td>{{ project.state }}</td>
                     <td>{{ project.projectStatus }}</td>
                     <td>
-                        <button pButton icon="pi pi-trash" class="p-button-sm p-button-outlined p-button-danger"
-                            (click)="deleteProject(project.projectId); $event.stopPropagation()">
-                        </button>
+                        <button pButton icon="pi pi-trash" class="p-button-sm p-button-outlined p-button-danger" style="margin-bottom: 0.25rem;"
+                            (click)="deleteProject(project.projectId); $event.stopPropagation()"></button>
+
+                        <ng-container *ngIf="reportGeneratingIds.has(project.projectId); else generateBtn">
+                            <p-progressSpinner strokeWidth="4" styleClass="w-3rem h-3rem"
+                                [style]="{ width: '1.5rem', height: '1.5rem' }"></p-progressSpinner>
+                        </ng-container>
+
+                        <ng-template #generateBtn>
+                            <button pButton icon="pi pi-file-pdf" class="p-button-sm p-button-outlined p-button-warning"
+                                (click)="generateProjectReport(project.projectId, project.awardNumber); $event.stopPropagation()"></button>
+                        </ng-template>
                     </td>
+
 
                 </tr>
             </ng-template>
