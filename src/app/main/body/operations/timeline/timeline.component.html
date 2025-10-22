@@ -7,7 +7,10 @@
                     {{ type }}<span *ngIf="!isLast">, </span>
                 </b>
             </div>
-            <div>Tasks Completed: {{ operationsSummary?.tasksCompletedPercent }}%</div>
+            <div>
+                Tasks Completed: {{ operationsSummary?.tasksCompletedPercent | number:'1.2-2' }}%
+            </div>
+
             <div>{{ operationsSummary?.project?.projectStatus }}</div>
         </section>
 
