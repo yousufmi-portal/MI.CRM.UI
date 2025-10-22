@@ -6,4 +6,6 @@ export interface ClaimDto {
     categoryId: number;
     categoryName: string;
     disbursementDate: Date;
+    units?: number;
+    rate?: number;
 }

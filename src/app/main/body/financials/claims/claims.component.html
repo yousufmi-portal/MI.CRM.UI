@@ -34,6 +34,23 @@
                         <p-columnFilter type="text" field="description" display="menu" class="ml-auto" />
                     </div>
                 </th>
+
+                <th pSortableColumn="units">
+                    <div>
+                        <p-sortIcon field="units" />
+                        Units
+                        <p-columnFilter type="number" field="units" display="menu" class="ml-auto" />
+                    </div>
+                </th>
+
+                <th pSortableColumn="rate">
+                    <div>
+                        <p-sortIcon field="rate" />
+                        Rate
+                        <p-columnFilter type="number" field="rate" display="menu" class="ml-auto" />
+                    </div>
+                </th>
+
                 <th pSortableColumn="disbursementDate">
                     <div>
                         <p-sortIcon field="disbursementDate" />
@@ -50,7 +67,9 @@
                 <td>{{ claim.disbursedAmount | currency }}</td>
                 <td>{{ claim.categoryName }}</td>
                 <td>{{ claim.description }}</td>
-                <td>{{ claim.disbursementDate | date }}</td>
+                <td>{{ claim.units || '—' }}</td>
+                <td>{{ (claim.rate | currency) || '—' }}</td>
+                <td>{{ claim.disbursementDate | date: 'MM/dd/yyyy' }}</td>
 
             </tr>
         </ng-template>

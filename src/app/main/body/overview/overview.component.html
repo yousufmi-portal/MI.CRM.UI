@@ -3,7 +3,7 @@
         <h1>
             Weekly Overview
             <span class="overview-date">
-                ({{ weekStartDate | date: 'MMM d, y' }} - {{ weekEndDate | date: 'MMM d, y' }})
+                ({{ weekStartDate | date: 'MM/dd/yyyy' }} - {{ weekEndDate | date: 'MM/dd/yyyy' }})
             </span>
         </h1>
     </section>
@@ -188,7 +188,7 @@
             <div class="top-info-card">
                 <div class="info-label">Start Date</div>
                 <div class="info-value">
-                    <p-datepicker dateFormat="yy-mm-dd" appendTo="body" [(ngModel)]="editableValues.startDate"
+                    <p-datepicker dateFormat="mm/dd/yy" appendTo="body" [(ngModel)]="editableValues.startDate"
                         (onSelect)="saveEdit('startDate')">
                     </p-datepicker>
                 </div>
@@ -197,7 +197,7 @@
             <div class="top-info-card">
                 <div class="info-label">End Date</div>
                 <div class="info-value">
-                    <p-datepicker dateFormat="yy-mm-dd" appendTo="body" [(ngModel)]="editableValues.endDate"
+                    <p-datepicker dateFormat="mm/dd/yy" appendTo="body" [(ngModel)]="editableValues.endDate"
                         (onSelect)="saveEdit('endDate')">
                     </p-datepicker>
                 </div>

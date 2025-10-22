@@ -41,6 +41,12 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.hasNewClaim = false;
+
+    if(changes['display'] && changes['display'].currentValue === true) {
+      this.loadClaimNumbers();
+    }
+
     if (changes['projectId'] && !changes['projectId'].firstChange) {
       this.loadClaimNumbers();
     }
@@ -94,11 +100,15 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
 
   show() {
     this.display = true;
+    this.hasNewClaim = false;
+    this.loadClaimNumbers();
   }
 
   close() {
     this.display = false;
     this.disbursementLogId = null;
+    this.hasNewClaim = false;
+    this.claimNumbers = [];
     this.displayChange.emit(this.display);
     this.form.reset();
   }
@@ -175,15 +185,29 @@ export class AddDisbursedDialogComponent implements OnInit, OnChanges {
   claimOptions: { label: string; value: number | 'new' }[] = [];
   hasNewClaim: boolean = false;
   private buildClaimOptions(): void {
-    this.claimOptions = this.claimNumbers.map(num => ({
+    if (!this.claimNumbers || this.claimNumbers.length === 0) {
+      // No existing claims — show only "Add new claim"
+      this.claimOptions = [{ label: '+ Add new claim', value: 'new' }];
+      return;
+    }
+
+    // ✅ Find max once (O(n))
+    const maxClaim = Math.max(...this.claimNumbers);
+
+    // ✅ Generate continuous range efficiently (1..max)
+    const fullRange = Array.from({ length: maxClaim }, (_, i) => i + 1);
+
+    // ✅ Build dropdown options
+    this.claimOptions = fullRange.map(num => ({
       label: `Claim ${num}`,
       value: num
     }));
 
-    // Always add the "Add new claim" option
+    // ✅ Add "+ Add new claim" at end
     if (!this.hasNewClaim)
       this.claimOptions.push({ label: '+ Add new claim', value: 'new' });
   }
+
 
   onClaimChange(event: any) {
     if (event.value === 'new') {
