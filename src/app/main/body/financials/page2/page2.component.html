@@ -68,7 +68,7 @@
 
                     <ng-template pTemplate="body" let-entry>
                         <tr>
-                            <td>{{ entry.disbursementDate | date: 'shortDate' }}</td>
+                            <td>{{ entry.disbursementDate | date: 'MM/dd/yyyy' }}</td>
                             <td>{{ entry.description || '—' }}</td>
                             <td>{{ entry.disbursedAmount | currency: 'USD' }}</td>
                             <td>

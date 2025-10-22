@@ -26,11 +26,11 @@
                     <i class="pi pi-check-circle"></i> My To Do Items
                 </div>
 
-                <div class="body-section-left-header-btns">
+                <!-- <div class="body-section-left-header-btns">
                     <button class="body-section-left-header-btn">View All</button>
                     <div class="btn-separator"></div>
                     <button class="body-section-left-header-btn">New To Do</button>
-                </div>
+                </div> -->
             </header>
 
             <div class="main-body-to-do-body">
@@ -47,7 +47,7 @@
                                     <div class="latest-to-do-item-title">{{ item.title }}</div>
                                     <div class="latest-finished-to-do-item-details">
                                         <small class="latest-finished-to-do-item-date">{{ item.endDate|
-                                            date:'mediumDate' }}</small>
+                                            date:'MM/dd/yyyy' }}</small>
                                         <!-- <div>
                                             <i class="pi pi-pencil"></i>
                                             <i class="pi pi-times"></i>
@@ -107,7 +107,7 @@
                         </td> -->
                         <td>{{ task.title }}</td>
                         <td>{{ task.activityTypeName }}</td>
-                        <td>{{ task.endDate | date:'mediumDate' }}</td>
+                        <td>{{ task.endDate | date:'MM/dd/yyyy' }}</td>
                         <td>{{ task.assigneeName }}</td>
                     </tr>
                 </ng-template>
